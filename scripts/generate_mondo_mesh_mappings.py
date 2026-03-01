@@ -1,9 +1,12 @@
+import os
 import re
+from collections import defaultdict
+
 import obonet
+import pandas as pd
 from gilda.process import normalize
 from gilda.generate_terms import generate_mesh_terms
 from indra.databases import mesh_client
-import pandas as pd
 from biomappings.resources import PREDICTIONS_SSSOM_PATH, POSITIVES_SSSOM_PATH
 
 MONDO_URL = ('https://raw.githubusercontent.com/monarch-initiative/mondo/'
@@ -137,3 +140,40 @@ if __name__ == '__main__':
         hlbs_novel_unambig_norms.update(
             {k: v for k, v in novel_unambig_overlap_norms.items()
              if mesh_client.has_tree_prefix(v[1], mesh_tree_code)})
+
+    # Export novel mappings as SSSOM TSV
+    hlbs_mesh_ids = {v[1] for v in hlbs_novel_unambig_norms.values()}
+
+    rows = []
+    for norm_text, (mondo_id, mesh_id) in sorted(
+        novel_unambig_overlap_norms_no_biomappings.items()
+    ):
+        mondo_curie = mondo_id.lower().replace(':', ':')
+        mesh_curie = f"mesh:{mesh_id}"
+        mondo_label = g.nodes[mondo_id].get('name', '')
+        mesh_label = mesh_client.get_mesh_name(mesh_id, offline=True) or ''
+        comment = 'HLBS-relevant' if mesh_id in hlbs_mesh_ids else ''
+        rows.append({
+            'subject_id': mondo_curie,
+            'subject_label': mondo_label,
+            'predicate_id': 'skos:exactMatch',
+            'object_id': mesh_curie,
+            'object_label': mesh_label,
+            'mapping_justification': 'semapv:LexicalMatching',
+            'mapping_tool': 'gilda',
+            'comment': comment,
+        })
+
+    df_out = pd.DataFrame(rows)
+    output_path = os.path.join(os.path.dirname(__file__),
+                               'gilda_mondo_mesh_predictions.sssom.tsv')
+    with open(output_path, 'w') as f:
+        f.write('#curie_map:\n')
+        f.write('#  mondo: http://purl.obolibrary.org/obo/MONDO_\n')
+        f.write('#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=\n')
+        f.write('#  skos: http://www.w3.org/2004/02/skos/core#\n')
+        f.write('#  semapv: https://w3id.org/semapv/vocab/\n')
+        f.write('#mapping_set_id: gilda_mondo_mesh_predictions\n')
+        f.write('#mapping_tool: gilda\n')
+    df_out.to_csv(output_path, sep='\t', index=False, mode='a')
+    print(f"Wrote {len(df_out)} mappings to {output_path}")
