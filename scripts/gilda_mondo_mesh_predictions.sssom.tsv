@@ -76,6 +76,8 @@ mondo:0008047	episodic ataxia type 1	skos:exactMatch	mesh:C563278	Episodic Ataxi
 mondo:0000397	ataxic cerebral palsy	skos:exactMatch	mesh:C562856	Cerebral Palsy, Ataxic, Autosomal Recessive	semapv:LexicalMatching	gilda	
 mondo:0007172	atrial septal defect 1	skos:exactMatch	mesh:C566239	Atrial Septal Defect 1	semapv:LexicalMatching	gilda	HLBS-relevant
 mondo:0016432	heart-hand syndrome	skos:exactMatch	mesh:C535326	Holt-Oram syndrome	semapv:LexicalMatching	gilda	HLBS-relevant
+mondo:0007743	attention deficit-hyperactivity disorder	skos:exactMatch	mesh:D001289	Attention Deficit Disorder with Hyperactivity	semapv:LexicalMatching	gilda	
+mondo:0007743	attention deficit-hyperactivity disorder	skos:exactMatch	mesh:D001289	Attention Deficit Disorder with Hyperactivity	semapv:LexicalMatching	gilda	
 mondo:0850097	autoimmune limbic encephalitis	skos:exactMatch	mesh:C531729	Autoimmune limbic encephalitis	semapv:LexicalMatching	gilda	
 mondo:0011158	autoimmune lymphoproliferative syndrome type 1	skos:exactMatch	mesh:C566613	Autoimmune Lymphoproliferative Syndrome, Type IA	semapv:LexicalMatching	gilda	
 mondo:0011158	autoimmune lymphoproliferative syndrome type 1	skos:exactMatch	mesh:C566614	Autoimmune Lymphoproliferative Syndrome, Type IB	semapv:LexicalMatching	gilda	
@@ -171,6 +173,7 @@ mondo:0010689	Charcot-Marie-Tooth disease X-linked recessive 4	skos:exactMatch	m
 mondo:0010699	Charcot-Marie-Tooth disease X-linked recessive 5	skos:exactMatch	mesh:C537129	Optic atrophy polyneuropathy deafness	semapv:LexicalMatching	gilda	
 mondo:0010699	Charcot-Marie-Tooth disease X-linked recessive 5	skos:exactMatch	mesh:C537129	Optic atrophy polyneuropathy deafness	semapv:LexicalMatching	gilda	
 mondo:0012500	chilblain lupus 1	skos:exactMatch	mesh:C535924	Chilblain lupus 1	semapv:LexicalMatching	gilda	
+mondo:0957430	childhood-onset schizophrenia	skos:exactMatch	mesh:D012561	Schizophrenia, Childhood	semapv:LexicalMatching	gilda	
 mondo:0008703	acromesomelic dysplasia 2A	skos:exactMatch	mesh:C537915	Chondrodysplasia, Grebe type	semapv:LexicalMatching	gilda	
 mondo:0002200	eccrine mixed tumor of skin	skos:exactMatch	mesh:D008949	Adenoma, Pleomorphic	semapv:LexicalMatching	gilda	
 mondo:0008695	chorea-acanthocytosis	skos:exactMatch	mesh:D054546	Neuroacanthocytosis	semapv:LexicalMatching	gilda	
@@ -344,6 +347,7 @@ mondo:0021022	hereditary hyperekplexia	skos:exactMatch	mesh:C538136	Hyperexplexi
 mondo:0019625	familial thoracic aortic aneurysm and aortic dissection	skos:exactMatch	mesh:C562834	Aortic Aneurysm, Familial Thoracic 1	semapv:LexicalMatching	gilda	HLBS-relevant
 mondo:0007876	laryngeal abductor paralysis	skos:exactMatch	mesh:C536354	Vocal cord dysfunction familial	semapv:LexicalMatching	gilda	HLBS-relevant
 mondo:0015609	advanced sleep phase syndrome	skos:exactMatch	mesh:C565789	Advanced Sleep-Phase Syndrome, Familial	semapv:LexicalMatching	gilda	HLBS-relevant
+mondo:0003727	animal phobia	skos:exactMatch	mesh:C000719220	Zoophobia	semapv:LexicalMatching	gilda	
 mondo:0013359	familial hyperaldosteronism type III	skos:exactMatch	mesh:C566337	Hypercholesterolemia, Autosomal Dominant, 3	semapv:LexicalMatching	gilda	
 mondo:0800497	interstitial lung disease 2	skos:exactMatch	mesh:D054990	Idiopathic Pulmonary Fibrosis	semapv:LexicalMatching	gilda	HLBS-relevant
 mondo:0800497	interstitial lung disease 2	skos:exactMatch	mesh:D054990	Idiopathic Pulmonary Fibrosis	semapv:LexicalMatching	gilda	HLBS-relevant
@@ -710,6 +714,7 @@ mondo:0018271	peripheral primitive neuroectodermal tumor	skos:exactMatch	mesh:D0
 mondo:0800364	peroxisome biogenesis disorder, complementation group 3	skos:exactMatch	mesh:C566633	Peroxisome Biogenesis Disorder, Complementation Group 3	semapv:LexicalMatching	gilda	
 mondo:0800365	peroxisome biogenesis disorder, complementation group K	skos:exactMatch	mesh:C566624	Peroxisome Biogenesis Disorder, Complementation Group K	semapv:LexicalMatching	gilda	
 mondo:0017312	Perrault syndrome	skos:exactMatch	mesh:C537286	Gonadal dysgenesis XX type deafness	semapv:LexicalMatching	gilda	
+mondo:0002028	personality disorder	skos:exactMatch	mesh:D010554	Personality Disorders	semapv:LexicalMatching	gilda	
 mondo:0010574	syndromic X-linked intellectual disability 5	skos:exactMatch	mesh:C535773	Mental retardation, X-linked, syndromic 5	semapv:LexicalMatching	gilda	
 mondo:0024685	Philadelphia-positive myelogenous leukemia	skos:exactMatch	mesh:D015464	Leukemia, Myelogenous, Chronic, BCR-ABL Positive	semapv:LexicalMatching	gilda	HLBS-relevant
 mondo:0024685	Philadelphia-positive myelogenous leukemia	skos:exactMatch	mesh:D015464	Leukemia, Myelogenous, Chronic, BCR-ABL Positive	semapv:LexicalMatching	gilda	HLBS-relevant
@@ -763,6 +768,9 @@ mondo:0008559	thrombophilia due to thrombin defect	skos:exactMatch	mesh:C566755	
 mondo:0700045	protothecosis	skos:exactMatch	mesh:C000656805	protothecosis	semapv:LexicalMatching	gilda	
 mondo:0009624	microcephaly and chorioretinopathy 1	skos:exactMatch	mesh:C535607	Aicardi-Goutieres syndrome	semapv:LexicalMatching	gilda	
 mondo:0040871	psychogenic polydipsia	skos:exactMatch	mesh:D059607	Polydipsia, Psychogenic	semapv:LexicalMatching	gilda	
+mondo:0000947	psychosexual disorder	skos:exactMatch	mesh:D020018	Sexual Dysfunctions, Psychological	semapv:LexicalMatching	gilda	
+mondo:0005485	psychotic disorder	skos:exactMatch	mesh:D011618	Psychotic Disorders	semapv:LexicalMatching	gilda	
+mondo:0005485	psychotic disorder	skos:exactMatch	mesh:D011618	Psychotic Disorders	semapv:LexicalMatching	gilda	
 mondo:0011751	COPD, severe early onset	skos:exactMatch	mesh:C564641	Pulmonary Disease, Chronic Obstructive, Severe Early-Onset	semapv:LexicalMatching	gilda	HLBS-relevant
 mondo:0800497	interstitial lung disease 2	skos:exactMatch	mesh:D054990	Idiopathic Pulmonary Fibrosis	semapv:LexicalMatching	gilda	HLBS-relevant
 mondo:0000297	baylisascariasis	skos:exactMatch	mesh:D017191	Ascaridida Infections	semapv:LexicalMatching	gilda	
@@ -770,6 +778,7 @@ mondo:0008972	rhizomelic chondrodysplasia punctata type 1	skos:exactMatch	mesh:C
 mondo:0975756	reactive angioendotheliomatosis	skos:exactMatch	mesh:C535293	Reactive angioendotheliomatosis	semapv:LexicalMatching	gilda	
 mondo:0001697	reading disorder	skos:exactMatch	mesh:D004410	Dyslexia	semapv:LexicalMatching	gilda	
 mondo:0009043	generalized resistance to thyroid hormone	skos:exactMatch	mesh:D018382	Thyroid Hormone Resistance Syndrome	semapv:LexicalMatching	gilda	
+mondo:0005414	treatment-refractory schizophrenia	skos:exactMatch	mesh:D000090663	Schizophrenia, Treatment-Resistant	semapv:LexicalMatching	gilda	
 mondo:0018470	renal agenesis	skos:exactMatch	mesh:C563261	Renal Adysplasia	semapv:LexicalMatching	gilda	
 mondo:0018470	renal agenesis	skos:exactMatch	mesh:C536482	Hereditary renal agenesis	semapv:LexicalMatching	gilda	
 mondo:0019636	renal agenesis, unilateral	skos:exactMatch	mesh:D000075529	Solitary Kidney	semapv:LexicalMatching	gilda	
@@ -957,3 +966,4 @@ mondo:0008888	Williams-Campbell syndrome	skos:exactMatch	mesh:D055089	Tracheobro
 mondo:0007764	autosomal dominant osteosclerosis, Worth type	skos:exactMatch	mesh:C536748	Worth syndrome	semapv:LexicalMatching	gilda	
 mondo:0010400	X-linked scapuloperoneal muscular dystrophy	skos:exactMatch	mesh:D000083143	X-Linked Emery-Dreifuss Muscular Dystrophy	semapv:LexicalMatching	gilda	
 mondo:0020682	Ehlers-Danlos syndrome, spondylodysplastic type, 1	skos:exactMatch	mesh:C536201	Ehlers-Danlos syndrome, progeroid form	semapv:LexicalMatching	gilda	HLBS-relevant
+mondo:0003727	animal phobia	skos:exactMatch	mesh:C000719220	Zoophobia	semapv:LexicalMatching	gilda	

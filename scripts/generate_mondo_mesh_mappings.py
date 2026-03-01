@@ -20,6 +20,7 @@ if __name__ == '__main__':
     mesh_disease_ids = {
         mesh_id for mesh_id in mesh_client.mesh_id_to_name
         if mesh_client.has_tree_prefix(mesh_id, 'C')
+        or mesh_client.has_tree_prefix(mesh_id, 'F03')
     }
 
     # Get the normalized MeSH names and synonyms from Gilda
@@ -94,6 +95,7 @@ if __name__ == '__main__':
            (list(mondo_terms_by_norm[n])[0] in mondo_no_mesh_mapping
             and list(mesh_terms_by_norm[n])[0] in mesh_no_mondo_mapping)
     }
+    print(f"Novel unambiguous mappings: {len(novel_unambig_overlap_norms)}")
 
     # Now filter out anything that we've already predicted or curated
     # as part of Biomappings
@@ -126,6 +128,8 @@ if __name__ == '__main__':
         k: v for k, v in novel_unambig_overlap_norms.items()
         if (v not in pred_mappings) and (v not in pos_mappings)
     }
+    print(f"Novel unambiguous mappings (excl. Biomappings): "
+          f"{len(novel_unambig_overlap_norms_no_biomappings)}")
 
     # Finally, specifically highlight terms that are relevant for HLBS
     # using the MeSH structure
@@ -140,6 +144,7 @@ if __name__ == '__main__':
         hlbs_novel_unambig_norms.update(
             {k: v for k, v in novel_unambig_overlap_norms.items()
              if mesh_client.has_tree_prefix(v[1], mesh_tree_code)})
+    print(f"HLBS-relevant novel mappings: {len(hlbs_novel_unambig_norms)}")
 
     # Export novel mappings as SSSOM TSV
     hlbs_mesh_ids = {v[1] for v in hlbs_novel_unambig_norms.values()}
