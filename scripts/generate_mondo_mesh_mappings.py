@@ -88,13 +88,20 @@ if __name__ == '__main__':
     # nothing to-from the given terms has already been mapped, i.e.,
     # the mapping would be novel in that the given MONDO entry as no
     # mapping to MESH and there is no mapping from any other MONDO
-    # term to the given MESH term
-    novel_unambig_overlap_norms = {
-        n: (list(mondo_terms_by_norm[n])[0], list(mesh_terms_by_norm[n])[0])
-            for n in unambig_overlap_norms if
-           (list(mondo_terms_by_norm[n])[0] in mondo_no_mesh_mapping
-            and list(mesh_terms_by_norm[n])[0] in mesh_no_mondo_mapping)
-    }
+    # term to the given MESH term.
+    # Since multiple normalized texts can imply the same mapping, we
+    # make sure we retain only unique mappings here.
+    novel_unambig_overlap_norms = {}
+    seen_mappings = set()
+    for norm_text in unambig_overlap_norms:
+        mondo_term = list(mondo_terms_by_norm[norm_text])[0]
+        mesh_term = list(mesh_terms_by_norm[norm_text])[0]
+        mapping = (mondo_term, mesh_term)
+        if (mondo_term in mondo_no_mesh_mapping) and \
+                (mesh_term in mesh_no_mondo_mapping):
+            if mapping not in seen_mappings:
+                novel_unambig_overlap_norms[norm_text] = mapping
+                seen_mappings.add(mapping)
     print(f"Novel unambiguous mappings: {len(novel_unambig_overlap_norms)}")
 
     # Now filter out anything that we've already predicted or curated
