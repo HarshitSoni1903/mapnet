@@ -1,0 +1,197 @@
+#curie_map:
+#  mondo: http://purl.obolibrary.org/obo/MONDO_
+#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=
+#  skos: http://www.w3.org/2004/02/skos/core#
+#  semapv: https://w3id.org/semapv/vocab/
+#mapping_set_id: leonmap_mondo_mesh_wrong
+#mapping_tool: leonmap
+subject_id	subject_label	predicate_id	object_id	object_label	confidence	mapping_justification	mapping_tool	comment
+mondo:0000127	geleophysic dysplasia	skos:broadMatch	mesh:C535662	Acromicric dysplasia	1.0	semapv:LexicalMatching	leonmap	cosine=0.740681; known_target=mesh:C537677
+mondo:0000153	transposition of the great arteries	skos:exactMatch	mesh:D000080041	Congenitally Corrected Transposition of the Great Arteries	0.9354918	semapv:SemanticSimilarity	leonmap	known_target=mesh:D014188
+mondo:0000159	bone marrow failure syndrome	skos:broadMatch	mesh:D000080983	Bone Marrow Failure Disorders	1.0	semapv:LexicalMatching	leonmap	cosine=0.923043; known_target=mesh:C536572
+mondo:0000266	pulmonary aspergilloma	skos:exactMatch	mesh:D001228	Aspergillosis	0.90400565	semapv:SemanticSimilarity	leonmap	known_target=mesh:D055732
+mondo:0000290	primary amebic meningoencephalitis	skos:broadMatch	mesh:D020808	Central Nervous System Protozoal Infections	1.0	semapv:LexicalMatching	leonmap	cosine=0.709424; known_target=mesh:C535275
+mondo:0000476	generalized dystonia	skos:exactMatch	mesh:C538005	Dystonia musculorum deformans type 1	0.93476999	semapv:SemanticSimilarity	leonmap	known_target=mesh:D004422
+mondo:0000495	oppositional defiant disorder	skos:exactMatch	mesh:D000096865	Oppositional Defiant Disorder	1.0	semapv:LexicalMatching	leonmap	cosine=0.948448; known_target=mesh:D019958
+mondo:0001167	spastic diplegia	skos:broadMatch	mesh:D002547	Cerebral Palsy	1.0	semapv:LexicalMatching	leonmap	cosine=0.871043; known_target=mesh:C537945
+mondo:0001244	vitamin K deficiency hemorrhagic disease	skos:exactMatch	mesh:D006475	Vitamin K Deficiency Bleeding	0.92650354	semapv:SemanticSimilarity	leonmap	known_target=mesh:D014813
+mondo:0001301	rumination disorder	skos:broadMatch	mesh:D000079562	Rumination Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.895704; known_target=mesh:D019959
+mondo:0001443	tympanosclerosis	skos:exactMatch	mesh:D000092163	Tympanosclerosis	1.0	semapv:LexicalMatching	leonmap	cosine=0.794572; known_target=mesh:D063371
+mondo:0001712	alexia	skos:broadMatch	mesh:D004410	Dyslexia	1.0	semapv:LexicalMatching	leonmap	cosine=0.818470; known_target=mesh:D004411
+mondo:0001713	inherited aplastic anemia	skos:exactMatch	mesh:D000741	Anemia, Aplastic	0.90856475	semapv:SemanticSimilarity	leonmap	known_target=mesh:D029502
+mondo:0002039	cognitive disorder	skos:broadMatch	mesh:D060825	Cognitive Dysfunction	1.0	semapv:LexicalMatching	leonmap	cosine=0.823593; known_target=mesh:D019965
+mondo:0002184	drug-induced hepatitis	skos:broadMatch	mesh:D056486	Chemical and Drug Induced Liver Injury	1.0	semapv:LexicalMatching	leonmap	cosine=0.824454; known_target=mesh:D056487
+mondo:0002350	familial nephrotic syndrome	skos:exactMatch	mesh:C563805	Nephrotic Syndrome, Congenital, with or without Ocular Abnormalities	0.91240251	semapv:SemanticSimilarity	leonmap	known_target=mesh:C535761
+mondo:0002411	narcissistic personality disorder	skos:exactMatch	mesh:D000097165	Narcissistic Personality Disorder	1.0	semapv:LexicalMatching	leonmap	cosine=0.806018; known_target=mesh:D010554
+mondo:0002447	endometrial carcinoma	skos:broadMatch	mesh:D016889	Endometrial Neoplasms	1.0	semapv:LexicalMatching	leonmap	cosine=0.858051; known_target=mesh:D018269
+mondo:0002805	hidradenoma	skos:broadMatch	mesh:D018250	Acrospiroma	1.0	semapv:LexicalMatching	leonmap	cosine=0.919679; known_target=mesh:D006607
+mondo:0002886	common bile duct disorder	skos:exactMatch	mesh:D001649	Bile Duct Diseases	0.93719786	semapv:SemanticSimilarity	leonmap	known_target=mesh:D003137
+mondo:0003019	potassium deficiency disease	skos:exactMatch	mesh:D011191	Potassium Deficiency	0.90616059	semapv:SemanticSimilarity	leonmap	known_target=mesh:D007008
+mondo:0003061	benign muscle neoplasm	skos:exactMatch	mesh:D009379	Neoplasms, Muscle Tissue	0.92458147	semapv:SemanticSimilarity	leonmap	known_target=mesh:D009214
+mondo:0003763	acute stress disorder	skos:broadMatch	mesh:D040701	Stress Disorders, Traumatic, Acute	1.0	semapv:LexicalMatching	leonmap	cosine=0.829722; known_target=mesh:D000068099
+mondo:0003803	aortic valve disorder	skos:broadMatch	mesh:D000082862	Aortic Valve Disease	1.0	semapv:LexicalMatching	leonmap	cosine=0.925563; known_target=mesh:C563178
+mondo:0004612	malignant histiocytosis	skos:broadMatch	mesh:D054747	Histiocytic Sarcoma	1.0	semapv:LexicalMatching	leonmap	cosine=0.858903; known_target=mesh:D015620
+mondo:0004684	plantar fibromatosis	skos:broadMatch	mesh:D000071380	Fibromatosis, Plantar	1.0	semapv:LexicalMatching	leonmap	cosine=0.949595; known_target=mesh:C537000
+mondo:0004686	lattice corneal dystrophy	skos:exactMatch	mesh:C563923	Corneal Dystrophy, Lattice Type IIIA	0.92851019	semapv:SemanticSimilarity	leonmap	known_target=mesh:C537935
+mondo:0004963	T-cell acute lymphoblastic leukemia	skos:broadMatch	mesh:D054218	Precursor T-Cell Lymphoblastic Leukemia-Lymphoma	1.0	semapv:LexicalMatching	leonmap	cosine=0.868734; known_target=mesh:D015459
+mondo:0004992	cancer	skos:broadMatch	mesh:D009369	Neoplasms	1.0	semapv:LexicalMatching	leonmap	cosine=0.759372; known_target=mesh:D009371
+mondo:0005012	cutaneous melanoma	skos:exactMatch	mesh:D000096142	Melanoma, Cutaneous Malignant	0.90406907	semapv:SemanticSimilarity	leonmap	known_target=mesh:C562393
+mondo:0005061	lung adenocarcinoma	skos:broadMatch	mesh:D000077192	Adenocarcinoma of Lung	1.0	semapv:LexicalMatching	leonmap	cosine=0.824011; known_target=mesh:C538231
+mondo:0005073	melanocytic nevus	skos:broadMatch	mesh:D009508	Nevus, Pigmented	1.0	semapv:LexicalMatching	leonmap	cosine=0.946335; known_target=mesh:D009506
+mondo:0005300	chronic kidney disease	skos:broadMatch	mesh:D051436	Renal Insufficiency, Chronic	1.0	semapv:LexicalMatching	leonmap	cosine=0.913194; known_target=mesh:D007676
+mondo:0005365	hearing loss disorder	skos:exactMatch	mesh:D006312	Hearing Loss, Bilateral	0.90068245	semapv:SemanticSimilarity	leonmap	known_target=mesh:D034381
+mondo:0005462	primitive neuroectodermal tumor	skos:broadMatch	mesh:D018242	Neuroectodermal Tumors, Primitive	1.0	semapv:LexicalMatching	leonmap	cosine=0.876565; known_target=mesh:D017599
+mondo:0005502	dengue disease	skos:exactMatch	mesh:D019595	Severe Dengue	0.93308771	semapv:SemanticSimilarity	leonmap	known_target=mesh:D003715
+mondo:0005582	binge eating disorder	skos:broadMatch	mesh:D056912	Binge-Eating Disorder	1.0	semapv:LexicalMatching	leonmap	cosine=0.859058; known_target=mesh:D002032, mesh:D052018
+mondo:0005656	Ascaridida infectious disease	skos:exactMatch	mesh:D001198	Ascaridiasis	0.9191649	semapv:SemanticSimilarity	leonmap	known_target=mesh:D017191
+mondo:0005696	central nervous system tuberculosis	skos:broadMatch	mesh:D020306	Tuberculosis, Central Nervous System	1.0	semapv:LexicalMatching	leonmap	cosine=0.828467; known_target=mesh:D016862
+mondo:0005864	muscle cancer	skos:broadMatch	mesh:D019042	Muscle Neoplasms	1.0	semapv:LexicalMatching	leonmap	cosine=0.953254; known_target=mesh:D009217
+mondo:0006009	viral encephalitis	skos:broadMatch	mesh:D018792	Encephalitis, Viral	1.0	semapv:LexicalMatching	leonmap	cosine=0.831216; known_target=mesh:D004671
+mondo:0006209	fibroblastic neoplasm	skos:exactMatch	mesh:D018218	Neoplasms, Fibrous Tissue	0.91310763	semapv:SemanticSimilarity	leonmap	known_target=mesh:D005354
+mondo:0006292	malignant mesothelioma	skos:broadMatch	mesh:D000086002	Mesothelioma, Malignant	1.0	semapv:LexicalMatching	leonmap	cosine=0.856250; known_target=mesh:C562839
+mondo:0006752	Erysipelothrix rhusiopathiae infectious disease	skos:exactMatch	mesh:D004889	Erysipelothrix Infections	0.90756398	semapv:SemanticSimilarity	leonmap	known_target=mesh:D004887
+mondo:0006765	Fusobacterium infectious disease	skos:exactMatch	mesh:D045825	Fusobacteriaceae Infections	0.92478001	semapv:SemanticSimilarity	leonmap	known_target=mesh:D005674
+mondo:0007012	variant Creutzfeldt-Jakob disease	skos:broadMatch	mesh:D007562	Creutzfeldt-Jakob Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.806046; known_target=mesh:D016643
+mondo:0007043	Pfeiffer syndrome	skos:broadMatch	mesh:D000168	Acrocephalosyndactylia	1.0	semapv:LexicalMatching	leonmap	cosine=0.812909; known_target=mesh:C538582
+mondo:0007078	pseudohypoparathyroidism type 1A	skos:exactMatch	mesh:D011547	Pseudohypoparathyroidism	0.92763489	semapv:SemanticSimilarity	leonmap	known_target=mesh:C537045
+mondo:0007086	autosomal dominant Alport syndrome	skos:broadMatch	mesh:D009394	Nephritis, Hereditary	1.0	semapv:LexicalMatching	leonmap	cosine=0.841410; known_target=mesh:C536586
+mondo:0007100	familial amyloid neuropathy	skos:broadMatch	mesh:D028227	Amyloid Neuropathies, Familial	1.0	semapv:LexicalMatching	leonmap	cosine=0.810228; known_target=mesh:C567782
+mondo:0007101	familial primary localized cutaneous amyloidosis	skos:exactMatch	mesh:C562642	Amyloidosis, Primary Cutaneous	0.90645021	semapv:SemanticSimilarity	leonmap	known_target=mesh:C562643
+mondo:0007238	amastia	skos:exactMatch	mesh:C562989	Amastia	1.0	semapv:LexicalMatching	leonmap	cosine=0.906263; known_target=mesh:C535565
+mondo:0007240	progressive familial heart block, type 1A	skos:exactMatch	mesh:C566873	Hereditary bundle branch system defect	0.92525947	semapv:SemanticSimilarity	leonmap	known_target=mesh:D002037
+mondo:0007356	Lynch syndrome 1	skos:exactMatch	mesh:D003123	Colorectal Neoplasms, Hereditary Nonpolyposis	0.94133371	semapv:SemanticSimilarity	leonmap	known_target=mesh:C537261
+mondo:0007426	deafness, unilateral	skos:broadMatch	mesh:D046088	Hearing Loss, Unilateral	1.0	semapv:LexicalMatching	leonmap	cosine=0.890918; known_target=mesh:C567079
+mondo:0007601	familial Mediterranean fever, autosomal dominant	skos:broadMatch	mesh:D010505	Familial Mediterranean Fever	1.0	semapv:LexicalMatching	leonmap	cosine=0.782377; known_target=mesh:C565021
+mondo:0007614	congenital fibrosis of extraocular muscles	skos:exactMatch	mesh:C567739	Fibrosis of Extraocular Muscles, Congenital, 3B	0.93599993	semapv:SemanticSimilarity	leonmap	known_target=mesh:C580012
+mondo:0007620	fish eye disease	skos:broadMatch	mesh:D007863	Lecithin Cholesterol Acyltransferase Deficiency	1.0	semapv:LexicalMatching	leonmap	cosine=0.912615; known_target=mesh:C538467
+mondo:0007738	spondyloepiphyseal dysplasia with congenital joint dislocations	skos:broadMatch	mesh:C535789	Spondyloepiphyseal dysplasia, Omani type	1.0	semapv:LexicalMatching	leonmap	cosine=0.886188; known_target=mesh:C537283
+mondo:0007790	Charcot-Marie-Tooth disease type 3	skos:broadMatch	mesh:D015417	Hereditary Sensory and Motor Neuropathy	1.0	semapv:LexicalMatching	leonmap	cosine=0.815709; known_target=mesh:C538392
+mondo:0007820	fused mandibular incisors	skos:broadMatch	mesh:D005671	Fused Teeth	1.0	semapv:LexicalMatching	leonmap	cosine=0.939353; known_target=mesh:C535997
+mondo:0007916	primary intestinal lymphangiectasia	skos:exactMatch	mesh:D008201	Lymphangiectasis, Intestinal	0.92544281	semapv:SemanticSimilarity	leonmap	known_target=mesh:C536567
+mondo:0008005	cardiospondylocarpofacial syndrome	skos:exactMatch	mesh:C537269	Forney Robinson Pascoe syndrome	0.90751123	semapv:SemanticSimilarity	leonmap	known_target=mesh:C563572
+mondo:0008054	juvenile dermatomyositis	skos:broadMatch	mesh:D003882	Dermatomyositis	1.0	semapv:LexicalMatching	leonmap	cosine=0.910457; known_target=mesh:C000598745
+mondo:0008094	familial multiple nevi flammei	skos:broadMatch	mesh:C535816	Nevi flammei, familial multiple	1.0	semapv:LexicalMatching	leonmap	cosine=0.874026; known_target=mesh:D019339
+mondo:0008148	osteogenesis imperfecta type 4	skos:broadMatch	mesh:C000631847	Osteogenesis Imperfecta, Type IV	1.0	semapv:LexicalMatching	leonmap	cosine=0.832869; known_target=mesh:C536045
+mondo:0008189	papillomatosis, florid, of nipple	skos:broadMatch	mesh:C000626393	Erosive Adenomatosis of the Nipple	1.0	semapv:LexicalMatching	leonmap	cosine=0.939767; known_target=mesh:C537167
+mondo:0008219	pemphigus vulgaris	skos:broadMatch	mesh:D010392	Pemphigus	1.0	semapv:LexicalMatching	leonmap	cosine=0.918831; known_target=mesh:C536645
+mondo:0008263	polycystic kidney disease 1	skos:exactMatch	mesh:D016891	Polycystic Kidney, Autosomal Dominant	0.91454291	semapv:SemanticSimilarity	leonmap	known_target=mesh:C536326
+mondo:0008346	pulmonary hemosiderosis	skos:broadMatch	mesh:D000097545	Hemosiderosis, Pulmonary	1.0	semapv:LexicalMatching	leonmap	cosine=0.912014; known_target=mesh:D012806, mesh:C536281
+mondo:0008368	autosomal dominant distal renal tubular acidosis	skos:broadMatch	mesh:D000141	Acidosis, Renal Tubular	1.0	semapv:LexicalMatching	leonmap	cosine=0.936606; known_target=mesh:C538565
+mondo:0008557	Paris-Trousseau thrombocytopenia	skos:broadMatch	mesh:D054868	Jacobsen Distal 11q Deletion Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.696839; known_target=mesh:C538617
+mondo:0008560	thrombophilia due to activated protein C resistance	skos:exactMatch	mesh:C566056	Thrombophilia due to Activated Protein C Resistance	1.0	semapv:LexicalMatching	leonmap	cosine=0.931162; known_target=mesh:D020016
+mondo:0008632	urticaria, aquagenic	skos:broadMatch	mesh:D000094482	Chronic Inducible Urticaria	1.0	semapv:LexicalMatching	leonmap	cosine=0.850843; known_target=mesh:C562481
+mondo:0008652	congenital vertical talus	skos:broadMatch	mesh:D005413	Flatfoot	1.0	semapv:LexicalMatching	leonmap	cosine=0.809030; known_target=mesh:C536345
+mondo:0008654	spinocerebellar ataxia 27A	skos:broadMatch	mesh:C537204	Spinocerebellar ataxia 27	1.0	semapv:LexicalMatching	leonmap	cosine=0.798470; known_target=mesh:C537856
+mondo:0008762	autosomal recessive Alport syndrome	skos:broadMatch	mesh:D009394	Nephritis, Hereditary	1.0	semapv:LexicalMatching	leonmap	cosine=0.809290; known_target=mesh:C536587
+mondo:0008900	camptodactyly with fibrous tissue hyperplasia and skeletal dysplasia	skos:broadMatch	mesh:C537287	Goodman camptodactyly	1.0	semapv:LexicalMatching	leonmap	cosine=0.801464; known_target=mesh:C537974
+mondo:0009008	heart defect - tongue hamartoma - polysyndactyly syndrome	skos:exactMatch	mesh:C537137	Orstavik Lindemann Solberg syndrome	0.9215492	semapv:SemanticSimilarity	leonmap	known_target=mesh:C535849
+mondo:0009020	macular corneal dystrophy	skos:broadMatch	mesh:D003317	Corneal Dystrophies, Hereditary	1.0	semapv:LexicalMatching	leonmap	cosine=0.886419; known_target=mesh:C537834
+mondo:0009054	autosomal recessive cutis laxa type 2, classic type	skos:exactMatch	mesh:C567855	Cutis Laxa, Autosomal Recessive, Type IIB	0.91214269	semapv:SemanticSimilarity	leonmap	known_target=mesh:C562632
+mondo:0009083	conductive deafness-malformed external ear syndrome	skos:exactMatch	mesh:C537239	Mengel Konigsmark syndrome	0.91136074	semapv:SemanticSimilarity	leonmap	known_target=mesh:C565644
+mondo:0009252	essential fructosuria	skos:exactMatch	mesh:D015318	Fructose Metabolism, Inborn Errors	0.94768	semapv:SemanticSimilarity	leonmap	known_target=mesh:C538068
+mondo:0009255	galactokinase deficiency	skos:broadMatch	mesh:D005693	Galactosemias	1.0	semapv:LexicalMatching	leonmap	cosine=0.900867; known_target=mesh:C535999
+mondo:0009519	letterer-Siwe disease	skos:broadMatch	mesh:D006646	Histiocytosis, Langerhans-Cell	1.0	semapv:LexicalMatching	leonmap	cosine=0.809751; known_target=mesh:C538636
+mondo:0009548	renal hypomagnesemia 5 with ocular involvement	skos:broadMatch	mesh:C565423	Hypomagnesemia 5, Renal, with Ocular Involvement	1.0	semapv:LexicalMatching	leonmap	cosine=0.929033; known_target=mesh:C536148
+mondo:0009642	orofaciodigital syndrome type II	skos:exactMatch	mesh:C557817	Orofaciodigital syndrome 3	0.90052569	semapv:SemanticSimilarity	leonmap	known_target=mesh:C538585
+mondo:0009650	mucolipidosis type II	skos:broadMatch	mesh:D009081	Mucolipidoses	1.0	semapv:LexicalMatching	leonmap	cosine=0.777347; known_target=mesh:C538602
+mondo:0009668	lethal multiple pterygium syndrome	skos:broadMatch	mesh:C537377	Multiple pterygium syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.756734; known_target=mesh:C537378
+mondo:0009673	spinal muscular atrophy, type II	skos:broadMatch	mesh:D014897	Spinal Muscular Atrophies of Childhood	1.0	semapv:LexicalMatching	leonmap	cosine=0.799234; known_target=mesh:C536879
+mondo:0009833	Shwachman-Diamond syndrome	skos:exactMatch	mesh:D000081003	Shwachman-Diamond Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.954330; known_target=mesh:C537330
+mondo:0009862	dihydropteridine reductase deficiency	skos:broadMatch	mesh:D010661	Phenylketonurias	1.0	semapv:LexicalMatching	leonmap	cosine=0.835097; known_target=mesh:C537896
+mondo:0009934	alveolar capillary dysplasia with misalignment of pulmonary veins	skos:broadMatch	mesh:D010547	Persistent Fetal Circulation Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.862519; known_target=mesh:C536590
+mondo:0010111	odontotrichomelic syndrome	skos:broadMatch	mesh:C535642	Growth retardation, Alopecia, Pseudoanodontia and Optic atrophy	1.0	semapv:LexicalMatching	leonmap	cosine=0.751998; known_target=mesh:C535637
+mondo:0010146	Kerion celsi	skos:broadMatch	mesh:D014006	Tinea Capitis	1.0	semapv:LexicalMatching	leonmap	cosine=0.878393; known_target=mesh:C536165
+mondo:0010150	head and neck squamous cell carcinoma	skos:broadMatch	mesh:D000077195	Squamous Cell Carcinoma of Head and Neck	1.0	semapv:LexicalMatching	leonmap	cosine=0.928340; known_target=mesh:C535575
+mondo:0010311	Becker muscular dystrophy	skos:broadMatch	mesh:D020388	Muscular Dystrophy, Duchenne	1.0	semapv:LexicalMatching	leonmap	cosine=0.920935; known_target=mesh:C570377
+mondo:0010362	glycogen storage disease IXd	skos:exactMatch	mesh:C563008	Glycogen Storage Disease IXB	0.93946344	semapv:SemanticSimilarity	leonmap	known_target=mesh:C564485
+mondo:0010525	neural tube defects, X-linked	skos:broadMatch	mesh:C536410	Neural tube defects X-linked	1.0	semapv:LexicalMatching	leonmap	cosine=0.955539; known_target=mesh:C536359
+mondo:0010528	anosmia	skos:exactMatch	mesh:D000086582	Anosmia	1.0	semapv:LexicalMatching	leonmap	cosine=0.897955; known_target=mesh:D000857
+mondo:0010555	X-linked chondrodysplasia punctata 1	skos:exactMatch	mesh:C580533	X-Linked Chondrodysplasia Punctata 1	1.0	semapv:LexicalMatching	leonmap	cosine=0.840197; known_target=mesh:C535941
+mondo:0010576	X-linked mixed hearing loss with perilymphatic gusher	skos:exactMatch	mesh:C536424	Progressive hearing loss stapes fixation	0.93331045	semapv:SemanticSimilarity	leonmap	known_target=mesh:D006316, mesh:D006319, mesh:D006313
+mondo:0010600	granulomatous disease, chronic, X-linked	skos:broadMatch	mesh:D006105	Granulomatous Disease, Chronic	1.0	semapv:LexicalMatching	leonmap	cosine=0.965671; known_target=mesh:C564210
+mondo:0010654	Partington syndrome	skos:broadMatch	mesh:C536300	Partington X-linked mental retardation syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.906974; known_target=mesh:C562446
+mondo:0010663	intellectual disability-hypotonic facies syndrome, X-linked, 1	skos:exactMatch	mesh:C537457	Mental retardation-hypotonic facies syndrome, x-linked, 1	0.91459203	semapv:SemanticSimilarity	leonmap	known_target=mesh:C537445
+mondo:0010683	X-linked myotubular myopathy	skos:broadMatch	mesh:D020914	Myopathies, Structural, Congenital	1.0	semapv:LexicalMatching	leonmap	cosine=0.838065; known_target=mesh:C538647
+mondo:0010684	X-linked myopathy with excessive autophagy	skos:broadMatch	mesh:C564093	Myopathy, X-Linked, with Excessive Autophagy	1.0	semapv:LexicalMatching	leonmap	cosine=0.898294; known_target=mesh:C536522
+mondo:0010702	orofaciodigital syndrome I	skos:broadMatch	mesh:D009958	Orofaciodigital Syndromes	1.0	semapv:LexicalMatching	leonmap	cosine=0.857666; known_target=mesh:C537134
+mondo:0010720	partial androgen insensitivity syndrome	skos:broadMatch	mesh:D013734	Androgen-Insensitivity Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.899449; known_target=mesh:C538435
+mondo:0010772	Leber optic atrophy and dystonia	skos:broadMatch	mesh:D029242	Optic Atrophy, Hereditary, Leber	1.0	semapv:LexicalMatching	leonmap	cosine=0.683191; known_target=mesh:C536024
+mondo:0010863	type 1 diabetes mellitus 5	skos:broadMatch	mesh:D000071698	Latent Autoimmune Diabetes in Adults	1.0	semapv:LexicalMatching	leonmap	cosine=0.784520; known_target=mesh:C563958
+mondo:0010870	tibial muscular dystrophy	skos:broadMatch	mesh:D049310	Distal Myopathies	1.0	semapv:LexicalMatching	leonmap	cosine=0.761874; known_target=mesh:C536815
+mondo:0010907	familial hypertryptophanemia	skos:broadMatch	mesh:C563467	Hypertryptophanemia, Familial	1.0	semapv:LexicalMatching	leonmap	cosine=0.609741; known_target=mesh:C538393
+mondo:0011055	distal monosomy 10p	skos:exactMatch	mesh:C538288	10p Deletion Syndrome (Partial)	0.95707202	semapv:SemanticSimilarity	leonmap	known_target=mesh:C563337
+mondo:0011114	familial multiple trichoepithelioma	skos:broadMatch	mesh:C536611	Familial cylindromatosis	1.0	semapv:LexicalMatching	leonmap	cosine=0.829864; known_target=mesh:C536552
+mondo:0011301	pseudohypoparathyroidism type 1B	skos:broadMatch	mesh:D011547	Pseudohypoparathyroidism	1.0	semapv:LexicalMatching	leonmap	cosine=0.832979; known_target=mesh:C548075
+mondo:0011340	congenital tracheal stenosis	skos:exactMatch	mesh:C000715347	Congenital tracheal stenosis	1.0	semapv:LexicalMatching	leonmap	cosine=0.961415; known_target=mesh:C566362
+mondo:0011430	pulverulent cataract	skos:broadMatch	mesh:C563426	Cataract, Pulverulent	1.0	semapv:LexicalMatching	leonmap	cosine=0.815804; known_target=mesh:C565133
+mondo:0011578	familial papillary thyroid carcinoma with renal papillary neoplasia	skos:exactMatch	mesh:D000077273	Thyroid Cancer, Papillary	0.90101415	semapv:SemanticSimilarity	leonmap	known_target=mesh:C565310
+mondo:0011599	birdshot chorioretinopathy	skos:exactMatch	mesh:D000080365	Birdshot Chorioretinopathy	1.0	semapv:LexicalMatching	leonmap	cosine=0.891711; known_target=mesh:C537630
+mondo:0011634	rippling muscle disease	skos:broadMatch	mesh:C535686	Rippling muscle disease, 1	1.0	semapv:LexicalMatching	leonmap	cosine=0.800968; known_target=mesh:C535685
+mondo:0011728	benign essential blepharospasm	skos:exactMatch	mesh:C535428	Benign essential blepharospasm	1.0	semapv:LexicalMatching	leonmap	cosine=0.954332; known_target=mesh:D001764
+mondo:0011757	brachydactyly type A1B	skos:exactMatch	mesh:C566196	Brachydactyly, Type B1	0.91776752	semapv:SemanticSimilarity	leonmap	known_target=mesh:C564635
+mondo:0011951	amyotrophic lateral sclerosis type 6	skos:broadMatch	mesh:C538251	Amyotrophic lateral sclerosis, type 6	1.0	semapv:LexicalMatching	leonmap	cosine=0.864248; known_target=mesh:C567699
+mondo:0012038	speech-sound disorder	skos:broadMatch	mesh:D066229	Speech Sound Disorder	1.0	semapv:LexicalMatching	leonmap	cosine=0.661387; known_target=mesh:C563928
+mondo:0012061	familial sick sinus syndrome	skos:exactMatch	mesh:D012804	Sick Sinus Syndrome	0.90537667	semapv:SemanticSimilarity	leonmap	known_target=mesh:C563907
+mondo:0012092	hereditary sensory and autonomic neuropathy type 5	skos:broadMatch	mesh:D009477	Hereditary Sensory and Autonomic Neuropathies	1.0	semapv:LexicalMatching	leonmap	cosine=0.890490; known_target=mesh:D000699
+mondo:0012315	distal 10q deletion syndrome	skos:exactMatch	mesh:C538087	Distal Trisomy 10q Syndrome	0.9082126	semapv:SemanticSimilarity	leonmap	known_target=mesh:C567182
+mondo:0012467	cold-induced sweating syndrome 2	skos:broadMatch	mesh:C536214	Crisponi syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.878268; known_target=mesh:C564791
+mondo:0012574	Potocki-Lupski syndrome	skos:exactMatch	mesh:C538355	Potocki-Lupski syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.821154; known_target=mesh:C536578
+mondo:0012580	hereditary pulmonary alveolar proteinosis	skos:exactMatch	mesh:D011649	Pulmonary Alveolar Proteinosis	0.9128778	semapv:SemanticSimilarity	leonmap	known_target=mesh:C535832
+mondo:0012857	porokeratosis 5, disseminated superficial actinic type	skos:exactMatch	mesh:C536339	Porokeratosis, disseminated superficial actinic 1	0.90436977	semapv:SemanticSimilarity	leonmap	known_target=mesh:C567356
+mondo:0013000	porphyria due to ALA dehydratase deficiency	skos:exactMatch	mesh:D017118	Porphyria, Acute Intermittent	0.90552396	semapv:SemanticSimilarity	leonmap	known_target=mesh:C562618
+mondo:0013127	asphyxiating thoracic dystrophy 3	skos:broadMatch	mesh:D012779	Short Rib-Polydactyly Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.767023; known_target=mesh:C537602
+mondo:0013433	primary sclerosing cholangitis	skos:broadMatch	mesh:D015209	Cholangitis, Sclerosing	1.0	semapv:LexicalMatching	leonmap	cosine=0.938997; known_target=mesh:C536419
+mondo:0013710	Lynch syndrome 5	skos:exactMatch	mesh:D003123	Colorectal Neoplasms, Hereditary Nonpolyposis	0.90668553	semapv:SemanticSimilarity	leonmap	known_target=mesh:C563456
+mondo:0013996	focal facial dermal dysplasia type II	skos:broadMatch	mesh:D000090303	Focal Facial Dermal Dysplasias	1.0	semapv:LexicalMatching	leonmap	cosine=0.910787; known_target=mesh:C536385
+mondo:0014243	Schaaf-Yang syndrome	skos:exactMatch	mesh:C000726748	Schaaf-Yang syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.762700; known_target=mesh:C535385
+mondo:0015048	amelogenesis imperfecta type 2	skos:exactMatch	mesh:C562880	Amelogenesis Imperfecta, Type III	0.93131959	semapv:SemanticSimilarity	leonmap	known_target=mesh:C536606
+mondo:0015053	hereditary angioedema type 1	skos:broadMatch	mesh:D056829	Hereditary Angioedema Types I and II	1.0	semapv:LexicalMatching	leonmap	cosine=0.893545; known_target=mesh:C538577
+mondo:0015168	arthrogryposis multiplex congenita	skos:broadMatch	mesh:D001176	Arthrogryposis	1.0	semapv:LexicalMatching	leonmap	cosine=0.891087; known_target=mesh:C536613
+mondo:0015265	bronchiolitis obliterans syndrome	skos:exactMatch	mesh:D000092122	Bronchiolitis Obliterans Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.737605; known_target=mesh:D001989
+mondo:0015374	primary central nervous system vasculitis	skos:broadMatch	mesh:D020293	Vasculitis, Central Nervous System	1.0	semapv:LexicalMatching	leonmap	cosine=0.885596; known_target=mesh:C535276, mesh:C537295
+mondo:0015726	distal trisomy 14q	skos:exactMatch	mesh:C538032	Chromosome 14q, proximal duplication	0.94918168	semapv:SemanticSimilarity	leonmap	known_target=mesh:C538034
+mondo:0016011	fetal alcohol syndrome	skos:broadMatch	mesh:D063647	Fetal Alcohol Spectrum Disorders	1.0	semapv:LexicalMatching	leonmap	cosine=0.911911; known_target=mesh:D005310
+mondo:0016516	Kenny-Caffey syndrome	skos:broadMatch	mesh:C537021	Kenny-Caffey syndrome, Type 1	1.0	semapv:LexicalMatching	leonmap	cosine=0.682870; known_target=mesh:C537020
+mondo:0016824	infantile myofibromatosis	skos:broadMatch	mesh:C562978	Fibromatosis, Congenital Generalized	1.0	semapv:LexicalMatching	leonmap	cosine=0.780732; known_target=mesh:D018224
+mondo:0016968	partial trisomy of the long arm of chromosome 18	skos:exactMatch	mesh:C536580	Chromosome 18 deletion syndrome	0.92921257	semapv:SemanticSimilarity	leonmap	known_target=mesh:C538308
+mondo:0017454	triphalangeal thumb-polysyndactyly syndrome	skos:broadMatch	mesh:C536311	Patterson Stevenson syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.840467; known_target=mesh:C536563
+mondo:0017827	malignant peripheral nerve sheath tumor	skos:broadMatch	mesh:D018319	Neurofibrosarcoma	1.0	semapv:LexicalMatching	leonmap	cosine=0.859869; known_target=mesh:D009442
+mondo:0017850	sirenomelia	skos:broadMatch	mesh:D004480	Ectromelia	1.0	semapv:LexicalMatching	leonmap	cosine=0.800091; known_target=mesh:C538595
+mondo:0017858	acute erythroid leukemia	skos:exactMatch	mesh:C535673	Acute erythroleukemia	0.92962122	semapv:SemanticSimilarity	leonmap	known_target=mesh:D004915
+mondo:0017884	papillary renal cell carcinoma	skos:broadMatch	mesh:D002292	Carcinoma, Renal Cell	1.0	semapv:LexicalMatching	leonmap	cosine=0.783332; known_target=mesh:C538614
+mondo:0018068	trisomy 13	skos:broadMatch	mesh:D000073839	Trisomy 13 Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.865791; known_target=mesh:C536305
+mondo:0018071	trisomy 18	skos:broadMatch	mesh:D000073842	Trisomy 18 Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.861811; known_target=mesh:C580500
+mondo:0018879	lichen planopilaris	skos:broadMatch	mesh:D008010	Lichen Planus	1.0	semapv:LexicalMatching	leonmap	cosine=0.872103; known_target=mesh:C535892
+mondo:0018923	22q11.2 deletion syndrome	skos:broadMatch	mesh:D004062	DiGeorge Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.834595; known_target=mesh:D058165
+mondo:0019165	central precocious puberty	skos:broadMatch	mesh:D011629	Puberty, Precocious	1.0	semapv:LexicalMatching	leonmap	cosine=0.852033; known_target=mesh:C562787
+mondo:0019181	non-syndromic X-linked intellectual disability	skos:exactMatch	mesh:D038901	X-Linked Intellectual Disability	0.91506255	semapv:SemanticSimilarity	leonmap	known_target=mesh:C564490
+mondo:0019260	adult neuronal ceroid lipofuscinosis	skos:broadMatch	mesh:D009472	Neuronal Ceroid-Lipofuscinoses	1.0	semapv:LexicalMatching	leonmap	cosine=0.831126; known_target=mesh:C537950
+mondo:0019261	infantile neuronal ceroid lipofuscinosis	skos:broadMatch	mesh:D009472	Neuronal Ceroid-Lipofuscinoses	1.0	semapv:LexicalMatching	leonmap	cosine=0.791316; known_target=mesh:C537948
+mondo:0019360	rickettsialpox	skos:broadMatch	mesh:D000073605	Spotted Fever Group Rickettsiosis	1.0	semapv:LexicalMatching	leonmap	cosine=0.609107; known_target=mesh:D012288
+mondo:0019438	AL amyloidosis	skos:broadMatch	mesh:D000075363	Immunoglobulin Light-chain Amyloidosis	1.0	semapv:LexicalMatching	leonmap	cosine=0.885586; known_target=mesh:C531616
+mondo:0019516	exudative vitreoretinopathy	skos:exactMatch	mesh:C536382	Exudative vitreoretinopathy 1	0.92965513	semapv:SemanticSimilarity	leonmap	known_target=mesh:C580083
+mondo:0019533	paroxysmal cold hemoglobinuria	skos:broadMatch	mesh:D006457	Hemoglobinuria, Paroxysmal	1.0	semapv:LexicalMatching	leonmap	cosine=0.873290; known_target=mesh:C538618
+mondo:0019565	hereditary von Willebrand disease	skos:exactMatch	mesh:D056728	von Willebrand Disease, Type 2	0.92433137	semapv:SemanticSimilarity	leonmap	known_target=mesh:C531844
+mondo:0019810	toxic epidermal necrolysis	skos:broadMatch	mesh:D013262	Stevens-Johnson Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.744786; known_target=mesh:D004816
+mondo:0019938	anorectal malformation	skos:broadMatch	mesh:D000071056	Anorectal Malformations	1.0	semapv:LexicalMatching	leonmap	cosine=0.770657; known_target=mesh:C537771
+mondo:0019982	bilateral multicystic dysplastic kidney	skos:exactMatch	mesh:D021782	Multicystic Dysplastic Kidney	0.91829467	semapv:SemanticSimilarity	leonmap	known_target=mesh:C537373
+mondo:0020297	Noonan syndrome and Noonan-related syndrome	skos:exactMatch	mesh:C564342	Noonan-Like Syndrome With Loose Anagen Hair	0.91919065	semapv:SemanticSimilarity	leonmap	known_target=mesh:C537846
+mondo:0020496	familial porencephaly	skos:broadMatch	mesh:D065708	Porencephaly	1.0	semapv:LexicalMatching	leonmap	cosine=0.653835; known_target=mesh:C536850
+mondo:0021020	Crigler-Najjar syndrome type 1	skos:broadMatch	mesh:D003414	Crigler-Najjar Syndrome	1.0	semapv:LexicalMatching	leonmap	cosine=0.900587; known_target=mesh:C536212
+mondo:0021223	digestive system neoplasm	skos:broadMatch	mesh:D004067	Digestive System Neoplasms	1.0	semapv:LexicalMatching	leonmap	cosine=0.901937; known_target=mesh:D005770
+mondo:0021548	total early-onset cataract	skos:exactMatch	mesh:C535338	Cataract, congenital, with microcornea or slight microphthalmia	0.91555619	semapv:SemanticSimilarity	leonmap	known_target=mesh:C535341
+mondo:0023283	ovarian granulosa cell tumor	skos:exactMatch	mesh:D006106	Granulosa Cell Tumor	0.90603352	semapv:SemanticSimilarity	leonmap	known_target=mesh:C537296
+mondo:0023601	non-classic congenital adrenal hyperplasia	skos:broadMatch	mesh:C535979	Congenital adrenal hyperplasia due to 21 hydroxylase deficiency	1.0	semapv:LexicalMatching	leonmap	cosine=0.861541; known_target=mesh:C537877
+mondo:0023607	Laurence-Prosser-Rocker syndrome	skos:exactMatch	mesh:C565517	Hirschsprung Disease with Ulnar Polydactyly, Polysyndactyly of Big Toes, and Ventricular Septal Defect	0.9093504	semapv:SemanticSimilarity	leonmap	known_target=mesh:C537882
+mondo:0023757	meralgia paresthetica	skos:broadMatch	mesh:D020428	Femoral Neuropathy	1.0	semapv:LexicalMatching	leonmap	cosine=0.796987; known_target=mesh:C537458
+mondo:0024457	neurodegeneration with brain iron accumulation 2A	skos:broadMatch	mesh:D019150	Neuroaxonal Dystrophies	1.0	semapv:LexicalMatching	leonmap	cosine=0.749859; known_target=mesh:C536071
+mondo:0024538	basal ganglia calcification, idiopathic, 1	skos:broadMatch	mesh:C536275	Fahr's disease	1.0	semapv:LexicalMatching	leonmap	cosine=0.905332; known_target=mesh:C537657
+mondo:0024614	neurotic depression	skos:broadMatch	mesh:D003866	Depressive Disorder	1.0	semapv:LexicalMatching	leonmap	cosine=0.811169; known_target=mesh:D009497
+mondo:0024686	tenosynovial giant cell tumor, diffuse type	skos:exactMatch	mesh:D000070779	Giant Cell Tumor of Tendon Sheath	0.92223489	semapv:SemanticSimilarity	leonmap	known_target=mesh:D013586
+mondo:0040501	Ehlers-Danlos syndrome, arthrochalasia type, 2	skos:exactMatch	mesh:C562625	Ehlers-Danlos Syndrome, Type VII, Autosomal Dominant	0.92129797	semapv:SemanticSimilarity	leonmap	known_target=mesh:C565061
+mondo:0100151	nephropathic cystinosis	skos:broadMatch	mesh:D003554	Cystinosis	1.0	semapv:LexicalMatching	leonmap	cosine=0.866433; known_target=mesh:C535335
+mondo:0100309	hereditary ataxia	skos:broadMatch	mesh:D013132	Spinocerebellar Degenerations	1.0	semapv:LexicalMatching	leonmap	cosine=0.823282; known_target=mesh:C531684
+mondo:0100511	sudden cardiac arrest	skos:broadMatch	mesh:D016757	Death, Sudden, Cardiac	1.0	semapv:LexicalMatching	leonmap	cosine=0.813646; known_target=mesh:C1720824
+mondo:0700081	newborn respiratory distress syndrome	skos:broadMatch	mesh:D012127	Respiratory Distress Syndrome, Newborn	1.0	semapv:LexicalMatching	leonmap	cosine=0.840254; known_target=mesh:D006819
+mondo:0800448	leukoencephalopathy with vanishing white matter	skos:broadMatch	mesh:D056784	Leukoencephalopathies	1.0	semapv:LexicalMatching	leonmap	cosine=0.903494; known_target=mesh:C537420
+mondo:0800449	lysosomal acid lipase deficiency	skos:broadMatch	mesh:D015223	Wolman Disease	1.0	semapv:LexicalMatching	leonmap	cosine=0.811389; known_target=mesh:C531854
