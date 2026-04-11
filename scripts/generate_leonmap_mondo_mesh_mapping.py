@@ -20,6 +20,7 @@ import os
 import shutil
 import sys
 import urllib.request
+from collections import defaultdict
 from pathlib import Path
 
 import obonet
@@ -133,8 +134,10 @@ def _mapper_tsv_to_mapnet_df(mapper_tsv: Path) -> pl.DataFrame:
             })
     return pl.DataFrame(rows)
 
-def _load_obo_xrefs() -> pl.DataFrame:
+def _load_obo_xrefs() -> tuple[pl.DataFrame, dict[str, set[str]], dict[str, set[str]]]:
     records = []
+    mondo_to_mesh = defaultdict(set)
+    mesh_to_mondo = defaultdict(set)
     g = obonet.read_obo(MONDO_OBO_URL)
     for node in g:
         if not node.startswith("MONDO"):
@@ -142,20 +145,24 @@ def _load_obo_xrefs() -> pl.DataFrame:
         nd = g.nodes[node]
         if not nd:
             continue
+        mondo_id = f"mondo:{node.split(':')[1]}"
         for xref in nd.get("xref", []):
             if not xref.startswith("MESH"):
                 continue
             mid = xref.split(":")[1]
+            mesh_id = f"mesh:{mid}"
+            mondo_to_mesh[mondo_id].add(mesh_id)
+            mesh_to_mondo[mesh_id].add(mondo_id)
             records.append({
-                "source identifier": f"mondo:{node.split(':')[1]}",
+                "source identifier": mondo_id,
                 "source name": nd.get("name", ""),
                 "source prefix": "mondo",
-                "target identifier": f"mesh:{mid}",
+                "target identifier": mesh_id,
                 "target name": mesh_client.get_mesh_name(mid, offline=True) or "",
                 "target prefix": "mesh",
             })
     print(f"  {len(records)} MONDO->MeSH xrefs from OBO")
-    return pl.DataFrame(records)
+    return pl.DataFrame(records), dict(mondo_to_mesh), dict(mesh_to_mondo)
 
 
 def _load_biomappings_sssom() -> pl.DataFrame:
@@ -209,19 +216,57 @@ def _write_sssom(df: pl.DataFrame, out_path: Path, mapping_set_id: str) -> None:
     print(f"Wrote {len(rows)} mappings -> {out_path}")
 
 
+def _filter_novel(novel: pl.DataFrame, mondo_to_mesh: dict[str, set[str]], mesh_to_mondo: dict[str, set[str]]) -> tuple[pl.DataFrame, pl.DataFrame]:
+    truly_novel_rows, false_novel_rows = [], []
+    for r in novel.iter_rows(named=True):
+        src, tgt = r["source identifier"], r["target identifier"]
+        known_mesh = mondo_to_mesh.get(src, set())
+        known_mondo = mesh_to_mondo.get(tgt, set())
+        if not known_mesh and not known_mondo:
+            truly_novel_rows.append(r)
+        else:
+            reason = []
+            if known_mesh: reason.append(f"mondo_maps_to:{','.join(sorted(known_mesh))}")
+            if known_mondo: reason.append(f"mesh_maps_to:{','.join(sorted(known_mondo))}")
+            r_aug = dict(r)
+            r_aug["predicted identifier"] = tgt
+            r_aug["predicted name"] = r["target name"]
+            r_aug["true identifier"] = " | ".join(reason)
+            r_aug["true name"] = ""
+            false_novel_rows.append(r_aug)
+    truly_novel = pl.DataFrame(truly_novel_rows) if truly_novel_rows else pl.DataFrame()
+    false_novel = pl.DataFrame(false_novel_rows) if false_novel_rows else pl.DataFrame()
+    return truly_novel, false_novel
+
+
 def classify_mappings(predictions_df: pl.DataFrame, output_dir: Path, check_semra: bool = False, export_all: bool = True) -> None:
-    evidence = _load_obo_xrefs()
-    evidence = evidence.vstack(_load_biomappings_sssom())
+    evidence, mondo_to_mesh, mesh_to_mondo = _load_obo_xrefs()
+    bio_evidence = _load_biomappings_sssom()
+    for r in bio_evidence.iter_rows(named=True):
+        s, t = r["source identifier"], r["target identifier"]
+        if s.startswith("mondo:") and t.startswith("mesh:"):
+            mondo_to_mesh.setdefault(s, set()).add(t)
+            mesh_to_mondo.setdefault(t, set()).add(s)
+    evidence = evidence.vstack(bio_evidence)
 
     if check_semra:
         semra_df = load_semera_landscape_df(
             landscape_name="disease", resources={"mondo": {}, "mesh": {}},
             additional_namespaces={"mondo": "mondo", "mesh": "mesh"}, sssom=False)
         predictions_df = repair_names_with_semra(predictions_df, semra_df)
+        for r in semra_df.iter_rows(named=True):
+            s, t = r["source identifier"], r["target identifier"]
+            if s.startswith("mondo:") and t.startswith("mesh:"):
+                mondo_to_mesh.setdefault(s, set()).add(t)
+                mesh_to_mondo.setdefault(t, set()).add(s)
+            elif s.startswith("mesh:") and t.startswith("mondo:"):
+                mondo_to_mesh.setdefault(t, set()).add(s)
+                mesh_to_mondo.setdefault(s, set()).add(t)
         evidence = evidence.vstack(semra_df)
 
     evidence = make_undirected(evidence.unique())
     print(f"  {len(evidence)} total evidence pairs (undirected)")
+    print(f"  {len(mondo_to_mesh)} MONDO with MeSH, {len(mesh_to_mondo)} MeSH with MONDO")
 
     no_name = predictions_df.filter(
         (pl.col("source name").eq("NO_NAME_FOUND")) |
@@ -250,11 +295,19 @@ def classify_mappings(predictions_df: pl.DataFrame, output_dir: Path, check_semr
     output_dir.mkdir(parents=True, exist_ok=True)
     base = f"leonmap_{STUDY}"
 
-    _write_sssom(novel, output_dir / f"{base}_novel.sssom.tsv", f"{base}_novel")
+    truly_novel, false_novel = _filter_novel(novel, mondo_to_mesh, mesh_to_mondo)
+    if len(false_novel) > 0 and len(wrong) > 0:
+        false_novel = false_novel.select(wrong.columns)
+        wrong = wrong.vstack(false_novel)
+    elif len(false_novel) > 0:
+        wrong = false_novel
+    print(f"  Post-hoc: {len(truly_novel)} truly novel, {len(false_novel)} reclassified to wrong")
+
+    _write_sssom(truly_novel, output_dir / f"{base}_novel.sssom.tsv", f"{base}_novel")
     if export_all:
         _write_sssom(right, output_dir / f"{base}_right.sssom.tsv", f"{base}_right")
         _write_sssom(wrong, output_dir / f"{base}_wrong.sssom.tsv", f"{base}_wrong")
-    print(f"Classification: {len(right)} right, {len(wrong)} wrong, {len(novel)} novel")
+    print(f"Classification: {len(right)} right, {len(wrong)} wrong, {len(truly_novel)} novel")
     print(f"Files -> {output_dir}/")
 
 
