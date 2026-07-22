@@ -1,8 +1,0 @@
-#curie_map:
-#  icd10: https://icd.who.int/browse10/2019/en#/
-#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=
-#  skos: http://www.w3.org/2004/02/skos/core#
-#  semapv: https://w3id.org/semapv/vocab/
-#mapping_set_id: gilda_icd10_mesh_wrong
-#mapping_tool: gilda
-
