@@ -1,0 +1,266 @@
+#curie_map:
+#  icd10: https://icd.who.int/browse10/2019/en#/
+#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=
+#  skos: http://www.w3.org/2004/02/skos/core#
+#  semapv: https://w3id.org/semapv/vocab/
+#mapping_set_id: leonmap_icd10_mesh_full_wrong
+#mapping_tool: leonmap
+subject_id	subject_label	predicate_id	object_id	object_label	confidence	mapping_justification	mapping_tool	comment
+icd10:D12.4	Descending colon	skos:exactMatch	mesh:D044683	Colon, Descending	1.0	semapv:LexicalMatching	leonmap	cosine=0.911914
+icd10:Y44.2	Anticoagulants	skos:exactMatch	mesh:D000925	Anticoagulants	1.0	semapv:LexicalMatching	leonmap	cosine=0.898654
+icd10:Y40.4	Tetracyclines	skos:exactMatch	mesh:D013754	Tetracyclines	1.0	semapv:LexicalMatching	leonmap	cosine=0.895895
+icd10:Y47.1	Benzodiazepines	skos:exactMatch	mesh:D001569	Benzodiazepines	1.0	semapv:LexicalMatching	leonmap	cosine=0.886375
+icd10:C18.7	Sigmoid colon	skos:exactMatch	mesh:D012809	Colon, Sigmoid	1.0	semapv:LexicalMatching	leonmap	cosine=0.880131
+icd10:D01.2	Rectum	skos:exactMatch	mesh:D012007	Rectum	1.0	semapv:LexicalMatching	leonmap	cosine=0.840811
+icd10:D12.8	Rectum	skos:exactMatch	mesh:D012007	Rectum	1.0	semapv:LexicalMatching	leonmap	cosine=0.840811
+icd10:Q43.0	Meckel diverticulum	skos:exactMatch	mesh:D008467	Meckel Diverticulum	1.0	semapv:LexicalMatching	leonmap	cosine=0.839574
+icd10:D14.2	Trachea	skos:exactMatch	mesh:D014132	Trachea	1.0	semapv:LexicalMatching	leonmap	cosine=0.832405
+icd10:Y45.1	Salicylates	skos:exactMatch	mesh:D012459	Salicylates	1.0	semapv:LexicalMatching	leonmap	cosine=0.827976
+icd10:D41.2	Ureter	skos:exactMatch	mesh:D014513	Ureter	1.0	semapv:LexicalMatching	leonmap	cosine=0.822862
+icd10:D29.4	Scrotum	skos:exactMatch	mesh:D012611	Scrotum	1.0	semapv:LexicalMatching	leonmap	cosine=0.818362
+icd10:Y40.6	Rifamycins	skos:exactMatch	mesh:D012294	Rifamycins	1.0	semapv:LexicalMatching	leonmap	cosine=0.817072
+icd10:D35.5	Carotid body	skos:exactMatch	mesh:D002344	Carotid Body	1.0	semapv:LexicalMatching	leonmap	cosine=0.816021
+icd10:D44.6	Carotid body	skos:exactMatch	mesh:D002344	Carotid Body	1.0	semapv:LexicalMatching	leonmap	cosine=0.816021
+icd10:D13.2	Duodenum	skos:exactMatch	mesh:D004386	Duodenum	1.0	semapv:LexicalMatching	leonmap	cosine=0.812927
+icd10:D35.4	Pineal gland	skos:exactMatch	mesh:D010870	Pineal Gland	1.0	semapv:LexicalMatching	leonmap	cosine=0.810150
+icd10:D44.5	Pineal gland	skos:exactMatch	mesh:D010870	Pineal Gland	1.0	semapv:LexicalMatching	leonmap	cosine=0.810150
+icd10:Y52.1	Calcium-channel blockers	skos:exactMatch	mesh:D002121	Calcium Channel Blockers	1.0	semapv:LexicalMatching	leonmap	cosine=0.808493
+icd10:D38.3	Mediastinum	skos:exactMatch	mesh:D008482	Mediastinum	1.0	semapv:LexicalMatching	leonmap	cosine=0.807671
+icd10:Y41.0	Sulfonamides	skos:exactMatch	mesh:D013449	Sulfonamides	1.0	semapv:LexicalMatching	leonmap	cosine=0.803904
+icd10:D40.1	Testis	skos:exactMatch	mesh:D013737	Testis	1.0	semapv:LexicalMatching	leonmap	cosine=0.803149
+icd10:Y56.1	Antipruritics	skos:exactMatch	mesh:D000982	Antipruritics	1.0	semapv:LexicalMatching	leonmap	cosine=0.792378
+icd10:D29.3	Epididymis	skos:exactMatch	mesh:D004822	Epididymis	1.0	semapv:LexicalMatching	leonmap	cosine=0.790994
+icd10:D38.2	Pleura	skos:exactMatch	mesh:D010994	Pleura	1.0	semapv:LexicalMatching	leonmap	cosine=0.790812
+icd10:H40	Glaucoma	skos:exactMatch	mesh:D005901	Glaucoma	1.0	semapv:LexicalMatching	leonmap	cosine=0.788415
+icd10:D48.4	Peritoneum	skos:exactMatch	mesh:D010537	Peritoneum	1.0	semapv:LexicalMatching	leonmap	cosine=0.784532
+icd10:Y40.0	Penicillins	skos:exactMatch	mesh:D010406	Penicillins	1.0	semapv:LexicalMatching	leonmap	cosine=0.781996
+icd10:D41.0	Kidney	skos:exactMatch	mesh:D007668	Kidney	1.0	semapv:LexicalMatching	leonmap	cosine=0.780540
+icd10:D31.0	Conjunctiva	skos:exactMatch	mesh:D003228	Conjunctiva	1.0	semapv:LexicalMatching	leonmap	cosine=0.778770
+icd10:D07.0	Endometrium	skos:exactMatch	mesh:D004717	Endometrium	1.0	semapv:LexicalMatching	leonmap	cosine=0.769983
+icd10:D31.4	Ciliary body	skos:exactMatch	mesh:D002924	Ciliary Body	1.0	semapv:LexicalMatching	leonmap	cosine=0.768545
+icd10:D31.1	Cornea	skos:exactMatch	mesh:D003315	Cornea	1.0	semapv:LexicalMatching	leonmap	cosine=0.767936
+icd10:Y40.3	Macrolides	skos:exactMatch	mesh:D018942	Macrolides	1.0	semapv:LexicalMatching	leonmap	cosine=0.759261
+icd10:Y42.4	Oral contraceptives	skos:exactMatch	mesh:D003276	Contraceptives, Oral	1.0	semapv:LexicalMatching	leonmap	cosine=0.757556
+icd10:D12.1	Appendix	skos:exactMatch	mesh:D001065	Appendix	1.0	semapv:LexicalMatching	leonmap	cosine=0.755210
+icd10:D37.3	Appendix	skos:exactMatch	mesh:D001065	Appendix	1.0	semapv:LexicalMatching	leonmap	cosine=0.755210
+icd10:Y40.5	Aminoglycosides	skos:exactMatch	mesh:D000617	Aminoglycosides	1.0	semapv:LexicalMatching	leonmap	cosine=0.754673
+icd10:D13.1	Stomach	skos:exactMatch	mesh:D013270	Stomach	1.0	semapv:LexicalMatching	leonmap	cosine=0.750263
+icd10:D37.1	Stomach	skos:exactMatch	mesh:D013270	Stomach	1.0	semapv:LexicalMatching	leonmap	cosine=0.750263
+icd10:D31.3	Choroid	skos:exactMatch	mesh:D002829	Choroid	1.0	semapv:LexicalMatching	leonmap	cosine=0.747955
+icd10:Y52.4	Angiotensin-converting-enzyme inhibitors	skos:exactMatch	mesh:D000806	Angiotensin-Converting Enzyme Inhibitors	1.0	semapv:LexicalMatching	leonmap	cosine=0.747248
+icd10:D31.2	Retina	skos:exactMatch	mesh:D012160	Retina	1.0	semapv:LexicalMatching	leonmap	cosine=0.736914
+icd10:Y53.7	Emetics	skos:exactMatch	mesh:D004639	Emetics	1.0	semapv:LexicalMatching	leonmap	cosine=0.733916
+icd10:D12.2	Ascending colon	skos:exactMatch	mesh:D044682	Colon, Ascending	1.0	semapv:LexicalMatching	leonmap	cosine=0.705186
+icd10:C38.0	Heart	skos:exactMatch	mesh:D006321	Heart	1.0	semapv:LexicalMatching	leonmap	cosine=0.701182
+icd10:D30.4	Urethra	skos:exactMatch	mesh:D014521	Urethra	1.0	semapv:LexicalMatching	leonmap	cosine=0.700318
+icd10:D41.3	Urethra	skos:exactMatch	mesh:D014521	Urethra	1.0	semapv:LexicalMatching	leonmap	cosine=0.700318
+icd10:D38.0	Larynx	skos:exactMatch	mesh:D007830	Larynx	1.0	semapv:LexicalMatching	leonmap	cosine=0.698265
+icd10:D07.2	Vagina	skos:exactMatch	mesh:D014621	Vagina	1.0	semapv:LexicalMatching	leonmap	cosine=0.689000
+icd10:D29.1	Prostate	skos:exactMatch	mesh:D011467	Prostate	1.0	semapv:LexicalMatching	leonmap	cosine=0.687608
+icd10:D40.0	Prostate	skos:exactMatch	mesh:D011467	Prostate	1.0	semapv:LexicalMatching	leonmap	cosine=0.687608
+icd10:C18.4	Transverse colon	skos:exactMatch	mesh:D044684	Colon, Transverse	1.0	semapv:LexicalMatching	leonmap	cosine=0.687419
+icd10:D14.1	Larynx	skos:exactMatch	mesh:D007830	Larynx	1.0	semapv:LexicalMatching	leonmap	cosine=0.672536
+icd10:D07.1	Vulva	skos:exactMatch	mesh:D014844	Vulva	1.0	semapv:LexicalMatching	leonmap	cosine=0.665556
+icd10:I98.0	Cardiovascular syphilis	skos:exactMatch	mesh:D013589	Syphilis, Cardiovascular	1.0	semapv:LexicalMatching	leonmap	cosine=0.662020
+icd10:D33.3	Cranial nerves	skos:exactMatch	mesh:D003391	Cranial Nerves	1.0	semapv:LexicalMatching	leonmap	cosine=0.659278
+icd10:D33.4	Spinal cord	skos:exactMatch	mesh:D013116	Spinal Cord	1.0	semapv:LexicalMatching	leonmap	cosine=0.639881
+icd10:D43.4	Spinal cord	skos:exactMatch	mesh:D013116	Spinal Cord	1.0	semapv:LexicalMatching	leonmap	cosine=0.639881
+icd10:Y55.4	Expectorants	skos:exactMatch	mesh:D005100	Expectorants	1.0	semapv:LexicalMatching	leonmap	cosine=0.633680
+icd10:D07.4	Penis	skos:exactMatch	mesh:D010413	Penis	1.0	semapv:LexicalMatching	leonmap	cosine=0.620262
+icd10:D35.2	Pituitary gland	skos:exactMatch	mesh:D010902	Pituitary Gland	1.0	semapv:LexicalMatching	leonmap	cosine=0.606218
+icd10:D44.3	Pituitary gland	skos:exactMatch	mesh:D010902	Pituitary Gland	1.0	semapv:LexicalMatching	leonmap	cosine=0.606218
+icd10:E26.0	Primary hyperaldosteronism	skos:closeMatch	mesh:D006929	Hyperaldosteronism	1.0	semapv:LexicalMatching	leonmap	cosine=0.932302
+icd10:K46	Unspecified abdominal hernia	skos:closeMatch	mesh:D006547	Hernia	1.0	semapv:LexicalMatching	leonmap	cosine=0.932251
+icd10:C24.0	Extrahepatic bile duct	skos:closeMatch	mesh:D017734	Bile Ducts, Extrahepatic	1.0	semapv:LexicalMatching	leonmap	cosine=0.918864
+icd10:P02.7	Fetus and newborn affected by chorioamnionitis	skos:closeMatch	mesh:D002821	Chorioamnionitis	1.0	semapv:LexicalMatching	leonmap	cosine=0.916201
+icd10:D16.6	Vertebral column	skos:closeMatch	mesh:D013131	Spine	1.0	semapv:LexicalMatching	leonmap	cosine=0.889556
+icd10:Y44.1	Vitamin B	skos:closeMatch	mesh:D014803	Vitamin B Complex	1.0	semapv:LexicalMatching	leonmap	cosine=0.872913
+icd10:D51	Vitamin B	skos:closeMatch	mesh:D014803	Vitamin B Complex	1.0	semapv:LexicalMatching	leonmap	cosine=0.870128
+icd10:I50.0	Congestive heart failure	skos:closeMatch	mesh:D006333	Heart Failure	1.0	semapv:LexicalMatching	leonmap	cosine=0.850648
+icd10:L12	Pemphigoid	skos:closeMatch	mesh:D010391	Pemphigoid, Bullous	1.0	semapv:LexicalMatching	leonmap	cosine=0.846061
+icd10:L10.2	Pemphigus foliaceus	skos:closeMatch	mesh:D010392	Pemphigus	1.0	semapv:LexicalMatching	leonmap	cosine=0.840185
+icd10:J43.2	Centrilobular emphysema	skos:closeMatch	mesh:D011656	Pulmonary Emphysema	1.0	semapv:LexicalMatching	leonmap	cosine=0.838832
+icd10:Y42.2	Antithyroid drugs	skos:closeMatch	mesh:D013956	Antithyroid Agents	1.0	semapv:LexicalMatching	leonmap	cosine=0.835784
+icd10:A68.1	Tick-borne relapsing fever	skos:closeMatch	mesh:D012061	Relapsing Fever	1.0	semapv:LexicalMatching	leonmap	cosine=0.834360
+icd10:B47.0	Eumycetoma	skos:closeMatch	mesh:D008271	Mycetoma	1.0	semapv:LexicalMatching	leonmap	cosine=0.834210
+icd10:A68	Relapsing fevers	skos:closeMatch	mesh:D012061	Relapsing Fever	1.0	semapv:LexicalMatching	leonmap	cosine=0.826589
+icd10:F45.0	Somatization disorder	skos:closeMatch	mesh:D013001	Somatoform Disorders	1.0	semapv:LexicalMatching	leonmap	cosine=0.826035
+icd10:F01.2	Subcortical vascular dementia	skos:closeMatch	mesh:D015140	Dementia, Vascular	1.0	semapv:LexicalMatching	leonmap	cosine=0.824897
+icd10:K60.3	Anal fistula	skos:closeMatch	mesh:D012003	Rectal Fistula	1.0	semapv:LexicalMatching	leonmap	cosine=0.821794
+icd10:D44.1	Adrenal gland	skos:closeMatch	mesh:D000311	Adrenal Glands	1.0	semapv:LexicalMatching	leonmap	cosine=0.818346
+icd10:A48.3	Toxic shock syndrome	skos:closeMatch	mesh:D012772	Shock, Septic	1.0	semapv:LexicalMatching	leonmap	cosine=0.817563
+icd10:L10.0	Pemphigus vulgaris	skos:closeMatch	mesh:D010392	Pemphigus	1.0	semapv:LexicalMatching	leonmap	cosine=0.816902
+icd10:L66.1	Lichen planopilaris	skos:closeMatch	mesh:D008010	Lichen Planus	1.0	semapv:LexicalMatching	leonmap	cosine=0.816257
+icd10:Q60.3	Renal hypoplasia, unilateral	skos:closeMatch	mesh:D000075529	Solitary Kidney	1.0	semapv:LexicalMatching	leonmap	cosine=0.814205
+icd10:F95.1	Chronic motor or vocal tic disorder	skos:closeMatch	mesh:D013981	Tic Disorders	1.0	semapv:LexicalMatching	leonmap	cosine=0.813682
+icd10:Y55.3	Antitussives	skos:closeMatch	mesh:D000996	Antitussive Agents	1.0	semapv:LexicalMatching	leonmap	cosine=0.807995
+icd10:G41.2	Complex partial status epilepticus	skos:closeMatch	mesh:D013226	Status Epilepticus	1.0	semapv:LexicalMatching	leonmap	cosine=0.805533
+icd10:G24.3	Spasmodic torticollis	skos:closeMatch	mesh:D014103	Torticollis	1.0	semapv:LexicalMatching	leonmap	cosine=0.802567
+icd10:D35.1	Parathyroid gland	skos:closeMatch	mesh:D010280	Parathyroid Glands	1.0	semapv:LexicalMatching	leonmap	cosine=0.801002
+icd10:D44.2	Parathyroid gland	skos:closeMatch	mesh:D010280	Parathyroid Glands	1.0	semapv:LexicalMatching	leonmap	cosine=0.801002
+icd10:C18.3	Hepatic flexure	skos:closeMatch	mesh:D044682	Colon, Ascending	1.0	semapv:LexicalMatching	leonmap	cosine=0.799025
+icd10:C00-C97	Malignant neoplasms	skos:closeMatch	mesh:D009369	Neoplasms	1.0	semapv:LexicalMatching	leonmap	cosine=0.797872
+icd10:R45.6	Physical violence	skos:closeMatch	mesh:D000066550	Physical Abuse	1.0	semapv:LexicalMatching	leonmap	cosine=0.795695
+icd10:C50	Malignant neoplasm of breast	skos:closeMatch	mesh:D001943	Breast Neoplasms	1.0	semapv:LexicalMatching	leonmap	cosine=0.792432
+icd10:M08.0	Juvenile rheumatoid arthritis	skos:closeMatch	mesh:D001171	Arthritis, Juvenile	1.0	semapv:LexicalMatching	leonmap	cosine=0.790042
+icd10:D41.1	Renal pelvis	skos:closeMatch	mesh:D007682	Kidney Pelvis	1.0	semapv:LexicalMatching	leonmap	cosine=0.784660
+icd10:J67.5	Mushroom-worker lung	skos:closeMatch	mesh:D005203	Farmer's Lung	1.0	semapv:LexicalMatching	leonmap	cosine=0.781914
+icd10:B35.4	Tinea corporis	skos:closeMatch	mesh:D014005	Tinea	1.0	semapv:LexicalMatching	leonmap	cosine=0.780551
+icd10:G41.0	Grand mal status epilepticus	skos:closeMatch	mesh:D013226	Status Epilepticus	1.0	semapv:LexicalMatching	leonmap	cosine=0.780517
+icd10:E20.0	Idiopathic hypoparathyroidism	skos:closeMatch	mesh:D007011	Hypoparathyroidism	1.0	semapv:LexicalMatching	leonmap	cosine=0.779697
+icd10:A43	Nocardiosis	skos:closeMatch	mesh:D009617	Nocardia Infections	1.0	semapv:LexicalMatching	leonmap	cosine=0.777691
+icd10:Y41.5	Antiviral drugs	skos:closeMatch	mesh:D000998	Antiviral Agents	1.0	semapv:LexicalMatching	leonmap	cosine=0.776802
+icd10:K74.4	Secondary biliary cirrhosis	skos:closeMatch	mesh:D008105	Liver Cirrhosis, Biliary	1.0	semapv:LexicalMatching	leonmap	cosine=0.765413
+icd10:A25	Rat-bite fevers	skos:closeMatch	mesh:D011906	Rat-Bite Fever	1.0	semapv:LexicalMatching	leonmap	cosine=0.765099
+icd10:G81.0	Flaccid hemiplegia	skos:closeMatch	mesh:D006429	Hemiplegia	1.0	semapv:LexicalMatching	leonmap	cosine=0.763932
+icd10:Q70.4	Polysyndactyly	skos:closeMatch	mesh:D013576	Syndactyly	1.0	semapv:LexicalMatching	leonmap	cosine=0.757429
+icd10:G11.2	Late-onset cerebellar ataxia	skos:closeMatch	mesh:D013132	Spinocerebellar Degenerations	1.0	semapv:LexicalMatching	leonmap	cosine=0.755539
+icd10:F95.0	Transient tic disorder	skos:closeMatch	mesh:D013981	Tic Disorders	1.0	semapv:LexicalMatching	leonmap	cosine=0.755345
+icd10:Y51.0	Anticholinesterase agents	skos:closeMatch	mesh:D002800	Cholinesterase Inhibitors	1.0	semapv:LexicalMatching	leonmap	cosine=0.753509
+icd10:D38.4	Thymus	skos:closeMatch	mesh:D013950	Thymus Gland	1.0	semapv:LexicalMatching	leonmap	cosine=0.747366
+icd10:D30.3	Bladder	skos:closeMatch	mesh:D001743	Urinary Bladder	1.0	semapv:LexicalMatching	leonmap	cosine=0.747301
+icd10:D41.4	Bladder	skos:closeMatch	mesh:D001743	Urinary Bladder	1.0	semapv:LexicalMatching	leonmap	cosine=0.747301
+icd10:B36.3	Black piedra	skos:closeMatch	mesh:D010854	Piedra	1.0	semapv:LexicalMatching	leonmap	cosine=0.745404
+icd10:I48.0	Paroxysmal atrial fibrillation	skos:closeMatch	mesh:D001281	Atrial Fibrillation	1.0	semapv:LexicalMatching	leonmap	cosine=0.742392
+icd10:Q01.2	Occipital encephalocele	skos:closeMatch	mesh:D004677	Encephalocele	1.0	semapv:LexicalMatching	leonmap	cosine=0.739354
+icd10:A20.2	Pneumonic plague	skos:closeMatch	mesh:D010930	Plague	1.0	semapv:LexicalMatching	leonmap	cosine=0.735077
+icd10:C18.5	Splenic flexure	skos:closeMatch	mesh:D044684	Colon, Transverse	1.0	semapv:LexicalMatching	leonmap	cosine=0.732039
+icd10:H15.1	Episcleritis	skos:closeMatch	mesh:D015423	Scleritis	1.0	semapv:LexicalMatching	leonmap	cosine=0.729467
+icd10:L70	Acne	skos:closeMatch	mesh:D000152	Acne Vulgaris	1.0	semapv:LexicalMatching	leonmap	cosine=0.729168
+icd10:B47.1	Actinomycetoma	skos:closeMatch	mesh:D008271	Mycetoma	1.0	semapv:LexicalMatching	leonmap	cosine=0.720334
+icd10:G11	Hereditary ataxia	skos:closeMatch	mesh:D013132	Spinocerebellar Degenerations	1.0	semapv:LexicalMatching	leonmap	cosine=0.719688
+icd10:F30.0	Hypomania	skos:closeMatch	mesh:D000087122	Mania	1.0	semapv:LexicalMatching	leonmap	cosine=0.718179
+icd10:M33	Dermatopolymyositis	skos:closeMatch	mesh:D003882	Dermatomyositis	1.0	semapv:LexicalMatching	leonmap	cosine=0.717195
+icd10:C60.1	Glans penis	skos:closeMatch	mesh:D010413	Penis	1.0	semapv:LexicalMatching	leonmap	cosine=0.715948
+icd10:H50.6	Mechanical strabismus	skos:closeMatch	mesh:D013285	Strabismus	1.0	semapv:LexicalMatching	leonmap	cosine=0.715021
+icd10:D10-D36	Benign neoplasms	skos:closeMatch	mesh:D009369	Neoplasms	1.0	semapv:LexicalMatching	leonmap	cosine=0.714037
+icd10:L41.1	Pityriasis lichenoides chronica	skos:closeMatch	mesh:D017514	Pityriasis Lichenoides	1.0	semapv:LexicalMatching	leonmap	cosine=0.713425
+icd10:R44.1	Visual hallucinations	skos:closeMatch	mesh:D006212	Hallucinations	1.0	semapv:LexicalMatching	leonmap	cosine=0.708479
+icd10:A20.0	Bubonic plague	skos:closeMatch	mesh:D010930	Plague	1.0	semapv:LexicalMatching	leonmap	cosine=0.707938
+icd10:C81.4	Lymphocyte-rich (classical) Hodgkin lymphoma	skos:closeMatch	mesh:D006689	Hodgkin Disease	1.0	semapv:LexicalMatching	leonmap	cosine=0.697733
+icd10:Q60.6	Potter syndrome	skos:closeMatch	mesh:C536482	Hereditary renal agenesis	1.0	semapv:LexicalMatching	leonmap	cosine=0.696391
+icd10:G82.4	Spastic tetraplegia	skos:closeMatch	mesh:D011782	Quadriplegia	1.0	semapv:LexicalMatching	leonmap	cosine=0.691004
+icd10:D51.0	Vitamin B	skos:closeMatch	mesh:D014803	Vitamin B Complex	1.0	semapv:LexicalMatching	leonmap	cosine=0.687346
+icd10:G91.1	Obstructive hydrocephalus	skos:closeMatch	mesh:D006849	Hydrocephalus	1.0	semapv:LexicalMatching	leonmap	cosine=0.685231
+icd10:G80.3	Dyskinetic cerebral palsy	skos:closeMatch	mesh:D002547	Cerebral Palsy	1.0	semapv:LexicalMatching	leonmap	cosine=0.683091
+icd10:G81.1	Spastic hemiplegia	skos:closeMatch	mesh:D006429	Hemiplegia	1.0	semapv:LexicalMatching	leonmap	cosine=0.682712
+icd10:Q01.0	Frontal encephalocele	skos:closeMatch	mesh:D004677	Encephalocele	1.0	semapv:LexicalMatching	leonmap	cosine=0.678854
+icd10:L40.3	Pustulosis palmaris et plantaris	skos:closeMatch	mesh:D011565	Psoriasis	1.0	semapv:LexicalMatching	leonmap	cosine=0.675903
+icd10:C57.3	Parametrium	skos:closeMatch	mesh:D010537	Peritoneum	1.0	semapv:LexicalMatching	leonmap	cosine=0.671907
+icd10:G82.1	Spastic paraplegia	skos:closeMatch	mesh:D010264	Paraplegia	1.0	semapv:LexicalMatching	leonmap	cosine=0.669959
+icd10:Q75.3	Macrocephaly	skos:closeMatch	mesh:D058627	Megalencephaly	1.0	semapv:LexicalMatching	leonmap	cosine=0.667720
+icd10:A52.2	Asymptomatic neurosyphilis	skos:closeMatch	mesh:D009494	Neurosyphilis	1.0	semapv:LexicalMatching	leonmap	cosine=0.666843
+icd10:D13.7	Endocrine pancreas	skos:closeMatch	mesh:D007515	Islets of Langerhans	1.0	semapv:LexicalMatching	leonmap	cosine=0.666410
+icd10:Q03	Congenital hydrocephalus	skos:closeMatch	mesh:D006849	Hydrocephalus	1.0	semapv:LexicalMatching	leonmap	cosine=0.664955
+icd10:G91.0	Communicating hydrocephalus	skos:closeMatch	mesh:D006849	Hydrocephalus	1.0	semapv:LexicalMatching	leonmap	cosine=0.653434
+icd10:Y53.5	Digestants	skos:closeMatch	mesh:D005765	Gastrointestinal Agents	1.0	semapv:LexicalMatching	leonmap	cosine=0.651840
+icd10:G63.2	Diabetic polyneuropathy	skos:closeMatch	mesh:D003929	Diabetic Neuropathies	1.0	semapv:LexicalMatching	leonmap	cosine=0.637946
+icd10:C81	Hodgkin lymphoma	skos:closeMatch	mesh:D006689	Hodgkin Disease	1.0	semapv:LexicalMatching	leonmap	cosine=0.635946
+icd10:C53.0	Endocervix	skos:closeMatch	mesh:D002584	Cervix Uteri	1.0	semapv:LexicalMatching	leonmap	cosine=0.628990
+icd10:D06.0	Endocervix	skos:closeMatch	mesh:D002584	Cervix Uteri	1.0	semapv:LexicalMatching	leonmap	cosine=0.628990
+icd10:F22.0	Delusional disorder	skos:closeMatch	mesh:D012563	Schizophrenia, Paranoid	1.0	semapv:LexicalMatching	leonmap	cosine=0.596782
+icd10:D51.1	Vitamin B	skos:closeMatch	mesh:D014803	Vitamin B Complex	1.0	semapv:LexicalMatching	leonmap	cosine=0.587202
+icd10:G43.2	Status migrainosus	skos:closeMatch	mesh:D008881	Migraine Disorders	1.0	semapv:LexicalMatching	leonmap	cosine=0.585004
+icd10:G51.1	Geniculate ganglionitis	skos:closeMatch	mesh:D005155	Facial Nerve Diseases	1.0	semapv:LexicalMatching	leonmap	cosine=0.544259
+icd10:G51.4	Facial myokymia	skos:closeMatch	mesh:D005155	Facial Nerve Diseases	1.0	semapv:LexicalMatching	leonmap	cosine=0.522215
+icd10:Q06.2	Diastematomyelia	skos:closeMatch	mesh:D009436	Neural Tube Defects	1.0	semapv:LexicalMatching	leonmap	cosine=0.518427
+icd10:A22.9	Anthrax, unspecified	skos:closeMatch	mesh:C531621	Cutaneous anthrax	0.926122	semapv:SemanticSimilarity	leonmap	
+icd10:A44.9	Bartonellosis, unspecified	skos:closeMatch	mesh:D001476	Bartonellaceae Infections	0.919825	semapv:SemanticSimilarity	leonmap	
+icd10:A48	Other bacterial diseases, not elsewhere classified	skos:closeMatch	mesh:D001424	Bacterial Infections	0.917333	semapv:SemanticSimilarity	leonmap	
+icd10:A49	Bacterial infection of unspecified site	skos:closeMatch	mesh:D001424	Bacterial Infections	0.939407	semapv:SemanticSimilarity	leonmap	
+icd10:A49.8	Other bacterial infections of unspecified site	skos:closeMatch	mesh:D001424	Bacterial Infections	0.924714	semapv:SemanticSimilarity	leonmap	
+icd10:A52.9	Late syphilis, unspecified	skos:closeMatch	mesh:C536774	Syphilis, tertiary	0.903167	semapv:SemanticSimilarity	leonmap	
+icd10:A53.0	Latent syphilis, unspecified as early or late	skos:closeMatch	mesh:D013592	Syphilis, Latent	0.912303	semapv:SemanticSimilarity	leonmap	
+icd10:A53.9	Syphilis, unspecified	skos:closeMatch	mesh:C536773	Syphilis, secondary	0.911814	semapv:SemanticSimilarity	leonmap	
+icd10:A69.9	Spirochaetal infection, unspecified	skos:closeMatch	mesh:D013145	Spirochaetales Infections	0.915252	semapv:SemanticSimilarity	leonmap	
+icd10:A74.9	Chlamydial infection, unspecified	skos:closeMatch	mesh:D002690	Chlamydia Infections	0.900426	semapv:SemanticSimilarity	leonmap	
+icd10:A79.9	Rickettsiosis, unspecified	skos:closeMatch	mesh:D012282	Rickettsia Infections	0.947409	semapv:SemanticSimilarity	leonmap	
+icd10:B30.9	Viral conjunctivitis, unspecified	skos:closeMatch	mesh:D003236	Conjunctivitis, Viral	0.900887	semapv:SemanticSimilarity	leonmap	
+icd10:B33	Other viral diseases, not elsewhere classified	skos:closeMatch	mesh:D014777	Virus Diseases	0.913942	semapv:SemanticSimilarity	leonmap	
+icd10:B34	Viral infection of unspecified site	skos:closeMatch	mesh:D014777	Virus Diseases	0.907959	semapv:SemanticSimilarity	leonmap	
+icd10:B44.9	Aspergillosis, unspecified	skos:closeMatch	mesh:D001228	Aspergillosis	0.907959	semapv:SemanticSimilarity	leonmap	
+icd10:B81.8	Other specified intestinal helminthiases	skos:closeMatch	mesh:C531698	Intestinal helminthiasis	0.938526	semapv:SemanticSimilarity	leonmap	
+icd10:B82	Unspecified intestinal parasitism	skos:closeMatch	mesh:C531698	Intestinal helminthiasis	0.904117	semapv:SemanticSimilarity	leonmap	
+icd10:B82.0	Intestinal helminthiasis, unspecified	skos:closeMatch	mesh:C531698	Intestinal helminthiasis	0.986865	semapv:SemanticSimilarity	leonmap	
+icd10:B83	Other helminthiases	skos:closeMatch	mesh:C531698	Intestinal helminthiasis	0.926058	semapv:SemanticSimilarity	leonmap	
+icd10:B83.9	Helminthiasis, unspecified	skos:closeMatch	mesh:C531698	Intestinal helminthiasis	0.921375	semapv:SemanticSimilarity	leonmap	
+icd10:B85.1	Pediculosis due to Pediculus humanus corporis	skos:closeMatch	mesh:D010374	Pediculus	0.90276	semapv:SemanticSimilarity	leonmap	
+icd10:C46.7	Kaposi sarcoma of other sites	skos:closeMatch	mesh:C554497	Non-AIDS-related Kaposi sarcoma	0.931072	semapv:SemanticSimilarity	leonmap	
+icd10:C46.9	Kaposi sarcoma, unspecified	skos:closeMatch	mesh:C554497	Non-AIDS-related Kaposi sarcoma	0.940748	semapv:SemanticSimilarity	leonmap	
+icd10:D57.8	Other sickle-cell disorders	skos:closeMatch	mesh:D012805	Sickle Cell Trait	0.920989	semapv:SemanticSimilarity	leonmap	
+icd10:D81.2	Severe combined immunodeficiency [SCID] with low or normal B-cell numbers	skos:closeMatch	mesh:C537590	Severe combined immunodeficiency, atypical	0.901009	semapv:SemanticSimilarity	leonmap	
+icd10:E26.9	Hyperaldosteronism, unspecified	skos:closeMatch	mesh:C580087	Familial Hyperaldosteronism	0.960078	semapv:SemanticSimilarity	leonmap	
+icd10:E63	Other nutritional deficiencies	skos:closeMatch	mesh:D009748	Nutrition Disorders	0.918235	semapv:SemanticSimilarity	leonmap	
+icd10:E63.9	Nutritional deficiency, unspecified	skos:closeMatch	mesh:D009748	Nutrition Disorders	0.91261	semapv:SemanticSimilarity	leonmap	
+icd10:E76.3	Mucopolysaccharidosis, unspecified	skos:closeMatch	mesh:C562442	Mucopolysaccharidoses, Unclassified Types	0.952663	semapv:SemanticSimilarity	leonmap	
+icd10:E85.3	Secondary systemic amyloidosis	skos:closeMatch	mesh:C000718787	AA amyloidosis	0.916529	semapv:SemanticSimilarity	leonmap	
+icd10:E85.4	Organ-limited amyloidosis	skos:closeMatch	mesh:C000718787	AA amyloidosis	0.94471	semapv:SemanticSimilarity	leonmap	
+icd10:E85.8	Other amyloidosis	skos:closeMatch	mesh:C000718787	AA amyloidosis	0.900718	semapv:SemanticSimilarity	leonmap	
+icd10:E85.9	Amyloidosis, unspecified	skos:closeMatch	mesh:C562642	Amyloidosis, Primary Cutaneous	0.9226	semapv:SemanticSimilarity	leonmap	
+icd10:F05.1	Delirium superimposed on dementia	skos:closeMatch	mesh:D003693	Delirium	0.904342	semapv:SemanticSimilarity	leonmap	
+icd10:F10.9	Mental and behavioural disorders due to use of alcohol : unspecified mental and behavioural disorder	skos:closeMatch	mesh:D020751	Alcohol-Induced Disorders	0.915575	semapv:SemanticSimilarity	leonmap	
+icd10:F38	Other mood [affective] disorders	skos:closeMatch	mesh:D019964	Mood Disorders	0.912796	semapv:SemanticSimilarity	leonmap	
+icd10:F52.6	Nonorganic dyspareunia	skos:closeMatch	mesh:D004414	Dyspareunia	0.905524	semapv:SemanticSimilarity	leonmap	
+icd10:G01	Meningitis in bacterial diseases classified elsewhere	skos:closeMatch	mesh:D016920	Meningitis, Bacterial	0.918331	semapv:SemanticSimilarity	leonmap	
+icd10:G05	Encephalitis, myelitis and encephalomyelitis in diseases classified elsewhere	skos:closeMatch	mesh:D004679	Encephalomyelitis	0.921881	semapv:SemanticSimilarity	leonmap	
+icd10:G73.3	Myasthenic syndromes in other diseases classified elsewhere	skos:closeMatch	mesh:C563831	Myasthenic Syndrome, Congenital, Ie	0.903841	semapv:SemanticSimilarity	leonmap	
+icd10:H01.9	Inflammation of eyelid, unspecified	skos:closeMatch	mesh:D001762	Blepharitis	0.902433	semapv:SemanticSimilarity	leonmap	
+icd10:H02.9	Disorder of eyelid, unspecified	skos:closeMatch	mesh:D005141	Eyelid Diseases	0.907416	semapv:SemanticSimilarity	leonmap	
+icd10:H03	Disorders of eyelid in diseases classified elsewhere	skos:closeMatch	mesh:D005141	Eyelid Diseases	0.926474	semapv:SemanticSimilarity	leonmap	
+icd10:H13	Disorders of conjunctiva in diseases classified elsewhere	skos:closeMatch	mesh:D003229	Conjunctival Diseases	0.905097	semapv:SemanticSimilarity	leonmap	
+icd10:H26.9	Cataract, unspecified	skos:closeMatch	mesh:C563426	Cataract, Pulverulent	0.935521	semapv:SemanticSimilarity	leonmap	
+icd10:H35.8	Other specified retinal disorders	skos:closeMatch	mesh:D012164	Retinal Diseases	0.905051	semapv:SemanticSimilarity	leonmap	
+icd10:H35.9	Retinal disorder, unspecified	skos:closeMatch	mesh:D012164	Retinal Diseases	0.924715	semapv:SemanticSimilarity	leonmap	
+icd10:H36	Retinal disorders in diseases classified elsewhere	skos:closeMatch	mesh:D012164	Retinal Diseases	0.948494	semapv:SemanticSimilarity	leonmap	
+icd10:I51	Complications and ill-defined descriptions of heart disease	skos:closeMatch	mesh:D006331	Heart Diseases	0.911668	semapv:SemanticSimilarity	leonmap	
+icd10:I51.9	Heart disease, unspecified	skos:closeMatch	mesh:D006331	Heart Diseases	0.911982	semapv:SemanticSimilarity	leonmap	
+icd10:I52	Other heart disorders in diseases classified elsewhere	skos:closeMatch	mesh:D006331	Heart Diseases	0.916258	semapv:SemanticSimilarity	leonmap	
+icd10:I88.8	Other nonspecific lymphadenitis	skos:closeMatch	mesh:D008199	Lymphadenitis	0.924812	semapv:SemanticSimilarity	leonmap	
+icd10:I88.9	Nonspecific lymphadenitis, unspecified	skos:closeMatch	mesh:D008199	Lymphadenitis	0.937199	semapv:SemanticSimilarity	leonmap	
+icd10:J91	Pleural effusion in conditions classified elsewhere	skos:closeMatch	mesh:D010996	Pleural Effusion	0.932476	semapv:SemanticSimilarity	leonmap	
+icd10:J98	Other respiratory disorders	skos:closeMatch	mesh:D012120	Respiration Disorders	0.912954	semapv:SemanticSimilarity	leonmap	
+icd10:J98.3	Compensatory emphysema	skos:closeMatch	mesh:D004646	Emphysema	0.903223	semapv:SemanticSimilarity	leonmap	
+icd10:J98.8	Other specified respiratory disorders	skos:closeMatch	mesh:D012120	Respiration Disorders	0.905985	semapv:SemanticSimilarity	leonmap	
+icd10:J99	Respiratory disorders in diseases classified elsewhere	skos:closeMatch	mesh:D012120	Respiration Disorders	0.921045	semapv:SemanticSimilarity	leonmap	
+icd10:J99.8	Respiratory disorders in other diseases classified elsewhere	skos:closeMatch	mesh:D012120	Respiration Disorders	0.905448	semapv:SemanticSimilarity	leonmap	
+icd10:K35.8	Acute appendicitis, other and unspecified	skos:closeMatch	mesh:D001064	Appendicitis	0.93584	semapv:SemanticSimilarity	leonmap	
+icd10:K44.9	Diaphragmatic hernia without obstruction or gangrene	skos:closeMatch	mesh:D006548	Hernia, Diaphragmatic	0.918818	semapv:SemanticSimilarity	leonmap	
+icd10:K66	Other disorders of peritoneum	skos:closeMatch	mesh:D010532	Peritoneal Diseases	0.902066	semapv:SemanticSimilarity	leonmap	
+icd10:K83.9	Disease of biliary tract, unspecified	skos:closeMatch	mesh:D001660	Biliary Tract Diseases	0.913513	semapv:SemanticSimilarity	leonmap	
+icd10:L04.9	Acute lymphadenitis, unspecified	skos:closeMatch	mesh:D008199	Lymphadenitis	0.900501	semapv:SemanticSimilarity	leonmap	
+icd10:L12.9	Pemphigoid, unspecified	skos:closeMatch	mesh:C536645	Pemphigus vulgaris, familial	0.907252	semapv:SemanticSimilarity	leonmap	
+icd10:L20.9	Atopic dermatitis, unspecified	skos:closeMatch	mesh:C566404	Dermatitis, Atopic, 1	0.934271	semapv:SemanticSimilarity	leonmap	
+icd10:L68.9	Hypertrichosis, unspecified	skos:closeMatch	mesh:C565029	Facial Hypertrichosis	0.922445	semapv:SemanticSimilarity	leonmap	
+icd10:L98	Other disorders of skin and subcutaneous tissue, not elsewhere classified	skos:closeMatch	mesh:D012871	Skin Diseases	0.91379	semapv:SemanticSimilarity	leonmap	
+icd10:L99	Other disorders of skin and subcutaneous tissue in diseases classified elsewhere	skos:closeMatch	mesh:D012871	Skin Diseases	0.922829	semapv:SemanticSimilarity	leonmap	
+icd10:L99.0	Amyloidosis of skin	skos:closeMatch	mesh:C562642	Amyloidosis, Primary Cutaneous	0.927497	semapv:SemanticSimilarity	leonmap	
+icd10:L99.8	Other specified disorders of skin and subcutaneous tissue in diseases classified elsewhere	skos:closeMatch	mesh:D012871	Skin Diseases	0.913565	semapv:SemanticSimilarity	leonmap	
+icd10:M14	Arthropathies in other diseases classified elsewhere	skos:closeMatch	mesh:D007592	Joint Diseases	0.902258	semapv:SemanticSimilarity	leonmap	
+icd10:M25.9	Joint disorder, unspecified	skos:closeMatch	mesh:D007592	Joint Diseases	0.904817	semapv:SemanticSimilarity	leonmap	
+icd10:M46.9	Inflammatory spondylopathy, unspecified	skos:closeMatch	mesh:D013166	Spondylitis	0.908426	semapv:SemanticSimilarity	leonmap	
+icd10:M51.9	Intervertebral disc disorder, unspecified	skos:closeMatch	mesh:C535531	Intervertebral disc disease	0.935059	semapv:SemanticSimilarity	leonmap	
+icd10:M88.9	Paget disease of bone, unspecified	skos:closeMatch	mesh:C538098	Familial Paget's disease of bone	0.919522	semapv:SemanticSimilarity	leonmap	
+icd10:N04.9	Nephrotic syndrome : unspecified	skos:closeMatch	mesh:C563805	Nephrotic Syndrome, Congenital, with or without Ocular Abnormalities	0.935059	semapv:SemanticSimilarity	leonmap	
+icd10:N11.9	Chronic tubulo-interstitial nephritis, unspecified	skos:closeMatch	mesh:C564016	Nephropathy, Chronic Tubulointerstitial	0.938246	semapv:SemanticSimilarity	leonmap	
+icd10:N80.9	Endometriosis, unspecified	skos:closeMatch	mesh:D004715	Endometriosis	0.903788	semapv:SemanticSimilarity	leonmap	
+icd10:N92.1	Excessive and frequent menstruation with irregular cycle	skos:closeMatch	mesh:D008595	Menorrhagia	0.909094	semapv:SemanticSimilarity	leonmap	
+icd10:O06	Unspecified abortion	skos:closeMatch	mesh:D000032	Abortion, Therapeutic	0.903024	semapv:SemanticSimilarity	leonmap	
+icd10:Q35.1	Cleft hard palate	skos:closeMatch	mesh:C562950	Cleft Soft Palate	0.936745	semapv:SemanticSimilarity	leonmap	
+icd10:Q35.9	Cleft palate, unspecified	skos:closeMatch	mesh:C562950	Cleft Soft Palate	0.924215	semapv:SemanticSimilarity	leonmap	
+icd10:Q79	Congenital malformations of the musculoskeletal system, not elsewhere classified	skos:closeMatch	mesh:D009139	Musculoskeletal Abnormalities	0.926878	semapv:SemanticSimilarity	leonmap	
+icd10:Q81.9	Epidermolysis bullosa, unspecified	skos:closeMatch	mesh:C564368	Epidermolysis Bullosa Simplex Superficialis	0.955196	semapv:SemanticSimilarity	leonmap	
+icd10:R15	Faecal incontinence	skos:closeMatch	mesh:D004688	Encopresis	0.93614	semapv:SemanticSimilarity	leonmap	
+icd10:S19	Other and unspecified injuries of neck	skos:closeMatch	mesh:D019838	Neck Injuries	0.917827	semapv:SemanticSimilarity	leonmap	
+icd10:S19.9	Unspecified injury of neck	skos:closeMatch	mesh:D019838	Neck Injuries	0.908923	semapv:SemanticSimilarity	leonmap	
+icd10:S59.9	Unspecified injury of forearm	skos:closeMatch	mesh:D005543	Forearm Injuries	0.909782	semapv:SemanticSimilarity	leonmap	
+icd10:S89.8	Other specified injuries of lower leg	skos:closeMatch	mesh:D007869	Leg Injuries	0.914549	semapv:SemanticSimilarity	leonmap	
+icd10:S89.9	Unspecified injury of lower leg	skos:closeMatch	mesh:D007869	Leg Injuries	0.910433	semapv:SemanticSimilarity	leonmap	
+icd10:T13.9	Unspecified injury of lower limb, level unspecified	skos:closeMatch	mesh:D007869	Leg Injuries	0.926119	semapv:SemanticSimilarity	leonmap	
+icd10:T33	Superficial frostbite	skos:closeMatch	mesh:D005627	Frostbite	0.918907	semapv:SemanticSimilarity	leonmap	
+icd10:T34	Frostbite with tissue necrosis	skos:closeMatch	mesh:D005627	Frostbite	0.927544	semapv:SemanticSimilarity	leonmap	
+icd10:T34.9	Frostbite with tissue necrosis of other and unspecified sites	skos:closeMatch	mesh:D005627	Frostbite	0.902301	semapv:SemanticSimilarity	leonmap	
+icd10:T35	Frostbite involving multiple body regions and unspecified frostbite	skos:closeMatch	mesh:D005627	Frostbite	0.912381	semapv:SemanticSimilarity	leonmap	
+icd10:T35.7	Unspecified frostbite of unspecified site	skos:closeMatch	mesh:D005627	Frostbite	0.909	semapv:SemanticSimilarity	leonmap	
+icd10:XII	Diseases of the skin and subcutaneous tissue	skos:closeMatch	mesh:D012871	Skin Diseases	0.908082	semapv:SemanticSimilarity	leonmap	
+icd10:Y48.4	Anaesthetic, unspecified	skos:closeMatch	mesh:C078186	NUM anaesthetic	0.910311	semapv:SemanticSimilarity	leonmap	
+icd10:Z54.9	Convalescence following unspecified treatment	skos:closeMatch	mesh:D003289	Convalescence	0.911232	semapv:SemanticSimilarity	leonmap	

@@ -1,0 +1,1259 @@
+#curie_map:
+#  icd10: https://icd.who.int/browse10/2019/en#/
+#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=
+#  skos: http://www.w3.org/2004/02/skos/core#
+#  semapv: https://w3id.org/semapv/vocab/
+#mapping_set_id: gilda_icd10_mesh_novel
+#mapping_tool: gilda
+subject_id	subject_label	predicate_id	object_id	object_label	confidence	mapping_justification	mapping_tool
+icd10:A00	Cholera	skos:exactMatch	mesh:D002771	Cholera	1.0	semapv:LexicalMatching	gilda
+icd10:A01.0	Typhoid fever	skos:exactMatch	mesh:D014435	Typhoid Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A02.0	Salmonella enteritis	skos:exactMatch	mesh:D012480	Salmonella Infections	0.95	semapv:LexicalMatching	gilda
+icd10:A05.1	Botulism	skos:exactMatch	mesh:D001906	Botulism	1.0	semapv:LexicalMatching	gilda
+icd10:A06	Amoebiasis	skos:exactMatch	mesh:D000562	Amebiasis	1.0	semapv:LexicalMatching	gilda
+icd10:A06.4	Amoebic liver abscess	skos:exactMatch	mesh:D008101	Liver Abscess, Amebic	1.0	semapv:LexicalMatching	gilda
+icd10:A07.0	Balantidiasis	skos:exactMatch	mesh:D001447	Balantidiasis	1.0	semapv:LexicalMatching	gilda
+icd10:A07.2	Cryptosporidiosis	skos:exactMatch	mesh:D003457	Cryptosporidiosis	1.0	semapv:LexicalMatching	gilda
+icd10:A07.3	Isosporiasis	skos:exactMatch	mesh:D021865	Isosporiasis	1.0	semapv:LexicalMatching	gilda
+icd10:A07.8	Other specified protozoal intestinal diseases	skos:exactMatch	mesh:D012523	Sarcocystosis	0.95	semapv:LexicalMatching	gilda
+icd10:A15-A19	Tuberculosis	skos:exactMatch	mesh:D014376	Tuberculosis	1.0	semapv:LexicalMatching	gilda
+icd10:A17.0	Tuberculous meningitis	skos:exactMatch	mesh:D014390	Tuberculosis, Meningeal	1.0	semapv:LexicalMatching	gilda
+icd10:A19	Miliary tuberculosis	skos:exactMatch	mesh:D014391	Tuberculosis, Miliary	1.0	semapv:LexicalMatching	gilda
+icd10:A20	Plague	skos:exactMatch	mesh:D010930	Plague	1.0	semapv:LexicalMatching	gilda
+icd10:A22	Anthrax	skos:exactMatch	mesh:D000881	Anthrax	1.0	semapv:LexicalMatching	gilda
+icd10:A22.0	Cutaneous anthrax	skos:exactMatch	mesh:C531621	Cutaneous anthrax	1.0	semapv:LexicalMatching	gilda
+icd10:A22.1	Pulmonary anthrax	skos:exactMatch	mesh:C571912	Inhalation anthrax	0.95	semapv:LexicalMatching	gilda
+icd10:A22.2	Gastrointestinal anthrax	skos:exactMatch	mesh:C571911	Gastrointestinal anthrax	1.0	semapv:LexicalMatching	gilda
+icd10:A23	Brucellosis	skos:exactMatch	mesh:D002006	Brucellosis	1.0	semapv:LexicalMatching	gilda
+icd10:A24.0	Glanders	skos:exactMatch	mesh:D005896	Glanders	1.0	semapv:LexicalMatching	gilda
+icd10:A24.4	Melioidosis, unspecified	skos:exactMatch	mesh:D008554	Melioidosis	0.95	semapv:LexicalMatching	gilda
+icd10:A25	Rat-bite fevers	skos:exactMatch	mesh:D011906	Rat-Bite Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A26	Erysipeloid	skos:exactMatch	mesh:D004887	Erysipeloid	1.0	semapv:LexicalMatching	gilda
+icd10:A27	Leptospirosis	skos:exactMatch	mesh:D007922	Leptospirosis	1.0	semapv:LexicalMatching	gilda
+icd10:A28.0	Pasteurellosis	skos:exactMatch	mesh:D010326	Pasteurella Infections	1.0	semapv:LexicalMatching	gilda
+icd10:A28.1	Cat-scratch disease	skos:exactMatch	mesh:D002372	Cat-Scratch Disease	1.0	semapv:LexicalMatching	gilda
+icd10:A30.1	Tuberculoid leprosy	skos:exactMatch	mesh:D015441	Leprosy, Tuberculoid	1.0	semapv:LexicalMatching	gilda
+icd10:A30.3	Borderline leprosy	skos:exactMatch	mesh:D015439	Leprosy, Borderline	1.0	semapv:LexicalMatching	gilda
+icd10:A30.5	Lepromatous leprosy	skos:exactMatch	mesh:D015440	Leprosy, Lepromatous	1.0	semapv:LexicalMatching	gilda
+icd10:A31.1	Cutaneous mycobacterial infection	skos:exactMatch	mesh:D054312	Buruli Ulcer	0.95	semapv:LexicalMatching	gilda
+icd10:A32	Listeriosis	skos:exactMatch	mesh:D008088	Listeriosis	1.0	semapv:LexicalMatching	gilda
+icd10:A36	Diphtheria	skos:exactMatch	mesh:D004165	Diphtheria	1.0	semapv:LexicalMatching	gilda
+icd10:A37	Whooping cough	skos:exactMatch	mesh:D014917	Whooping Cough	1.0	semapv:LexicalMatching	gilda
+icd10:A38	Scarlet fever	skos:exactMatch	mesh:D012541	Scarlet Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A39	Meningococcal infection	skos:exactMatch	mesh:D008589	Meningococcal Infections	1.0	semapv:LexicalMatching	gilda
+icd10:A39.0	Meningococcal meningitis	skos:exactMatch	mesh:D008585	Meningitis, Meningococcal	1.0	semapv:LexicalMatching	gilda
+icd10:A39.1	Waterhouse-Friderichsen syndrome	skos:exactMatch	mesh:D014884	Waterhouse-Friderichsen Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:A42	Actinomycosis	skos:exactMatch	mesh:D000196	Actinomycosis	1.0	semapv:LexicalMatching	gilda
+icd10:A43	Nocardiosis	skos:exactMatch	mesh:D009617	Nocardia Infections	1.0	semapv:LexicalMatching	gilda
+icd10:A44	Bartonellosis	skos:exactMatch	mesh:D001474	Bartonella Infections	1.0	semapv:LexicalMatching	gilda
+icd10:A46	Erysipelas	skos:exactMatch	mesh:D004886	Erysipelas	1.0	semapv:LexicalMatching	gilda
+icd10:A48.0	Gas gangrene	skos:exactMatch	mesh:D005738	Gas Gangrene	1.0	semapv:LexicalMatching	gilda
+icd10:A48.1	Legionnaires disease	skos:exactMatch	mesh:D007877	Legionnaires' Disease	1.0	semapv:LexicalMatching	gilda
+icd10:A50	Congenital syphilis	skos:exactMatch	mesh:D013590	Syphilis, Congenital	1.0	semapv:LexicalMatching	gilda
+icd10:A52	Late syphilis	skos:exactMatch	mesh:C536774	Syphilis, tertiary	1.0	semapv:LexicalMatching	gilda
+icd10:A52.1	Symptomatic neurosyphilis	skos:exactMatch	mesh:D013606	Tabes Dorsalis	0.95	semapv:LexicalMatching	gilda
+icd10:A55	Chlamydial lymphogranuloma (venereum)	skos:exactMatch	mesh:D008219	Lymphogranuloma Venereum	0.95	semapv:LexicalMatching	gilda
+icd10:A57	Chancroid	skos:exactMatch	mesh:D002602	Chancroid	1.0	semapv:LexicalMatching	gilda
+icd10:A58	Granuloma inguinale	skos:exactMatch	mesh:D006100	Granuloma Inguinale	1.0	semapv:LexicalMatching	gilda
+icd10:A59	Trichomoniasis	skos:exactMatch	mesh:D014245	Trichomonas Infections	1.0	semapv:LexicalMatching	gilda
+icd10:A65	Nonvenereal syphilis	skos:exactMatch	mesh:C538405	Dichuchwa	1.0	semapv:LexicalMatching	gilda
+icd10:A66	Yaws	skos:exactMatch	mesh:D015001	Yaws	1.0	semapv:LexicalMatching	gilda
+icd10:A68	Relapsing fevers	skos:exactMatch	mesh:D012061	Relapsing Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A69.0	Necrotizing ulcerative stomatitis	skos:exactMatch	mesh:D009625	Noma	0.95	semapv:LexicalMatching	gilda
+icd10:A69.1	Other Vincent infections	skos:exactMatch	mesh:D005892	Gingivitis, Necrotizing Ulcerative	0.95	semapv:LexicalMatching	gilda
+icd10:A69.2	Lyme disease	skos:exactMatch	mesh:D008193	Lyme Disease	1.0	semapv:LexicalMatching	gilda
+icd10:A70	Chlamydia psittaci infection	skos:exactMatch	mesh:D009956	Psittacosis	0.95	semapv:LexicalMatching	gilda
+icd10:A71	Trachoma	skos:exactMatch	mesh:D014141	Trachoma	1.0	semapv:LexicalMatching	gilda
+icd10:A75-A79	Rickettsioses	skos:exactMatch	mesh:D012282	Rickettsia Infections	1.0	semapv:LexicalMatching	gilda
+icd10:A75.3	Typhus fever due to Rickettsia tsutsugamushi	skos:exactMatch	mesh:D012612	Scrub Typhus	0.95	semapv:LexicalMatching	gilda
+icd10:A77.0	Spotted fever due to Rickettsia rickettsii	skos:exactMatch	mesh:D012373	Rocky Mountain Spotted Fever	0.95	semapv:LexicalMatching	gilda
+icd10:A77.1	Spotted fever due to Rickettsia conorii	skos:exactMatch	mesh:D001907	Boutonneuse Fever	0.95	semapv:LexicalMatching	gilda
+icd10:A78	Q fever	skos:exactMatch	mesh:D011778	Q Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A79.0	Trench fever	skos:exactMatch	mesh:D014205	Trench Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A80	Acute poliomyelitis	skos:exactMatch	mesh:D011051	Poliomyelitis	1.0	semapv:LexicalMatching	gilda
+icd10:A81.0	Creutzfeldt-Jakob disease	skos:exactMatch	mesh:D007562	Creutzfeldt-Jakob Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:A81.1	Subacute sclerosing panencephalitis	skos:exactMatch	mesh:D013344	Subacute Sclerosing Panencephalitis	1.0	semapv:LexicalMatching	gilda
+icd10:A81.2	Progressive multifocal leukoencephalopathy	skos:exactMatch	mesh:D007968	Leukoencephalopathy, Progressive Multifocal	1.0	semapv:LexicalMatching	gilda
+icd10:A81.8	Other atypical virus infections of central nervous system	skos:exactMatch	mesh:D007729	Kuru	0.95	semapv:LexicalMatching	gilda
+icd10:A82	Rabies	skos:exactMatch	mesh:D011818	Rabies	1.0	semapv:LexicalMatching	gilda
+icd10:A83.0	Japanese encephalitis	skos:exactMatch	mesh:D004672	Encephalitis, Japanese	1.0	semapv:LexicalMatching	gilda
+icd10:A83.1	Western equine encephalitis	skos:exactMatch	mesh:D020241	Encephalomyelitis, Western Equine	1.0	semapv:LexicalMatching	gilda
+icd10:A83.2	Eastern equine encephalitis	skos:exactMatch	mesh:D020242	Encephalomyelitis, Eastern Equine	1.0	semapv:LexicalMatching	gilda
+icd10:A83.5	California encephalitis	skos:exactMatch	mesh:D004670	Encephalitis, California	1.0	semapv:LexicalMatching	gilda
+icd10:A84.8	Other tick-borne viral encephalitis	skos:exactMatch	mesh:D008146	Louping Ill	0.95	semapv:LexicalMatching	gilda
+icd10:A87	Viral meningitis	skos:exactMatch	mesh:D008587	Meningitis, Viral	1.0	semapv:LexicalMatching	gilda
+icd10:A87.2	Lymphocytic choriomeningitis	skos:exactMatch	mesh:D008216	Lymphocytic Choriomeningitis	1.0	semapv:LexicalMatching	gilda
+icd10:A92.3	West Nile virus infection	skos:exactMatch	mesh:D014901	West Nile Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A92.4	Rift Valley fever	skos:exactMatch	mesh:D012295	Rift Valley Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A92.5	Zika virus disease	skos:exactMatch	mesh:D000071243	Zika Virus Infection	1.0	semapv:LexicalMatching	gilda
+icd10:A93.1	Sandfly fever	skos:exactMatch	mesh:D010217	Phlebotomus Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A93.2	Colorado tick fever	skos:exactMatch	mesh:D003121	Colorado Tick Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A95	Yellow fever	skos:exactMatch	mesh:D015004	Yellow Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A96.2	Lassa fever	skos:exactMatch	mesh:D007835	Lassa Fever	1.0	semapv:LexicalMatching	gilda
+icd10:A97	Dengue	skos:exactMatch	mesh:D003715	Dengue	1.0	semapv:LexicalMatching	gilda
+icd10:A97.2	Severe Dengue	skos:exactMatch	mesh:D019595	Severe Dengue	1.0	semapv:LexicalMatching	gilda
+icd10:A98.0	Crimean-Congo haemorrhagic fever	skos:exactMatch	mesh:D006479	Hemorrhagic Fever, Crimean	1.0	semapv:LexicalMatching	gilda
+icd10:A98.2	Kyasanur Forest disease	skos:exactMatch	mesh:D007733	Kyasanur Forest Disease	1.0	semapv:LexicalMatching	gilda
+icd10:A98.3	Marburg virus disease	skos:exactMatch	mesh:D008379	Marburg Virus Disease	1.0	semapv:LexicalMatching	gilda
+icd10:A98.4	Ebola virus disease	skos:exactMatch	mesh:D019142	Hemorrhagic Fever, Ebola	1.0	semapv:LexicalMatching	gilda
+icd10:B00.0	Eczema herpeticum	skos:exactMatch	mesh:D007617	Kaposi Varicelliform Eruption	0.95	semapv:LexicalMatching	gilda
+icd10:B01.1	Varicella encephalitis	skos:exactMatch	mesh:D020804	Encephalitis, Varicella Zoster	1.0	semapv:LexicalMatching	gilda
+icd10:B02	Zoster [herpes zoster]	skos:exactMatch	mesh:D006562	Herpes Zoster	0.95	semapv:LexicalMatching	gilda
+icd10:B03	Smallpox	skos:exactMatch	mesh:D012899	Smallpox	1.0	semapv:LexicalMatching	gilda
+icd10:B04	Monkeypox	skos:exactMatch	mesh:D045908	Mpox (monkeypox)	1.0	semapv:LexicalMatching	gilda
+icd10:B05	Measles	skos:exactMatch	mesh:D008457	Measles	1.0	semapv:LexicalMatching	gilda
+icd10:B08.0	Other orthopoxvirus infections	skos:exactMatch	mesh:D015605	Cowpox	0.95	semapv:LexicalMatching	gilda
+icd10:B08.1	Molluscum contagiosum	skos:exactMatch	mesh:D008976	Molluscum Contagiosum	1.0	semapv:LexicalMatching	gilda
+icd10:B08.4	Enteroviral vesicular stomatitis with exanthem	skos:exactMatch	mesh:D006232	Hand, Foot and Mouth Disease	0.95	semapv:LexicalMatching	gilda
+icd10:B08.5	Enteroviral vesicular pharyngitis	skos:exactMatch	mesh:D006557	Herpangina	0.95	semapv:LexicalMatching	gilda
+icd10:B08.8	Other specified viral infections characterized by skin and mucous membrane lesions	skos:exactMatch	mesh:D005536	Foot-and-Mouth Disease	0.95	semapv:LexicalMatching	gilda
+icd10:B22.0	HIV disease resulting in encephalopathy	skos:exactMatch	mesh:D015526	AIDS Dementia Complex	0.95	semapv:LexicalMatching	gilda
+icd10:B22.2	HIV disease resulting in wasting syndrome	skos:exactMatch	mesh:D019247	HIV Wasting Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:B26	Mumps	skos:exactMatch	mesh:D009107	Mumps	1.0	semapv:LexicalMatching	gilda
+icd10:B27	Infectious mononucleosis	skos:exactMatch	mesh:D007244	Infectious Mononucleosis	1.0	semapv:LexicalMatching	gilda
+icd10:B30	Viral conjunctivitis	skos:exactMatch	mesh:D003236	Conjunctivitis, Viral	1.0	semapv:LexicalMatching	gilda
+icd10:B33.0	Epidemic myalgia	skos:exactMatch	mesh:D011000	Pleurodynia, Epidemic	1.0	semapv:LexicalMatching	gilda
+icd10:B35	Dermatophytosis	skos:exactMatch	mesh:D014005	Tinea	1.0	semapv:LexicalMatching	gilda
+icd10:B35-B49	Mycoses	skos:exactMatch	mesh:D009181	Mycoses	1.0	semapv:LexicalMatching	gilda
+icd10:B35.0	Tinea barbae and tinea capitis	skos:exactMatch	mesh:C000656825	tinea barbae	0.95	semapv:LexicalMatching	gilda
+icd10:B35.1	Tinea unguium	skos:exactMatch	mesh:D014009	Onychomycosis	1.0	semapv:LexicalMatching	gilda
+icd10:B35.2	Tinea manuum	skos:exactMatch	mesh:C000656824	tinea manus	1.0	semapv:LexicalMatching	gilda
+icd10:B35.3	Tinea pedis	skos:exactMatch	mesh:D014008	Tinea Pedis	1.0	semapv:LexicalMatching	gilda
+icd10:B35.6	Tinea inguinalis [Tinea cruris]	skos:exactMatch	mesh:D000084002	Tinea cruris	0.95	semapv:LexicalMatching	gilda
+icd10:B36.0	Pityriasis versicolor	skos:exactMatch	mesh:D014010	Tinea Versicolor	1.0	semapv:LexicalMatching	gilda
+icd10:B36.1	Tinea nigra	skos:exactMatch	mesh:C000656904	tinea nigra	1.0	semapv:LexicalMatching	gilda
+icd10:B37	Candidiasis	skos:exactMatch	mesh:D002177	Candidiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B38	Coccidioidomycosis	skos:exactMatch	mesh:D003047	Coccidioidomycosis	1.0	semapv:LexicalMatching	gilda
+icd10:B39	Histoplasmosis	skos:exactMatch	mesh:D006660	Histoplasmosis	1.0	semapv:LexicalMatching	gilda
+icd10:B40	Blastomycosis	skos:exactMatch	mesh:D001759	Blastomycosis	1.0	semapv:LexicalMatching	gilda
+icd10:B41	Paracoccidioidomycosis	skos:exactMatch	mesh:D010229	Paracoccidioidomycosis	1.0	semapv:LexicalMatching	gilda
+icd10:B42	Sporotrichosis	skos:exactMatch	mesh:D013174	Sporotrichosis	1.0	semapv:LexicalMatching	gilda
+icd10:B43.0	Cutaneous chromomycosis	skos:exactMatch	mesh:D002862	Chromoblastomycosis	0.95	semapv:LexicalMatching	gilda
+icd10:B44	Aspergillosis	skos:exactMatch	mesh:D001228	Aspergillosis	1.0	semapv:LexicalMatching	gilda
+icd10:B44.0	Invasive pulmonary aspergillosis	skos:exactMatch	mesh:D055744	Invasive Pulmonary Aspergillosis	1.0	semapv:LexicalMatching	gilda
+icd10:B45	Cryptococcosis	skos:exactMatch	mesh:D003453	Cryptococcosis	1.0	semapv:LexicalMatching	gilda
+icd10:B46	Zygomycosis	skos:exactMatch	mesh:D020096	Zygomycosis	1.0	semapv:LexicalMatching	gilda
+icd10:B46.8	Other zygomycoses	skos:exactMatch	mesh:C000656785	entomophthoromycosis	0.95	semapv:LexicalMatching	gilda
+icd10:B47	Mycetoma	skos:exactMatch	mesh:D008271	Mycetoma	1.0	semapv:LexicalMatching	gilda
+icd10:B48.0	Lobomycosis	skos:exactMatch	mesh:D060368	Lobomycosis	1.0	semapv:LexicalMatching	gilda
+icd10:B48.1	Rhinosporidiosis	skos:exactMatch	mesh:D012227	Rhinosporidiosis	1.0	semapv:LexicalMatching	gilda
+icd10:B48.3	Geotrichosis	skos:exactMatch	mesh:D005847	Geotrichosis	1.0	semapv:LexicalMatching	gilda
+icd10:B48.5	Pneumocystosis	skos:exactMatch	mesh:D011020	Pneumonia, Pneumocystis	1.0	semapv:LexicalMatching	gilda
+icd10:B48.8	Other specified mycoses	skos:exactMatch	mesh:C000656784	adiaspiromycosis	0.95	semapv:LexicalMatching	gilda
+icd10:B50	Plasmodium falciparum malaria	skos:exactMatch	mesh:D016778	Malaria, Falciparum	1.0	semapv:LexicalMatching	gilda
+icd10:B51	Plasmodium vivax malaria	skos:exactMatch	mesh:D016780	Malaria, Vivax	1.0	semapv:LexicalMatching	gilda
+icd10:B55	Leishmaniasis	skos:exactMatch	mesh:D007896	Leishmaniasis	1.0	semapv:LexicalMatching	gilda
+icd10:B55.0	Visceral leishmaniasis	skos:exactMatch	mesh:D007898	Leishmaniasis, Visceral	1.0	semapv:LexicalMatching	gilda
+icd10:B55.1	Cutaneous leishmaniasis	skos:exactMatch	mesh:D016773	Leishmaniasis, Cutaneous	1.0	semapv:LexicalMatching	gilda
+icd10:B55.2	Mucocutaneous leishmaniasis	skos:exactMatch	mesh:D007897	Leishmaniasis, Mucocutaneous	1.0	semapv:LexicalMatching	gilda
+icd10:B56	African trypanosomiasis	skos:exactMatch	mesh:D014353	Trypanosomiasis, African	1.0	semapv:LexicalMatching	gilda
+icd10:B57	Chagas disease	skos:exactMatch	mesh:D014355	Chagas Disease	1.0	semapv:LexicalMatching	gilda
+icd10:B58	Toxoplasmosis	skos:exactMatch	mesh:D014123	Toxoplasmosis	1.0	semapv:LexicalMatching	gilda
+icd10:B60.0	Babesiosis	skos:exactMatch	mesh:D001404	Babesiosis	1.0	semapv:LexicalMatching	gilda
+icd10:B60.8	Other specified protozoal diseases	skos:exactMatch	mesh:D016881	Microsporidiosis	0.95	semapv:LexicalMatching	gilda
+icd10:B65-B83	Helminthiases	skos:exactMatch	mesh:D006373	Helminthiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B66.0	Opisthorchiasis	skos:exactMatch	mesh:D009889	Opisthorchiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B66.1	Clonorchiasis	skos:exactMatch	mesh:D003003	Clonorchiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B66.2	Dicrocoeliasis	skos:exactMatch	mesh:D004011	Dicrocoeliasis	1.0	semapv:LexicalMatching	gilda
+icd10:B66.3	Fascioliasis	skos:exactMatch	mesh:D005211	Fascioliasis	1.0	semapv:LexicalMatching	gilda
+icd10:B66.4	Paragonimiasis	skos:exactMatch	mesh:D010237	Paragonimiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B66.8	Other specified fluke infections	skos:exactMatch	mesh:D004451	Echinostomiasis	0.95	semapv:LexicalMatching	gilda
+icd10:B67	Echinococcosis	skos:exactMatch	mesh:D004443	Echinococcosis	1.0	semapv:LexicalMatching	gilda
+icd10:B68	Taeniasis	skos:exactMatch	mesh:D013622	Taeniasis	1.0	semapv:LexicalMatching	gilda
+icd10:B69	Cysticercosis	skos:exactMatch	mesh:D003551	Cysticercosis	1.0	semapv:LexicalMatching	gilda
+icd10:B70.0	Diphyllobothriasis	skos:exactMatch	mesh:D004169	Diphyllobothriasis	1.0	semapv:LexicalMatching	gilda
+icd10:B70.1	Sparganosis	skos:exactMatch	mesh:D013031	Sparganosis	1.0	semapv:LexicalMatching	gilda
+icd10:B71.0	Hymenolepiasis	skos:exactMatch	mesh:D006925	Hymenolepiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B72	Dracunculiasis	skos:exactMatch	mesh:D004320	Dracunculiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B73	Onchocerciasis	skos:exactMatch	mesh:D009855	Onchocerciasis	1.0	semapv:LexicalMatching	gilda
+icd10:B74	Filariasis	skos:exactMatch	mesh:D005368	Filariasis	1.0	semapv:LexicalMatching	gilda
+icd10:B74.3	Loiasis	skos:exactMatch	mesh:D008118	Loiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B74.4	Mansonelliasis	skos:exactMatch	mesh:D008368	Mansonelliasis	1.0	semapv:LexicalMatching	gilda
+icd10:B74.8	Other filariases	skos:exactMatch	mesh:D004184	Dirofilariasis	0.95	semapv:LexicalMatching	gilda
+icd10:B75	Trichinellosis	skos:exactMatch	mesh:D014235	Trichinellosis	1.0	semapv:LexicalMatching	gilda
+icd10:B76.0	Ancylostomiasis	skos:exactMatch	mesh:D000724	Ancylostomiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B76.1	Necatoriasis	skos:exactMatch	mesh:D009332	Necatoriasis	1.0	semapv:LexicalMatching	gilda
+icd10:B77	Ascariasis	skos:exactMatch	mesh:D001196	Ascariasis	1.0	semapv:LexicalMatching	gilda
+icd10:B78	Strongyloidiasis	skos:exactMatch	mesh:D013322	Strongyloidiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B79	Trichuriasis	skos:exactMatch	mesh:D014257	Trichuriasis	1.0	semapv:LexicalMatching	gilda
+icd10:B80	Enterobiasis	skos:exactMatch	mesh:D017229	Enterobiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B81.0	Anisakiasis	skos:exactMatch	mesh:D017129	Anisakiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B83.0	Visceral larva migrans	skos:exactMatch	mesh:D007816	Larva Migrans, Visceral	1.0	semapv:LexicalMatching	gilda
+icd10:B83.1	Gnathostomiasis	skos:exactMatch	mesh:D058429	Gnathostomiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B86	Scabies	skos:exactMatch	mesh:D012532	Scabies	1.0	semapv:LexicalMatching	gilda
+icd10:B87	Myiasis	skos:exactMatch	mesh:D009198	Myiasis	1.0	semapv:LexicalMatching	gilda
+icd10:B97.3	Retrovirus as the cause of diseases classified to other chapters	skos:exactMatch	mesh:D016086	Lentivirus	0.95	semapv:LexicalMatching	gilda
+icd10:C03	Malignant neoplasm of gum	skos:exactMatch	mesh:D005881	Gingiva	0.95	semapv:LexicalMatching	gilda
+icd10:C05.0	Hard palate	skos:exactMatch	mesh:D021362	Palate, Hard	1.0	semapv:LexicalMatching	gilda
+icd10:C05.1	Soft palate	skos:exactMatch	mesh:D010160	Palate, Soft	1.0	semapv:LexicalMatching	gilda
+icd10:C05.2	Uvula	skos:exactMatch	mesh:D014609	Uvula	1.0	semapv:LexicalMatching	gilda
+icd10:C08.0	Submandibular gland	skos:exactMatch	mesh:D013363	Submandibular Gland	1.0	semapv:LexicalMatching	gilda
+icd10:C08.1	Sublingual gland	skos:exactMatch	mesh:D013361	Sublingual Gland	1.0	semapv:LexicalMatching	gilda
+icd10:C11.1	Posterior wall of nasopharynx	skos:exactMatch	mesh:D000234	Adenoids	0.95	semapv:LexicalMatching	gilda
+icd10:C12	Malignant neoplasm of piriform sinus	skos:exactMatch	mesh:D056144	Pyriform Sinus	0.95	semapv:LexicalMatching	gilda
+icd10:C16.0	Cardia	skos:exactMatch	mesh:D002299	Cardia	1.0	semapv:LexicalMatching	gilda
+icd10:C16.3	Pyloric antrum	skos:exactMatch	mesh:D011706	Pyloric Antrum	1.0	semapv:LexicalMatching	gilda
+icd10:C16.4	Pylorus	skos:exactMatch	mesh:D011708	Pylorus	1.0	semapv:LexicalMatching	gilda
+icd10:C17.1	Jejunum	skos:exactMatch	mesh:D007583	Jejunum	1.0	semapv:LexicalMatching	gilda
+icd10:C17.2	Ileum	skos:exactMatch	mesh:D007082	Ileum	1.0	semapv:LexicalMatching	gilda
+icd10:C18.3	Hepatic flexure	skos:exactMatch	mesh:D044682	Colon, Ascending	1.0	semapv:LexicalMatching	gilda
+icd10:C21.1	Anal canal	skos:exactMatch	mesh:D001003	Anal Canal	1.0	semapv:LexicalMatching	gilda
+icd10:C22.0	Liver cell carcinoma	skos:exactMatch	mesh:D006528	Carcinoma, Hepatocellular	1.0	semapv:LexicalMatching	gilda
+icd10:C22.1	Intrahepatic bile duct carcinoma	skos:exactMatch	mesh:D018281	Cholangiocarcinoma	0.95	semapv:LexicalMatching	gilda
+icd10:C22.2	Hepatoblastoma	skos:exactMatch	mesh:D018197	Hepatoblastoma	1.0	semapv:LexicalMatching	gilda
+icd10:C24.0	Extrahepatic bile duct	skos:exactMatch	mesh:D017734	Bile Ducts, Extrahepatic	1.0	semapv:LexicalMatching	gilda
+icd10:C24.1	Ampulla of Vater	skos:exactMatch	mesh:D014670	Ampulla of Vater	1.0	semapv:LexicalMatching	gilda
+icd10:C25.3	Pancreatic duct	skos:exactMatch	mesh:D010183	Pancreatic Ducts	1.0	semapv:LexicalMatching	gilda
+icd10:C26.1	Spleen	skos:exactMatch	mesh:D013154	Spleen	1.0	semapv:LexicalMatching	gilda
+icd10:C30.0	Nasal cavity	skos:exactMatch	mesh:D009296	Nasal Cavity	1.0	semapv:LexicalMatching	gilda
+icd10:C30.1	Middle ear	skos:exactMatch	mesh:D004432	Ear, Middle	1.0	semapv:LexicalMatching	gilda
+icd10:C31.0	Maxillary sinus	skos:exactMatch	mesh:D008443	Maxillary Sinus	1.0	semapv:LexicalMatching	gilda
+icd10:C31.2	Frontal sinus	skos:exactMatch	mesh:D005626	Frontal Sinus	1.0	semapv:LexicalMatching	gilda
+icd10:C32.0	Glottis	skos:exactMatch	mesh:D005931	Glottis	1.0	semapv:LexicalMatching	gilda
+icd10:C32.3	Laryngeal cartilage	skos:exactMatch	mesh:D007817	Laryngeal Cartilages	1.0	semapv:LexicalMatching	gilda
+icd10:C38.0	Heart	skos:exactMatch	mesh:D010496	Pericardium	0.95	semapv:LexicalMatching	gilda
+icd10:C41.1	Mandible	skos:exactMatch	mesh:D008334	Mandible	1.0	semapv:LexicalMatching	gilda
+icd10:C45	Mesothelioma	skos:exactMatch	mesh:D008654	Mesothelioma	1.0	semapv:LexicalMatching	gilda
+icd10:C46	Kaposi sarcoma	skos:exactMatch	mesh:D012514	Sarcoma, Kaposi	1.0	semapv:LexicalMatching	gilda
+icd10:C49	Malignant neoplasm of other connective and soft tissue	skos:exactMatch	mesh:D042601	Lymphatic Vessels	0.95	semapv:LexicalMatching	gilda
+icd10:C51.2	Clitoris	skos:exactMatch	mesh:D002987	Clitoris	1.0	semapv:LexicalMatching	gilda
+icd10:C54.2	Myometrium	skos:exactMatch	mesh:D009215	Myometrium	1.0	semapv:LexicalMatching	gilda
+icd10:C57.0	Fallopian tube	skos:exactMatch	mesh:D005187	Fallopian Tubes	1.0	semapv:LexicalMatching	gilda
+icd10:C57.1	Broad ligament	skos:exactMatch	mesh:D001956	Broad Ligament	1.0	semapv:LexicalMatching	gilda
+icd10:C57.2	Round ligament	skos:exactMatch	mesh:D000069590	Round Ligaments	1.0	semapv:LexicalMatching	gilda
+icd10:C60.0	Prepuce	skos:exactMatch	mesh:D052816	Foreskin	0.95	semapv:LexicalMatching	gilda
+icd10:C62.0	Undescended testis	skos:exactMatch	mesh:D003456	Cryptorchidism	1.0	semapv:LexicalMatching	gilda
+icd10:C63.1	Spermatic cord	skos:exactMatch	mesh:D013085	Spermatic Cord	1.0	semapv:LexicalMatching	gilda
+icd10:C67.7	Urachus	skos:exactMatch	mesh:D014497	Urachus	1.0	semapv:LexicalMatching	gilda
+icd10:C69.6	Orbit	skos:exactMatch	mesh:D009915	Orbit	1.0	semapv:LexicalMatching	gilda
+icd10:C71.1	Frontal lobe	skos:exactMatch	mesh:D005625	Frontal Lobe	1.0	semapv:LexicalMatching	gilda
+icd10:C71.2	Temporal lobe	skos:exactMatch	mesh:D013702	Temporal Lobe	1.0	semapv:LexicalMatching	gilda
+icd10:C71.3	Parietal lobe	skos:exactMatch	mesh:D010296	Parietal Lobe	1.0	semapv:LexicalMatching	gilda
+icd10:C71.4	Occipital lobe	skos:exactMatch	mesh:D009778	Occipital Lobe	1.0	semapv:LexicalMatching	gilda
+icd10:C71.5	Cerebral ventricle	skos:exactMatch	mesh:D002552	Cerebral Ventricles	1.0	semapv:LexicalMatching	gilda
+icd10:C71.6	Cerebellum	skos:exactMatch	mesh:D002531	Cerebellum	1.0	semapv:LexicalMatching	gilda
+icd10:C71.7	Brain stem	skos:exactMatch	mesh:D001933	Brain Stem	1.0	semapv:LexicalMatching	gilda
+icd10:C72.1	Cauda equina	skos:exactMatch	mesh:D002420	Cauda Equina	1.0	semapv:LexicalMatching	gilda
+icd10:C72.2	Olfactory nerve	skos:exactMatch	mesh:D009832	Olfactory Nerve	1.0	semapv:LexicalMatching	gilda
+icd10:C72.3	Optic nerve	skos:exactMatch	mesh:D009900	Optic Nerve	1.0	semapv:LexicalMatching	gilda
+icd10:C72.4	Acoustic nerve	skos:exactMatch	mesh:D003056	Cochlear Nerve	1.0	semapv:LexicalMatching	gilda
+icd10:C76.1	Thorax	skos:exactMatch	mesh:D013909	Thorax	1.0	semapv:LexicalMatching	gilda
+icd10:C76.2	Abdomen	skos:exactMatch	mesh:D000005	Abdomen	1.0	semapv:LexicalMatching	gilda
+icd10:C76.3	Pelvis	skos:exactMatch	mesh:D010388	Pelvis	1.0	semapv:LexicalMatching	gilda
+icd10:C76.4	Upper limb	skos:exactMatch	mesh:D034941	Upper Extremity	1.0	semapv:LexicalMatching	gilda
+icd10:C76.5	Lower limb	skos:exactMatch	mesh:D035002	Lower Extremity	1.0	semapv:LexicalMatching	gilda
+icd10:C81	Hodgkin lymphoma	skos:exactMatch	mesh:D006689	Hodgkin Disease	1.0	semapv:LexicalMatching	gilda
+icd10:C82	Follicular lymphoma	skos:exactMatch	mesh:D008224	Lymphoma, Follicular	1.0	semapv:LexicalMatching	gilda
+icd10:C83.1	Mantle cell lymphoma	skos:exactMatch	mesh:D020522	Lymphoma, Mantle-Cell	1.0	semapv:LexicalMatching	gilda
+icd10:C83.3	Diffuse large B-cell lymphoma	skos:exactMatch	mesh:D016403	Lymphoma, Large B-Cell, Diffuse	1.0	semapv:LexicalMatching	gilda
+icd10:C83.7	Burkitt lymphoma	skos:exactMatch	mesh:D002051	Burkitt Lymphoma	1.0	semapv:LexicalMatching	gilda
+icd10:C84.0	Mycosis fungoides	skos:exactMatch	mesh:D009182	Mycosis Fungoides	1.0	semapv:LexicalMatching	gilda
+icd10:C86.3	Subcutaneous panniculitis-like T-cell lymphoma	skos:exactMatch	mesh:C537503	Subcutaneous panniculitis-like T-cell lymphoma	1.0	semapv:LexicalMatching	gilda
+icd10:C86.6	Primary cutaneous CD30-positive T-cell proliferations	skos:exactMatch	mesh:D017731	Lymphomatoid Papulosis	0.95	semapv:LexicalMatching	gilda
+icd10:C88.0	Waldenström macroglobulinaemia	skos:exactMatch	mesh:D008258	Waldenstrom Macroglobulinemia	1.0	semapv:LexicalMatching	gilda
+icd10:C88.3	Immunoproliferative small intestinal disease	skos:exactMatch	mesh:D007161	Immunoproliferative Small Intestinal Disease	1.0	semapv:LexicalMatching	gilda
+icd10:C90.0	Multiple myeloma	skos:exactMatch	mesh:D009101	Multiple Myeloma	1.0	semapv:LexicalMatching	gilda
+icd10:C92.3	Myeloid sarcoma	skos:exactMatch	mesh:D023981	Sarcoma, Myeloid	1.0	semapv:LexicalMatching	gilda
+icd10:C92.4	Acute promyelocytic leukaemia [PML]	skos:exactMatch	mesh:D015473	Leukemia, Promyelocytic, Acute	0.95	semapv:LexicalMatching	gilda
+icd10:C96.2	Malignant mast cell tumour	skos:exactMatch	mesh:D012515	Mast-Cell Sarcoma	0.95	semapv:LexicalMatching	gilda
+icd10:C96.6	Unifocal Langerhans-cell histiocytosis	skos:exactMatch	mesh:D004803	Eosinophilic Granuloma	0.95	semapv:LexicalMatching	gilda
+icd10:C96.8	Histiocytic sarcoma	skos:exactMatch	mesh:D054747	Histiocytic Sarcoma	1.0	semapv:LexicalMatching	gilda
+icd10:D00-D09	In situ neoplasms	skos:exactMatch	mesh:D001913	Bowen's Disease	0.95	semapv:LexicalMatching	gilda
+icd10:D09.2	Eye	skos:exactMatch	mesh:D005123	Eye	1.0	semapv:LexicalMatching	gilda
+icd10:D10.0	Lip	skos:exactMatch	mesh:D008046	Lip	1.0	semapv:LexicalMatching	gilda
+icd10:D10.1	Tongue	skos:exactMatch	mesh:D014059	Tongue	1.0	semapv:LexicalMatching	gilda
+icd10:D10.2	Floor of mouth	skos:exactMatch	mesh:D009060	Mouth Floor	1.0	semapv:LexicalMatching	gilda
+icd10:D10.4	Tonsil	skos:exactMatch	mesh:D014066	Palatine Tonsil	1.0	semapv:LexicalMatching	gilda
+icd10:D10.6	Nasopharynx	skos:exactMatch	mesh:D009305	Nasopharynx	1.0	semapv:LexicalMatching	gilda
+icd10:D10.7	Hypopharynx	skos:exactMatch	mesh:D007013	Hypopharynx	1.0	semapv:LexicalMatching	gilda
+icd10:D11.0	Parotid gland	skos:exactMatch	mesh:D010306	Parotid Gland	1.0	semapv:LexicalMatching	gilda
+icd10:D13.4	Liver	skos:exactMatch	mesh:D008099	Liver	1.0	semapv:LexicalMatching	gilda
+icd10:D13.6	Pancreas	skos:exactMatch	mesh:D010179	Pancreas	1.0	semapv:LexicalMatching	gilda
+icd10:D26.0	Cervix uteri	skos:exactMatch	mesh:D002584	Cervix Uteri	1.0	semapv:LexicalMatching	gilda
+icd10:D28	Benign neoplasm of other and unspecified female genital organs	skos:exactMatch	mesh:D018256	Adenomatous Polyps	0.95	semapv:LexicalMatching	gilda
+icd10:D36.0	Lymph nodes	skos:exactMatch	mesh:D008198	Lymph Nodes	1.0	semapv:LexicalMatching	gilda
+icd10:D37.2	Small intestine	skos:exactMatch	mesh:D007421	Intestine, Small	1.0	semapv:LexicalMatching	gilda
+icd10:D39.0	Uterus	skos:exactMatch	mesh:D014599	Uterus	1.0	semapv:LexicalMatching	gilda
+icd10:D39.1	Ovary	skos:exactMatch	mesh:D010053	Ovary	1.0	semapv:LexicalMatching	gilda
+icd10:D39.2	Placenta	skos:exactMatch	mesh:D010920	Placenta	1.0	semapv:LexicalMatching	gilda
+icd10:D44.0	Thyroid gland	skos:exactMatch	mesh:D013961	Thyroid Gland	1.0	semapv:LexicalMatching	gilda
+icd10:D44.8	Pluriglandular involvement	skos:exactMatch	mesh:D009377	Multiple Endocrine Neoplasia	0.95	semapv:LexicalMatching	gilda
+icd10:D46	Myelodysplastic syndromes	skos:exactMatch	mesh:D009190	Myelodysplastic Syndromes	1.0	semapv:LexicalMatching	gilda
+icd10:D47.4	Osteomyelofibrosis	skos:exactMatch	mesh:D055728	Primary Myelofibrosis	0.95	semapv:LexicalMatching	gilda
+icd10:D48.5	Skin	skos:exactMatch	mesh:D012867	Skin	1.0	semapv:LexicalMatching	gilda
+icd10:D48.6	Breast	skos:exactMatch	mesh:D001940	Breast	1.0	semapv:LexicalMatching	gilda
+icd10:D48.7	Other specified sites	skos:exactMatch	mesh:D006321	Heart	0.95	semapv:LexicalMatching	gilda
+icd10:D50.1	Sideropenic dysphagia	skos:exactMatch	mesh:D011004	Plummer-Vinson Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:D55-D59	Haemolytic anaemias	skos:exactMatch	mesh:D000743	Anemia, Hemolytic	1.0	semapv:LexicalMatching	gilda
+icd10:D55.0	Anaemia due to glucose-6-phosphate dehydrogenase [G6PD] deficiency	skos:exactMatch	mesh:D005236	Favism	0.95	semapv:LexicalMatching	gilda
+icd10:D58.1	Hereditary elliptocytosis	skos:exactMatch	mesh:D004612	Elliptocytosis, Hereditary	1.0	semapv:LexicalMatching	gilda
+icd10:D61.0	Constitutional aplastic anaemia	skos:exactMatch	mesh:D029503	Anemia, Diamond-Blackfan	0.95	semapv:LexicalMatching	gilda
+icd10:D65	Disseminated intravascular coagulation [defibrination syndrome]	skos:exactMatch	mesh:D004211	Disseminated Intravascular Coagulation	0.95	semapv:LexicalMatching	gilda
+icd10:D67	Hereditary factor IX deficiency	skos:exactMatch	mesh:D002836	Hemophilia B	0.95	semapv:LexicalMatching	gilda
+icd10:D68.0	Von Willebrand disease	skos:exactMatch	mesh:D014842	von Willebrand Diseases	1.0	semapv:LexicalMatching	gilda
+icd10:D68.2	Hereditary deficiency of other clotting factors	skos:exactMatch	mesh:D005166	Factor V Deficiency	0.95	semapv:LexicalMatching	gilda
+icd10:D68.6	Other thrombophilia	skos:exactMatch	mesh:D016736	Antiphospholipid Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:D69.0	Allergic purpura	skos:exactMatch	mesh:D011695	IgA Vasculitis	1.0	semapv:LexicalMatching	gilda
+icd10:D69.1	Qualitative platelet defects	skos:exactMatch	mesh:D055652	Gray Platelet Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:D69.3	Idiopathic thrombocytopenic purpura	skos:exactMatch	mesh:D016553	Purpura, Thrombocytopenic, Idiopathic	1.0	semapv:LexicalMatching	gilda
+icd10:D70	Agranulocytosis	skos:exactMatch	mesh:D000380	Agranulocytosis	1.0	semapv:LexicalMatching	gilda
+icd10:D72.1	Eosinophilia	skos:exactMatch	mesh:D004802	Eosinophilia	1.0	semapv:LexicalMatching	gilda
+icd10:D72.8	Other specified disorders of white blood cells	skos:exactMatch	mesh:D007964	Leukocytosis	0.95	semapv:LexicalMatching	gilda
+icd10:D73.1	Hypersplenism	skos:exactMatch	mesh:D006971	Hypersplenism	1.0	semapv:LexicalMatching	gilda
+icd10:D75.0	Familial erythrocytosis	skos:exactMatch	mesh:C536842	Polycythemia, primary familial and congenital	1.0	semapv:LexicalMatching	gilda
+icd10:D76.3	Other histiocytosis syndromes	skos:exactMatch	mesh:D015618	Histiocytosis, Sinus	0.95	semapv:LexicalMatching	gilda
+icd10:D82.0	Wiskott-Aldrich syndrome	skos:exactMatch	mesh:D014923	Wiskott-Aldrich Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:D82.1	Di George syndrome	skos:exactMatch	mesh:D004062	DiGeorge Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:D83	Common variable immunodeficiency	skos:exactMatch	mesh:D017074	Common Variable Immunodeficiency	1.0	semapv:LexicalMatching	gilda
+icd10:D86	Sarcoidosis	skos:exactMatch	mesh:D012507	Sarcoidosis	1.0	semapv:LexicalMatching	gilda
+icd10:D89.3	Immune reconstitution syndrome	skos:exactMatch	mesh:D054019	Immune Reconstitution Inflammatory Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:E05.0	Thyrotoxicosis with diffuse goitre	skos:exactMatch	mesh:D006111	Graves Disease	0.95	semapv:LexicalMatching	gilda
+icd10:E06	Thyroiditis	skos:exactMatch	mesh:D013966	Thyroiditis	1.0	semapv:LexicalMatching	gilda
+icd10:E06.1	Subacute thyroiditis	skos:exactMatch	mesh:D013968	Thyroiditis, Subacute	1.0	semapv:LexicalMatching	gilda
+icd10:E06.3	Autoimmune thyroiditis	skos:exactMatch	mesh:D013967	Thyroiditis, Autoimmune	1.0	semapv:LexicalMatching	gilda
+icd10:E07.1	Dyshormogenetic goitre	skos:exactMatch	mesh:C536648	Pendred syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:E10	Type 1 diabetes mellitus	skos:exactMatch	mesh:D003922	Diabetes Mellitus, Type 1	1.0	semapv:LexicalMatching	gilda
+icd10:E10-E14	Diabetes mellitus	skos:exactMatch	mesh:D003920	Diabetes Mellitus	1.0	semapv:LexicalMatching	gilda
+icd10:E11	Type 2 diabetes mellitus	skos:exactMatch	mesh:D003924	Diabetes Mellitus, Type 2	1.0	semapv:LexicalMatching	gilda
+icd10:E16.4	Abnormal secretion of gastrin	skos:exactMatch	mesh:D015043	Zollinger-Ellison Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:E20	Hypoparathyroidism	skos:exactMatch	mesh:D007011	Hypoparathyroidism	1.0	semapv:LexicalMatching	gilda
+icd10:E20.1	Pseudohypoparathyroidism	skos:exactMatch	mesh:D011547	Pseudohypoparathyroidism	1.0	semapv:LexicalMatching	gilda
+icd10:E21.0	Primary hyperparathyroidism	skos:exactMatch	mesh:D049950	Hyperparathyroidism, Primary	1.0	semapv:LexicalMatching	gilda
+icd10:E22.1	Hyperprolactinaemia	skos:exactMatch	mesh:D006966	Hyperprolactinemia	1.0	semapv:LexicalMatching	gilda
+icd10:E23.0	Hypopituitarism	skos:exactMatch	mesh:D007018	Hypopituitarism	1.0	semapv:LexicalMatching	gilda
+icd10:E23.2	Diabetes insipidus	skos:exactMatch	mesh:D003919	Diabetes Insipidus	1.0	semapv:LexicalMatching	gilda
+icd10:E24	Cushing syndrome	skos:exactMatch	mesh:D003480	Cushing Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:E24.1	Nelson syndrome	skos:exactMatch	mesh:D009347	Nelson Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:E24.3	Ectopic ACTH syndrome	skos:exactMatch	mesh:D000182	ACTH Syndrome, Ectopic	1.0	semapv:LexicalMatching	gilda
+icd10:E25.0	Congenital adrenogenital disorders associated with enzyme deficiency	skos:exactMatch	mesh:C535979	Congenital adrenal hyperplasia due to 21 hydroxylase deficiency	0.95	semapv:LexicalMatching	gilda
+icd10:E26	Hyperaldosteronism	skos:exactMatch	mesh:D006929	Hyperaldosteronism	1.0	semapv:LexicalMatching	gilda
+icd10:E26.8	Other hyperaldosteronism	skos:exactMatch	mesh:D001477	Bartter Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:E27.1	Primary adrenocortical insufficiency	skos:exactMatch	mesh:D000224	Addison Disease	1.0	semapv:LexicalMatching	gilda
+icd10:E27.4	Other and unspecified adrenocortical insufficiency	skos:exactMatch	mesh:D006994	Hypoaldosteronism	0.95	semapv:LexicalMatching	gilda
+icd10:E28.2	Polycystic ovarian syndrome	skos:exactMatch	mesh:D011085	Polycystic Ovary Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:E30.0	Delayed puberty	skos:exactMatch	mesh:D011628	Puberty, Delayed	1.0	semapv:LexicalMatching	gilda
+icd10:E30.1	Precocious puberty	skos:exactMatch	mesh:D011629	Puberty, Precocious	1.0	semapv:LexicalMatching	gilda
+icd10:E34.5	Androgen resistance syndrome	skos:exactMatch	mesh:D013734	Androgen-Insensitivity Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:E34.8	Other specified endocrine disorders	skos:exactMatch	mesh:D011371	Progeria	0.95	semapv:LexicalMatching	gilda
+icd10:E40	Kwashiorkor	skos:exactMatch	mesh:D007732	Kwashiorkor	1.0	semapv:LexicalMatching	gilda
+icd10:E40-E46	Malnutrition	skos:exactMatch	mesh:D044342	Malnutrition	1.0	semapv:LexicalMatching	gilda
+icd10:E50	Vitamin A deficiency	skos:exactMatch	mesh:D014802	Vitamin A Deficiency	1.0	semapv:LexicalMatching	gilda
+icd10:E51	Thiamine deficiency	skos:exactMatch	mesh:D013832	Thiamine Deficiency	1.0	semapv:LexicalMatching	gilda
+icd10:E51.1	Beriberi	skos:exactMatch	mesh:D001602	Beriberi	1.0	semapv:LexicalMatching	gilda
+icd10:E51.2	Wernicke encephalopathy	skos:exactMatch	mesh:D014899	Wernicke Encephalopathy	1.0	semapv:LexicalMatching	gilda
+icd10:E53.0	Riboflavin deficiency	skos:exactMatch	mesh:D012257	Riboflavin Deficiency	1.0	semapv:LexicalMatching	gilda
+icd10:E54	Ascorbic acid deficiency	skos:exactMatch	mesh:D001206	Ascorbic Acid Deficiency	1.0	semapv:LexicalMatching	gilda
+icd10:E55	Vitamin D deficiency	skos:exactMatch	mesh:D014808	Vitamin D Deficiency	1.0	semapv:LexicalMatching	gilda
+icd10:E59	Dietary selenium deficiency	skos:exactMatch	mesh:C536166	Keshan disease	0.95	semapv:LexicalMatching	gilda
+icd10:E61.1	Iron deficiency	skos:exactMatch	mesh:D000090463	Iron Deficiencies	1.0	semapv:LexicalMatching	gilda
+icd10:E61.2	Magnesium deficiency	skos:exactMatch	mesh:D008275	Magnesium Deficiency	1.0	semapv:LexicalMatching	gilda
+icd10:E66	Obesity	skos:exactMatch	mesh:D009765	Obesity	1.0	semapv:LexicalMatching	gilda
+icd10:E66.2	Extreme obesity with alveolar hypoventilation	skos:exactMatch	mesh:D010845	Obesity Hypoventilation Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:E66.8	Other obesity	skos:exactMatch	mesh:D009767	Obesity, Morbid	0.95	semapv:LexicalMatching	gilda
+icd10:E67.0	Hypervitaminosis A	skos:exactMatch	mesh:D006986	Hypervitaminosis A	1.0	semapv:LexicalMatching	gilda
+icd10:E70.2	Disorders of tyrosine metabolism	skos:exactMatch	mesh:D000474	Alkaptonuria	0.95	semapv:LexicalMatching	gilda
+icd10:E70.3	Albinism	skos:exactMatch	mesh:D000417	Albinism	1.0	semapv:LexicalMatching	gilda
+icd10:E72.0	Disorders of amino-acid transport	skos:exactMatch	mesh:D003555	Cystinuria	0.95	semapv:LexicalMatching	gilda
+icd10:E72.1	Disorders of sulfur-bearing amino-acid metabolism	skos:exactMatch	mesh:C535408	Gamma-cystathionase deficiency	0.95	semapv:LexicalMatching	gilda
+icd10:E72.2	Disorders of urea cycle metabolism	skos:exactMatch	mesh:D056807	Argininosuccinic Aciduria	0.95	semapv:LexicalMatching	gilda
+icd10:E73	Lactose intolerance	skos:exactMatch	mesh:D007787	Lactose Intolerance	1.0	semapv:LexicalMatching	gilda
+icd10:E74.0	Glycogen storage disease	skos:exactMatch	mesh:D006008	Glycogen Storage Disease	1.0	semapv:LexicalMatching	gilda
+icd10:E74.1	Disorders of fructose metabolism	skos:exactMatch	mesh:D015319	Fructose-1,6-Diphosphatase Deficiency	0.95	semapv:LexicalMatching	gilda
+icd10:E74.3	Other disorders of intestinal carbohydrate absorption	skos:exactMatch	mesh:C562602	Glucose-Galactose Malabsorption	0.95	semapv:LexicalMatching	gilda
+icd10:E74.8	Other specified disorders of carbohydrate metabolism	skos:exactMatch	mesh:D006959	Hyperoxaluria	0.95	semapv:LexicalMatching	gilda
+icd10:E75.2	Other sphingolipidosis	skos:exactMatch	mesh:D007966	Leukodystrophy, Metachromatic	0.95	semapv:LexicalMatching	gilda
+icd10:E75.4	Neuronal ceroid lipofuscinosis	skos:exactMatch	mesh:D009472	Neuronal Ceroid-Lipofuscinoses	1.0	semapv:LexicalMatching	gilda
+icd10:E75.5	Other lipid storage disorders	skos:exactMatch	mesh:D015223	Wolman Disease	0.95	semapv:LexicalMatching	gilda
+icd10:E76.1	Mucopolysaccharidosis, type II	skos:exactMatch	mesh:D016532	Mucopolysaccharidosis II	0.95	semapv:LexicalMatching	gilda
+icd10:E76.2	Other mucopolysaccharidoses	skos:exactMatch	mesh:D016538	Mucopolysaccharidosis VII	0.95	semapv:LexicalMatching	gilda
+icd10:E77.1	Defects in glycoprotein degradation	skos:exactMatch	mesh:D054880	Aspartylglucosaminuria	0.95	semapv:LexicalMatching	gilda
+icd10:E78.6	Lipoprotein deficiency	skos:exactMatch	mesh:D007863	Lecithin Cholesterol Acyltransferase Deficiency	0.95	semapv:LexicalMatching	gilda
+icd10:E79.1	Lesch-Nyhan syndrome	skos:exactMatch	mesh:D007926	Lesch-Nyhan Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:E80.0	Hereditary erythropoietic porphyria	skos:exactMatch	mesh:D017092	Porphyria, Erythropoietic	0.95	semapv:LexicalMatching	gilda
+icd10:E80.1	Porphyria cutanea tarda	skos:exactMatch	mesh:D017119	Porphyria Cutanea Tarda	1.0	semapv:LexicalMatching	gilda
+icd10:E80.2	Other porphyria	skos:exactMatch	mesh:D046349	Coproporphyria, Hereditary	0.95	semapv:LexicalMatching	gilda
+icd10:E80.4	Gilbert syndrome	skos:exactMatch	mesh:D005878	Gilbert Disease	1.0	semapv:LexicalMatching	gilda
+icd10:E80.5	Crigler-Najjar syndrome	skos:exactMatch	mesh:D003414	Crigler-Najjar Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:E80.6	Other disorders of bilirubin metabolism	skos:exactMatch	mesh:D007566	Jaundice, Chronic Idiopathic	0.95	semapv:LexicalMatching	gilda
+icd10:E83.0	Disorders of copper metabolism	skos:exactMatch	mesh:D006527	Hepatolenticular Degeneration	0.95	semapv:LexicalMatching	gilda
+icd10:E83.1	Disorders of iron metabolism	skos:exactMatch	mesh:D006432	Hemochromatosis	0.95	semapv:LexicalMatching	gilda
+icd10:E83.2	Disorders of zinc metabolism	skos:exactMatch	mesh:C538178	Acrodermatitis enteropathica	0.95	semapv:LexicalMatching	gilda
+icd10:E83.3	Disorders of phosphorus metabolism and phosphatases	skos:exactMatch	mesh:C562645	Acid Phosphatase Deficiency	0.95	semapv:LexicalMatching	gilda
+icd10:E84	Cystic fibrosis	skos:exactMatch	mesh:D003550	Cystic Fibrosis	1.0	semapv:LexicalMatching	gilda
+icd10:E85	Amyloidosis	skos:exactMatch	mesh:D000686	Amyloidosis	1.0	semapv:LexicalMatching	gilda
+icd10:E85.0	Non-neuropathic heredofamilial amyloidosis	skos:exactMatch	mesh:D010505	Familial Mediterranean Fever	0.95	semapv:LexicalMatching	gilda
+icd10:E86	Volume depletion	skos:exactMatch	mesh:D003681	Dehydration	0.95	semapv:LexicalMatching	gilda
+icd10:E87.2	Acidosis	skos:exactMatch	mesh:D000138	Acidosis	1.0	semapv:LexicalMatching	gilda
+icd10:E87.3	Alkalosis	skos:exactMatch	mesh:D000471	Alkalosis	1.0	semapv:LexicalMatching	gilda
+icd10:E88.3	Tumour lysis syndrome	skos:exactMatch	mesh:D015275	Tumor Lysis Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:E88.8	Other specified metabolic disorders	skos:exactMatch	mesh:C536561	Trimethylaminuria	0.95	semapv:LexicalMatching	gilda
+icd10:F01	Vascular dementia	skos:exactMatch	mesh:D015140	Dementia, Vascular	1.0	semapv:LexicalMatching	gilda
+icd10:F01.1	Multi-infarct dementia	skos:exactMatch	mesh:D015161	Dementia, Multi-Infarct	1.0	semapv:LexicalMatching	gilda
+icd10:F05.8	Other delirium	skos:exactMatch	mesh:D000071257	Emergence Delirium	0.95	semapv:LexicalMatching	gilda
+icd10:F20	Schizophrenia	skos:exactMatch	mesh:D012559	Schizophrenia	1.0	semapv:LexicalMatching	gilda
+icd10:F20.0	Paranoid schizophrenia	skos:exactMatch	mesh:D012563	Schizophrenia, Paranoid	1.0	semapv:LexicalMatching	gilda
+icd10:F20.1	Hebephrenic schizophrenia	skos:exactMatch	mesh:D012562	Schizophrenia, Disorganized	1.0	semapv:LexicalMatching	gilda
+icd10:F20.2	Catatonic schizophrenia	skos:exactMatch	mesh:D012560	Schizophrenia, Catatonic	1.0	semapv:LexicalMatching	gilda
+icd10:F21	Schizotypal disorder	skos:exactMatch	mesh:D012569	Schizotypal Personality Disorder	0.95	semapv:LexicalMatching	gilda
+icd10:F22.0	Delusional disorder	skos:exactMatch	mesh:D010259	Paranoid Disorders	0.95	semapv:LexicalMatching	gilda
+icd10:F24	Induced delusional disorder	skos:exactMatch	mesh:D012753	Shared Paranoid Disorder	0.95	semapv:LexicalMatching	gilda
+icd10:F34.0	Cyclothymia	skos:exactMatch	mesh:D003527	Cyclothymic Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F34.1	Dysthymia	skos:exactMatch	mesh:D019263	Dysthymic Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F40.0	Agoraphobia	skos:exactMatch	mesh:D000379	Agoraphobia	1.0	semapv:LexicalMatching	gilda
+icd10:F40.1	Social phobias	skos:exactMatch	mesh:D000072861	Phobia, Social	1.0	semapv:LexicalMatching	gilda
+icd10:F40.2	Specific (isolated) phobias	skos:exactMatch	mesh:C000719188	Acrophobia	0.95	semapv:LexicalMatching	gilda
+icd10:F42	Obsessive-compulsive disorder	skos:exactMatch	mesh:D009771	Obsessive-Compulsive Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F43.1	Post-traumatic stress disorder	skos:exactMatch	mesh:D013313	Stress Disorders, Post-Traumatic	1.0	semapv:LexicalMatching	gilda
+icd10:F43.2	Adjustment disorders	skos:exactMatch	mesh:D000275	Adjustment Disorders	1.0	semapv:LexicalMatching	gilda
+icd10:F44	Dissociative [conversion] disorders	skos:exactMatch	mesh:D007046	Hysteria	0.95	semapv:LexicalMatching	gilda
+icd10:F44.8	Other dissociative [conversion] disorders	skos:exactMatch	mesh:D009105	Dissociative Identity Disorder	0.95	semapv:LexicalMatching	gilda
+icd10:F45	Somatoform disorders	skos:exactMatch	mesh:D013001	Somatoform Disorders	1.0	semapv:LexicalMatching	gilda
+icd10:F45.2	Hypochondriacal disorder	skos:exactMatch	mesh:D057215	Body Dysmorphic Disorders	0.95	semapv:LexicalMatching	gilda
+icd10:F45.3	Somatoform autonomic dysfunction	skos:exactMatch	mesh:D009449	Neurocirculatory Asthenia	0.95	semapv:LexicalMatching	gilda
+icd10:F48.0	Neurasthenia	skos:exactMatch	mesh:D009440	Neurasthenia	1.0	semapv:LexicalMatching	gilda
+icd10:F48.8	Other specified neurotic disorders	skos:exactMatch	mesh:C000711649	dhat syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:F50.0	Anorexia nervosa	skos:exactMatch	mesh:D000856	Anorexia Nervosa	1.0	semapv:LexicalMatching	gilda
+icd10:F50.2	Bulimia nervosa	skos:exactMatch	mesh:D052018	Bulimia Nervosa	1.0	semapv:LexicalMatching	gilda
+icd10:F52.4	Premature ejaculation	skos:exactMatch	mesh:D061686	Premature Ejaculation	1.0	semapv:LexicalMatching	gilda
+icd10:F60.0	Paranoid personality disorder	skos:exactMatch	mesh:D010260	Paranoid Personality Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F60.1	Schizoid personality disorder	skos:exactMatch	mesh:D012557	Schizoid Personality Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F60.4	Histrionic personality disorder	skos:exactMatch	mesh:D006677	Histrionic Personality Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F60.7	Dependent personality disorder	skos:exactMatch	mesh:D003859	Dependent Personality Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F63.3	Trichotillomania	skos:exactMatch	mesh:D014256	Trichotillomania	1.0	semapv:LexicalMatching	gilda
+icd10:F64	Gender identity disorders	skos:exactMatch	mesh:D000068116	Gender Dysphoria	1.0	semapv:LexicalMatching	gilda
+icd10:F64.0	Transsexualism	skos:exactMatch	mesh:D014189	Transsexualism	1.0	semapv:LexicalMatching	gilda
+icd10:F65	Disorders of sexual preference	skos:exactMatch	mesh:D010262	Paraphilic Disorders	0.95	semapv:LexicalMatching	gilda
+icd10:F65.1	Fetishistic transvestism	skos:exactMatch	mesh:D014190	Transvestism	0.95	semapv:LexicalMatching	gilda
+icd10:F65.2	Exhibitionism	skos:exactMatch	mesh:D005084	Exhibitionism	1.0	semapv:LexicalMatching	gilda
+icd10:F65.3	Voyeurism	skos:exactMatch	mesh:D014843	Voyeurism	1.0	semapv:LexicalMatching	gilda
+icd10:F65.5	Sadomasochism	skos:exactMatch	mesh:D008398	Masochism	0.95	semapv:LexicalMatching	gilda
+icd10:F68.1	Intentional production or feigning of symptoms or disabilities, either physical or psychological [factitious disorder]	skos:exactMatch	mesh:D009110	Munchausen Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:F70-F79	Mental retardation	skos:exactMatch	mesh:D008607	Intellectual Disability	1.0	semapv:LexicalMatching	gilda
+icd10:F80.2	Receptive language disorder	skos:exactMatch	mesh:D001037	Aphasia	0.95	semapv:LexicalMatching	gilda
+icd10:F84.0	Childhood autism	skos:exactMatch	mesh:D001321	Autistic Disorder	0.95	semapv:LexicalMatching	gilda
+icd10:F84.2	Rett syndrome	skos:exactMatch	mesh:D015518	Rett Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:F84.5	Asperger syndrome	skos:exactMatch	mesh:D020817	Asperger Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:F91	Conduct disorders	skos:exactMatch	mesh:D019955	Conduct Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F91.3	Oppositional defiant disorder	skos:exactMatch	mesh:D000096865	Oppositional Defiant Disorder	1.0	semapv:LexicalMatching	gilda
+icd10:F93.8	Other childhood emotional disorders	skos:exactMatch	mesh:C000726808	general anxiety disorder	0.95	semapv:LexicalMatching	gilda
+icd10:F95	Tic disorders	skos:exactMatch	mesh:D013981	Tic Disorders	1.0	semapv:LexicalMatching	gilda
+icd10:G00.0	Haemophilus meningitis	skos:exactMatch	mesh:D008583	Meningitis, Haemophilus	1.0	semapv:LexicalMatching	gilda
+icd10:G00.1	Pneumococcal meningitis	skos:exactMatch	mesh:D008586	Meningitis, Pneumococcal	1.0	semapv:LexicalMatching	gilda
+icd10:G04	Encephalitis, myelitis and encephalomyelitis	skos:exactMatch	mesh:D008590	Meningoencephalitis	0.95	semapv:LexicalMatching	gilda
+icd10:G04.1	Human T-cell lymphotropic virus associated myelopathy	skos:exactMatch	mesh:D015493	Paraparesis, Tropical Spastic	0.95	semapv:LexicalMatching	gilda
+icd10:G10	Huntington disease	skos:exactMatch	mesh:D006816	Huntington Disease	1.0	semapv:LexicalMatching	gilda
+icd10:G11.4	Hereditary spastic paraplegia	skos:exactMatch	mesh:D015419	Spastic Paraplegia, Hereditary	1.0	semapv:LexicalMatching	gilda
+icd10:G12.2	Motor neuron disease	skos:exactMatch	mesh:D016472	Motor Neuron Disease	1.0	semapv:LexicalMatching	gilda
+icd10:G14	Postpolio syndrome	skos:exactMatch	mesh:D016262	Postpoliomyelitis Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G20	Parkinson disease	skos:exactMatch	mesh:D010300	Parkinson Disease	1.0	semapv:LexicalMatching	gilda
+icd10:G21	Secondary parkinsonism	skos:exactMatch	mesh:D010302	Parkinson Disease, Secondary	1.0	semapv:LexicalMatching	gilda
+icd10:G21.3	Postencephalitic parkinsonism	skos:exactMatch	mesh:D010301	Parkinson Disease, Postencephalitic	1.0	semapv:LexicalMatching	gilda
+icd10:G23.0	Hallervorden-Spatz disease	skos:exactMatch	mesh:D006211	Pantothenate Kinase-Associated Neurodegeneration	1.0	semapv:LexicalMatching	gilda
+icd10:G23.1	Progressive supranuclear ophthalmoplegia [Steele-Richardson-Olszewski]	skos:exactMatch	mesh:D013494	Supranuclear Palsy, Progressive	0.95	semapv:LexicalMatching	gilda
+icd10:G24	Dystonia	skos:exactMatch	mesh:D004421	Dystonia	1.0	semapv:LexicalMatching	gilda
+icd10:G24.5	Blepharospasm	skos:exactMatch	mesh:D001764	Blepharospasm	1.0	semapv:LexicalMatching	gilda
+icd10:G25.0	Essential tremor	skos:exactMatch	mesh:D020329	Essential Tremor	1.0	semapv:LexicalMatching	gilda
+icd10:G25.3	Myoclonus	skos:exactMatch	mesh:D009207	Myoclonus	1.0	semapv:LexicalMatching	gilda
+icd10:G25.8	Other specified extrapyramidal and movement disorders	skos:exactMatch	mesh:D012148	Restless Legs Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:G30	Alzheimer disease	skos:exactMatch	mesh:D000544	Alzheimer Disease	1.0	semapv:LexicalMatching	gilda
+icd10:G31.0	Circumscribed brain atrophy	skos:exactMatch	mesh:D020774	Pick Disease of the Brain	0.95	semapv:LexicalMatching	gilda
+icd10:G35	Multiple sclerosis	skos:exactMatch	mesh:D009103	Multiple Sclerosis	1.0	semapv:LexicalMatching	gilda
+icd10:G37.0	Diffuse sclerosis	skos:exactMatch	mesh:D002549	Diffuse Cerebral Sclerosis of Schilder	0.95	semapv:LexicalMatching	gilda
+icd10:G37.2	Central pontine myelinolysis	skos:exactMatch	mesh:D017590	Myelinolysis, Central Pontine	1.0	semapv:LexicalMatching	gilda
+icd10:G40	Epilepsy	skos:exactMatch	mesh:D004827	Epilepsy	1.0	semapv:LexicalMatching	gilda
+icd10:G40.4	Other generalized epilepsy and epileptic syndromes	skos:exactMatch	mesh:D013036	Spasms, Infantile	0.95	semapv:LexicalMatching	gilda
+icd10:G41	Status epilepticus	skos:exactMatch	mesh:D013226	Status Epilepticus	1.0	semapv:LexicalMatching	gilda
+icd10:G43	Migraine	skos:exactMatch	mesh:D008881	Migraine Disorders	1.0	semapv:LexicalMatching	gilda
+icd10:G43.8	Other migraine	skos:exactMatch	mesh:D060486	Ophthalmoplegic Migraine	0.95	semapv:LexicalMatching	gilda
+icd10:G44.0	Cluster headache syndrome	skos:exactMatch	mesh:D003027	Cluster Headache	1.0	semapv:LexicalMatching	gilda
+icd10:G44.2	Tension-type headache	skos:exactMatch	mesh:D018781	Tension-Type Headache	1.0	semapv:LexicalMatching	gilda
+icd10:G45.3	Amaurosis fugax	skos:exactMatch	mesh:D020757	Amaurosis Fugax	1.0	semapv:LexicalMatching	gilda
+icd10:G45.4	Transient global amnesia	skos:exactMatch	mesh:D020236	Amnesia, Transient Global	1.0	semapv:LexicalMatching	gilda
+icd10:G47.8	Other sleep disorders	skos:exactMatch	mesh:D017593	Kleine-Levin Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:G50.0	Trigeminal neuralgia	skos:exactMatch	mesh:D014277	Trigeminal Neuralgia	1.0	semapv:LexicalMatching	gilda
+icd10:G51	Facial nerve disorders	skos:exactMatch	mesh:D005155	Facial Nerve Diseases	1.0	semapv:LexicalMatching	gilda
+icd10:G51.0	Bell palsy	skos:exactMatch	mesh:D020330	Bell Palsy	1.0	semapv:LexicalMatching	gilda
+icd10:G51.2	Melkersson syndrome	skos:exactMatch	mesh:D008556	Melkersson-Rosenthal Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G54.0	Brachial plexus disorders	skos:exactMatch	mesh:D020516	Brachial Plexus Neuropathies	1.0	semapv:LexicalMatching	gilda
+icd10:G54.5	Neuralgic amyotrophy	skos:exactMatch	mesh:D020968	Brachial Plexus Neuritis	0.95	semapv:LexicalMatching	gilda
+icd10:G56.0	Carpal tunnel syndrome	skos:exactMatch	mesh:D002349	Carpal Tunnel Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G57.5	Tarsal tunnel syndrome	skos:exactMatch	mesh:D013641	Tarsal Tunnel Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G57.6	Lesion of plantar nerve	skos:exactMatch	mesh:D000070607	Morton Neuroma	0.95	semapv:LexicalMatching	gilda
+icd10:G60.0	Hereditary motor and sensory neuropathy	skos:exactMatch	mesh:D015417	Hereditary Sensory and Motor Neuropathy	1.0	semapv:LexicalMatching	gilda
+icd10:G60.1	Refsum disease	skos:exactMatch	mesh:D012035	Refsum Disease	1.0	semapv:LexicalMatching	gilda
+icd10:G61.0	Guillain-Barré syndrome	skos:exactMatch	mesh:D020275	Guillain-Barre Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G62.1	Alcoholic polyneuropathy	skos:exactMatch	mesh:D020269	Alcoholic Neuropathy	1.0	semapv:LexicalMatching	gilda
+icd10:G70.0	Myasthenia gravis	skos:exactMatch	mesh:D009157	Myasthenia Gravis	1.0	semapv:LexicalMatching	gilda
+icd10:G71.0	Muscular dystrophy	skos:exactMatch	mesh:D009136	Muscular Dystrophies	1.0	semapv:LexicalMatching	gilda
+icd10:G71.1	Myotonic disorders	skos:exactMatch	mesh:D020967	Myotonic Disorders	1.0	semapv:LexicalMatching	gilda
+icd10:G73.1	Lambert-Eaton syndrome	skos:exactMatch	mesh:D015624	Lambert-Eaton Myasthenic Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G80	Cerebral palsy	skos:exactMatch	mesh:D002547	Cerebral Palsy	1.0	semapv:LexicalMatching	gilda
+icd10:G80.4	Ataxic cerebral palsy	skos:exactMatch	mesh:C562856	Cerebral Palsy, Ataxic, Autosomal Recessive	1.0	semapv:LexicalMatching	gilda
+icd10:G81	Hemiplegia	skos:exactMatch	mesh:D006429	Hemiplegia	1.0	semapv:LexicalMatching	gilda
+icd10:G83.4	Cauda equina syndrome	skos:exactMatch	mesh:D000077684	Cauda Equina Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G83.5	Locked-in syndrome	skos:exactMatch	mesh:D000080422	Locked-In Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G90.2	Horner syndrome	skos:exactMatch	mesh:D006732	Horner Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G90.4	Autonomic dysreflexia	skos:exactMatch	mesh:D020211	Autonomic Dysreflexia	1.0	semapv:LexicalMatching	gilda
+icd10:G90.6	Complex regional pain syndrome type II	skos:exactMatch	mesh:D002422	Causalgia	1.0	semapv:LexicalMatching	gilda
+icd10:G91	Hydrocephalus	skos:exactMatch	mesh:D006849	Hydrocephalus	1.0	semapv:LexicalMatching	gilda
+icd10:G93.2	Benign intracranial hypertension	skos:exactMatch	mesh:D011559	Pseudotumor Cerebri	1.0	semapv:LexicalMatching	gilda
+icd10:G93.3	Postviral fatigue syndrome	skos:exactMatch	mesh:D015673	Fatigue Syndrome, Chronic	1.0	semapv:LexicalMatching	gilda
+icd10:G93.7	Reye syndrome	skos:exactMatch	mesh:D012202	Reye Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:G96.0	Cerebrospinal fluid leak	skos:exactMatch	mesh:D065634	Cerebrospinal Fluid Leak	1.0	semapv:LexicalMatching	gilda
+icd10:H00.1	Chalazion	skos:exactMatch	mesh:D017043	Chalazion	1.0	semapv:LexicalMatching	gilda
+icd10:H01.0	Blepharitis	skos:exactMatch	mesh:D001762	Blepharitis	1.0	semapv:LexicalMatching	gilda
+icd10:H02.2	Lagophthalmos	skos:exactMatch	mesh:D000092164	Lagophthalmos	1.0	semapv:LexicalMatching	gilda
+icd10:H02.5	Other disorders affecting eyelid function	skos:exactMatch	mesh:D016569	Blepharophimosis	0.95	semapv:LexicalMatching	gilda
+icd10:H04.1	Other disorders of lacrimal gland	skos:exactMatch	mesh:D015352	Dry Eye Syndromes	0.95	semapv:LexicalMatching	gilda
+icd10:H05.4	Enophthalmos	skos:exactMatch	mesh:D015841	Enophthalmos	1.0	semapv:LexicalMatching	gilda
+icd10:H10	Conjunctivitis	skos:exactMatch	mesh:D003231	Conjunctivitis	1.0	semapv:LexicalMatching	gilda
+icd10:H10.0	Mucopurulent conjunctivitis	skos:exactMatch	mesh:D003234	Conjunctivitis, Bacterial	1.0	semapv:LexicalMatching	gilda
+icd10:H11.0	Pterygium	skos:exactMatch	mesh:D011625	Pterygium	1.0	semapv:LexicalMatching	gilda
+icd10:H15.0	Scleritis	skos:exactMatch	mesh:D015423	Scleritis	1.0	semapv:LexicalMatching	gilda
+icd10:H16	Keratitis	skos:exactMatch	mesh:D007634	Keratitis	1.0	semapv:LexicalMatching	gilda
+icd10:H16.0	Corneal ulcer	skos:exactMatch	mesh:D003320	Corneal Ulcer	1.0	semapv:LexicalMatching	gilda
+icd10:H16.2	Keratoconjunctivitis	skos:exactMatch	mesh:D007637	Keratoconjunctivitis	1.0	semapv:LexicalMatching	gilda
+icd10:H16.4	Corneal neovascularization	skos:exactMatch	mesh:D016510	Corneal Neovascularization	1.0	semapv:LexicalMatching	gilda
+icd10:H18.4	Corneal degeneration	skos:exactMatch	mesh:D001112	Arcus Senilis	0.95	semapv:LexicalMatching	gilda
+icd10:H18.5	Hereditary corneal dystrophies	skos:exactMatch	mesh:D003317	Corneal Dystrophies, Hereditary	1.0	semapv:LexicalMatching	gilda
+icd10:H18.6	Keratoconus	skos:exactMatch	mesh:D007640	Keratoconus	1.0	semapv:LexicalMatching	gilda
+icd10:H19.3	Keratitis and keratoconjunctivitis in other diseases classified elsewhere	skos:exactMatch	mesh:D007638	Keratoconjunctivitis Sicca	0.95	semapv:LexicalMatching	gilda
+icd10:H20	Iridocyclitis	skos:exactMatch	mesh:D015863	Iridocyclitis	1.0	semapv:LexicalMatching	gilda
+icd10:H26.4	After-cataract	skos:exactMatch	mesh:D058442	Capsule Opacification	0.95	semapv:LexicalMatching	gilda
+icd10:H27.0	Aphakia	skos:exactMatch	mesh:D001035	Aphakia	1.0	semapv:LexicalMatching	gilda
+icd10:H30.2	Posterior cyclitis	skos:exactMatch	mesh:D015868	Pars Planitis	0.95	semapv:LexicalMatching	gilda
+icd10:H31.2	Hereditary choroidal dystrophy	skos:exactMatch	mesh:D015794	Choroideremia	0.95	semapv:LexicalMatching	gilda
+icd10:H31.8	Other specified disorders of choroid	skos:exactMatch	mesh:D020256	Choroidal Neovascularization	0.95	semapv:LexicalMatching	gilda
+icd10:H35.1	Retinopathy of prematurity	skos:exactMatch	mesh:D012178	Retinopathy of Prematurity	1.0	semapv:LexicalMatching	gilda
+icd10:H35.2	Other proliferative retinopathy	skos:exactMatch	mesh:D018630	Vitreoretinopathy, Proliferative	0.95	semapv:LexicalMatching	gilda
+icd10:H35.5	Hereditary retinal dystrophy	skos:exactMatch	mesh:D012174	Retinitis Pigmentosa	0.95	semapv:LexicalMatching	gilda
+icd10:H35.7	Separation of retinal layers	skos:exactMatch	mesh:D056833	Central Serous Chorioretinopathy	0.95	semapv:LexicalMatching	gilda
+icd10:H36.0	Diabetic retinopathy	skos:exactMatch	mesh:D003930	Diabetic Retinopathy	1.0	semapv:LexicalMatching	gilda
+icd10:H40.0	Glaucoma suspect	skos:exactMatch	mesh:D009798	Ocular Hypertension	0.95	semapv:LexicalMatching	gilda
+icd10:H44.0	Purulent endophthalmitis	skos:exactMatch	mesh:D010202	Panophthalmitis	0.95	semapv:LexicalMatching	gilda
+icd10:H44.1	Other endophthalmitis	skos:exactMatch	mesh:D009879	Ophthalmia, Sympathetic	0.95	semapv:LexicalMatching	gilda
+icd10:H44.2	Degenerative myopia	skos:exactMatch	mesh:D047728	Myopia, Degenerative	1.0	semapv:LexicalMatching	gilda
+icd10:H46	Optic neuritis	skos:exactMatch	mesh:D009902	Optic Neuritis	1.0	semapv:LexicalMatching	gilda
+icd10:H47.2	Optic atrophy	skos:exactMatch	mesh:D009896	Optic Atrophy	1.0	semapv:LexicalMatching	gilda
+icd10:H49.4	Progressive external ophthalmoplegia	skos:exactMatch	mesh:D017246	Ophthalmoplegia, Chronic Progressive External	1.0	semapv:LexicalMatching	gilda
+icd10:H49.8	Other paralytic strabismus	skos:exactMatch	mesh:D007625	Kearns-Sayre Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:H50.4	Other and unspecified heterotropia	skos:exactMatch	mesh:C000721272	cyclotropia	0.95	semapv:LexicalMatching	gilda
+icd10:H50.8	Other specified strabismus	skos:exactMatch	mesh:D004370	Duane Retraction Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:H52.0	Hypermetropia	skos:exactMatch	mesh:D006956	Hyperopia	1.0	semapv:LexicalMatching	gilda
+icd10:H52.1	Myopia	skos:exactMatch	mesh:D009216	Myopia	1.0	semapv:LexicalMatching	gilda
+icd10:H52.2	Astigmatism	skos:exactMatch	mesh:D001251	Astigmatism	1.0	semapv:LexicalMatching	gilda
+icd10:H52.4	Presbyopia	skos:exactMatch	mesh:D011305	Presbyopia	1.0	semapv:LexicalMatching	gilda
+icd10:H53.1	Subjective visual disturbances	skos:exactMatch	mesh:D001248	Asthenopia	0.95	semapv:LexicalMatching	gilda
+icd10:H53.2	Diplopia	skos:exactMatch	mesh:D004172	Diplopia	1.0	semapv:LexicalMatching	gilda
+icd10:H53.6	Night blindness	skos:exactMatch	mesh:D009755	Night Blindness	1.0	semapv:LexicalMatching	gilda
+icd10:H60	Otitis externa	skos:exactMatch	mesh:D010032	Otitis Externa	1.0	semapv:LexicalMatching	gilda
+icd10:H70.2	Petrositis	skos:exactMatch	mesh:D059270	Petrositis	1.0	semapv:LexicalMatching	gilda
+icd10:H74.0	Tympanosclerosis	skos:exactMatch	mesh:D000092163	Tympanosclerosis	1.0	semapv:LexicalMatching	gilda
+icd10:H80	Otosclerosis	skos:exactMatch	mesh:D010040	Otosclerosis	1.0	semapv:LexicalMatching	gilda
+icd10:H81.0	Ménière disease	skos:exactMatch	mesh:D008575	Meniere Disease	1.0	semapv:LexicalMatching	gilda
+icd10:H81.2	Vestibular neuronitis	skos:exactMatch	mesh:D020338	Vestibular Neuronitis	1.0	semapv:LexicalMatching	gilda
+icd10:H83.0	Labyrinthitis	skos:exactMatch	mesh:D007762	Labyrinthitis	1.0	semapv:LexicalMatching	gilda
+icd10:H83.3	Noise effects on inner ear	skos:exactMatch	mesh:D006317	Hearing Loss, Noise-Induced	0.95	semapv:LexicalMatching	gilda
+icd10:H91.1	Presbycusis	skos:exactMatch	mesh:D011304	Presbycusis	1.0	semapv:LexicalMatching	gilda
+icd10:H92.0	Otalgia	skos:exactMatch	mesh:D004433	Earache	1.0	semapv:LexicalMatching	gilda
+icd10:H93.1	Tinnitus	skos:exactMatch	mesh:D014012	Tinnitus	1.0	semapv:LexicalMatching	gilda
+icd10:H93.2	Other abnormal auditory perceptions	skos:exactMatch	mesh:D012001	Hyperacusis	0.95	semapv:LexicalMatching	gilda
+icd10:I00-I02	Acute rheumatic fever	skos:exactMatch	mesh:D012213	Rheumatic Fever	1.0	semapv:LexicalMatching	gilda
+icd10:I05.0	Mitral stenosis	skos:exactMatch	mesh:D008946	Mitral Valve Stenosis	1.0	semapv:LexicalMatching	gilda
+icd10:I10	Essential (primary) hypertension	skos:exactMatch	mesh:D006973	Hypertension	0.95	semapv:LexicalMatching	gilda
+icd10:I12	Hypertensive renal disease	skos:exactMatch	mesh:C563161	Hypertensive Nephropathy	0.95	semapv:LexicalMatching	gilda
+icd10:I15.0	Renovascular hypertension	skos:exactMatch	mesh:D006978	Hypertension, Renovascular	1.0	semapv:LexicalMatching	gilda
+icd10:I20	Angina pectoris	skos:exactMatch	mesh:D000787	Angina Pectoris	1.0	semapv:LexicalMatching	gilda
+icd10:I20.0	Unstable angina	skos:exactMatch	mesh:D000789	Angina, Unstable	1.0	semapv:LexicalMatching	gilda
+icd10:I20.8	Other forms of angina pectoris	skos:exactMatch	mesh:D060050	Angina, Stable	0.95	semapv:LexicalMatching	gilda
+icd10:I24.1	Dressler syndrome	skos:exactMatch	mesh:C538618	Donath-Landsteiner hemolytic anemia	1.0	semapv:LexicalMatching	gilda
+icd10:I26	Pulmonary embolism	skos:exactMatch	mesh:D011655	Pulmonary Embolism	1.0	semapv:LexicalMatching	gilda
+icd10:I31.9	Disease of pericardium, unspecified	skos:exactMatch	mesh:D002305	Cardiac Tamponade	0.95	semapv:LexicalMatching	gilda
+icd10:I37.0	Pulmonary valve stenosis	skos:exactMatch	mesh:D011666	Pulmonary Valve Stenosis	1.0	semapv:LexicalMatching	gilda
+icd10:I37.1	Pulmonary valve insufficiency	skos:exactMatch	mesh:D011665	Pulmonary Valve Insufficiency	1.0	semapv:LexicalMatching	gilda
+icd10:I42	Cardiomyopathy	skos:exactMatch	mesh:D009202	Cardiomyopathies	1.0	semapv:LexicalMatching	gilda
+icd10:I42.0	Dilated cardiomyopathy	skos:exactMatch	mesh:D002311	Cardiomyopathy, Dilated	1.0	semapv:LexicalMatching	gilda
+icd10:I42.4	Endocardial fibroelastosis	skos:exactMatch	mesh:D004695	Endocardial Fibroelastosis	1.0	semapv:LexicalMatching	gilda
+icd10:I42.6	Alcoholic cardiomyopathy	skos:exactMatch	mesh:D002310	Cardiomyopathy, Alcoholic	1.0	semapv:LexicalMatching	gilda
+icd10:I45.5	Other specified heart block	skos:exactMatch	mesh:D012848	Sinoatrial Block	0.95	semapv:LexicalMatching	gilda
+icd10:I45.6	Pre-excitation syndrome	skos:exactMatch	mesh:D011226	Pre-Excitation Syndromes	1.0	semapv:LexicalMatching	gilda
+icd10:I45.9	Conduction disorder, unspecified	skos:exactMatch	mesh:D000219	Adams-Stokes Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:I46	Cardiac arrest	skos:exactMatch	mesh:D006323	Heart Arrest	1.0	semapv:LexicalMatching	gilda
+icd10:I47	Paroxysmal tachycardia	skos:exactMatch	mesh:D013614	Tachycardia, Paroxysmal	1.0	semapv:LexicalMatching	gilda
+icd10:I47.1	Supraventricular tachycardia	skos:exactMatch	mesh:D013617	Tachycardia, Supraventricular	1.0	semapv:LexicalMatching	gilda
+icd10:I47.2	Ventricular tachycardia	skos:exactMatch	mesh:D017180	Tachycardia, Ventricular	1.0	semapv:LexicalMatching	gilda
+icd10:I49.4	Other and unspecified premature depolarization	skos:exactMatch	mesh:D005117	Cardiac Complexes, Premature	0.95	semapv:LexicalMatching	gilda
+icd10:I49.5	Sick sinus syndrome	skos:exactMatch	mesh:D012804	Sick Sinus Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:I49.8	Other specified cardiac arrhythmias	skos:exactMatch	mesh:D053840	Brugada Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:I50	Heart failure	skos:exactMatch	mesh:D006333	Heart Failure	1.0	semapv:LexicalMatching	gilda
+icd10:I51.7	Cardiomegaly	skos:exactMatch	mesh:D006332	Cardiomegaly	1.0	semapv:LexicalMatching	gilda
+icd10:I60-I69	Cerebrovascular diseases	skos:exactMatch	mesh:D002561	Cerebrovascular Disorders	1.0	semapv:LexicalMatching	gilda
+icd10:I63	Cerebral infarction	skos:exactMatch	mesh:D002544	Cerebral Infarction	1.0	semapv:LexicalMatching	gilda
+icd10:I67.4	Hypertensive encephalopathy	skos:exactMatch	mesh:D020343	Hypertensive Encephalopathy	1.0	semapv:LexicalMatching	gilda
+icd10:I67.5	Moyamoya disease	skos:exactMatch	mesh:D009072	Moyamoya Disease	1.0	semapv:LexicalMatching	gilda
+icd10:I68.0	Cerebral amyloid angiopathy	skos:exactMatch	mesh:D016657	Cerebral Amyloid Angiopathy	1.0	semapv:LexicalMatching	gilda
+icd10:I70	Atherosclerosis	skos:exactMatch	mesh:D050197	Atherosclerosis	1.0	semapv:LexicalMatching	gilda
+icd10:I73.8	Other specified peripheral vascular diseases	skos:exactMatch	mesh:D004916	Erythromelalgia	0.95	semapv:LexicalMatching	gilda
+icd10:I73.9	Peripheral vascular disease, unspecified	skos:exactMatch	mesh:D007383	Intermittent Claudication	0.95	semapv:LexicalMatching	gilda
+icd10:I74.0	Embolism and thrombosis of abdominal aorta	skos:exactMatch	mesh:D007925	Leriche Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:I78.0	Hereditary haemorrhagic telangiectasia	skos:exactMatch	mesh:D013683	Telangiectasia, Hereditary Hemorrhagic	0.95	semapv:LexicalMatching	gilda
+icd10:I82.0	Budd-Chiari syndrome	skos:exactMatch	mesh:D006502	Budd-Chiari Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:I86.1	Scrotal varices	skos:exactMatch	mesh:D014646	Varicocele	0.95	semapv:LexicalMatching	gilda
+icd10:I87.0	Postthrombotic syndrome	skos:exactMatch	mesh:D054070	Postthrombotic Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:I89.0	Lymphoedema, not elsewhere classified	skos:exactMatch	mesh:D008200	Lymphangiectasis	0.95	semapv:LexicalMatching	gilda
+icd10:I89.1	Lymphangitis	skos:exactMatch	mesh:D008205	Lymphangitis	1.0	semapv:LexicalMatching	gilda
+icd10:I95	Hypotension	skos:exactMatch	mesh:D007022	Hypotension	1.0	semapv:LexicalMatching	gilda
+icd10:I95.1	Orthostatic hypotension	skos:exactMatch	mesh:D007024	Hypotension, Orthostatic	1.0	semapv:LexicalMatching	gilda
+icd10:II	Neoplasms	skos:exactMatch	mesh:D009369	Neoplasms	1.0	semapv:LexicalMatching	gilda
+icd10:J16.0	Chlamydial pneumonia	skos:exactMatch	mesh:D061387	Chlamydial Pneumonia	1.0	semapv:LexicalMatching	gilda
+icd10:J30.0	Vasomotor rhinitis	skos:exactMatch	mesh:D012223	Rhinitis, Vasomotor	1.0	semapv:LexicalMatching	gilda
+icd10:J30.1	Allergic rhinitis due to pollen	skos:exactMatch	mesh:D006255	Rhinitis, Allergic, Seasonal	0.95	semapv:LexicalMatching	gilda
+icd10:J33	Nasal polyp	skos:exactMatch	mesh:D009298	Nasal Polyps	1.0	semapv:LexicalMatching	gilda
+icd10:J36	Peritonsillar abscess	skos:exactMatch	mesh:D000039	Peritonsillar Abscess	1.0	semapv:LexicalMatching	gilda
+icd10:J38.5	Laryngeal spasm	skos:exactMatch	mesh:D007826	Laryngismus	1.0	semapv:LexicalMatching	gilda
+icd10:J43	Emphysema	skos:exactMatch	mesh:D004646	Emphysema	1.0	semapv:LexicalMatching	gilda
+icd10:J45	Asthma	skos:exactMatch	mesh:D001249	Asthma	1.0	semapv:LexicalMatching	gilda
+icd10:J46	Status asthmaticus	skos:exactMatch	mesh:D013224	Status Asthmaticus	1.0	semapv:LexicalMatching	gilda
+icd10:J47	Bronchiectasis	skos:exactMatch	mesh:D001987	Bronchiectasis	1.0	semapv:LexicalMatching	gilda
+icd10:J60	Coalworker pneumoconiosis	skos:exactMatch	mesh:D055008	Anthracosis	1.0	semapv:LexicalMatching	gilda
+icd10:J61	Pneumoconiosis due to asbestos and other mineral fibres	skos:exactMatch	mesh:D001195	Asbestosis	0.95	semapv:LexicalMatching	gilda
+icd10:J63.2	Berylliosis	skos:exactMatch	mesh:D001607	Berylliosis	1.0	semapv:LexicalMatching	gilda
+icd10:J63.4	Siderosis	skos:exactMatch	mesh:D012806	Siderosis	1.0	semapv:LexicalMatching	gilda
+icd10:J66.0	Byssinosis	skos:exactMatch	mesh:D002095	Byssinosis	1.0	semapv:LexicalMatching	gilda
+icd10:J67.0	Farmer lung	skos:exactMatch	mesh:D005203	Farmer's Lung	1.0	semapv:LexicalMatching	gilda
+icd10:J67.2	Bird fancier lung	skos:exactMatch	mesh:D001716	Bird Fancier's Lung	1.0	semapv:LexicalMatching	gilda
+icd10:J69.1	Pneumonitis due to oils and essences	skos:exactMatch	mesh:D011017	Pneumonia, Lipid	0.95	semapv:LexicalMatching	gilda
+icd10:J70.0	Acute pulmonary manifestations due to radiation	skos:exactMatch	mesh:D017564	Radiation Pneumonitis	0.95	semapv:LexicalMatching	gilda
+icd10:J84.0	Alveolar and parietoalveolar conditions	skos:exactMatch	mesh:C562405	Pulmonary Alveolar Microlithiasis	0.95	semapv:LexicalMatching	gilda
+icd10:J84.1	Other interstitial pulmonary diseases with fibrosis	skos:exactMatch	mesh:D000080203	Hamman-Rich Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:J86	Pyothorax	skos:exactMatch	mesh:D016724	Empyema, Pleural	1.0	semapv:LexicalMatching	gilda
+icd10:J93	Pneumothorax	skos:exactMatch	mesh:D011030	Pneumothorax	1.0	semapv:LexicalMatching	gilda
+icd10:J94.8	Other specified pleural conditions	skos:exactMatch	mesh:D006876	Hydrothorax	0.95	semapv:LexicalMatching	gilda
+icd10:J98.1	Pulmonary collapse	skos:exactMatch	mesh:D001261	Pulmonary Atelectasis	0.95	semapv:LexicalMatching	gilda
+icd10:J98.2	Interstitial emphysema	skos:exactMatch	mesh:D008478	Mediastinal Emphysema	0.95	semapv:LexicalMatching	gilda
+icd10:J98.5	Diseases of mediastinum, not elsewhere classified	skos:exactMatch	mesh:D008480	Mediastinitis	0.95	semapv:LexicalMatching	gilda
+icd10:K00.0	Anodontia	skos:exactMatch	mesh:D000848	Anodontia	1.0	semapv:LexicalMatching	gilda
+icd10:K00.1	Supernumerary teeth	skos:exactMatch	mesh:D014096	Tooth, Supernumerary	1.0	semapv:LexicalMatching	gilda
+icd10:K00.2	Abnormalities of size and form of teeth	skos:exactMatch	mesh:C000723629	enamel pearl	0.95	semapv:LexicalMatching	gilda
+icd10:K00.3	Mottled teeth	skos:exactMatch	mesh:D009050	Fluorosis, Dental	0.95	semapv:LexicalMatching	gilda
+icd10:K01.1	Impacted teeth	skos:exactMatch	mesh:D014095	Tooth, Impacted	1.0	semapv:LexicalMatching	gilda
+icd10:K02	Dental caries	skos:exactMatch	mesh:D003731	Dental Caries	1.0	semapv:LexicalMatching	gilda
+icd10:K03.4	Hypercementosis	skos:exactMatch	mesh:D006936	Hypercementosis	1.0	semapv:LexicalMatching	gilda
+icd10:K03.5	Ankylosis of teeth	skos:exactMatch	mesh:D020254	Tooth Ankylosis	1.0	semapv:LexicalMatching	gilda
+icd10:K04.0	Pulpitis	skos:exactMatch	mesh:D011671	Pulpitis	1.0	semapv:LexicalMatching	gilda
+icd10:K04.8	Radicular cyst	skos:exactMatch	mesh:D011842	Radicular Cyst	1.0	semapv:LexicalMatching	gilda
+icd10:K05.2	Acute periodontitis	skos:exactMatch	mesh:D010508	Periodontal Abscess	0.95	semapv:LexicalMatching	gilda
+icd10:K05.3	Chronic periodontitis	skos:exactMatch	mesh:D055113	Chronic Periodontitis	1.0	semapv:LexicalMatching	gilda
+icd10:K06.0	Gingival recession	skos:exactMatch	mesh:D005889	Gingival Recession	1.0	semapv:LexicalMatching	gilda
+icd10:K06.1	Gingival enlargement	skos:exactMatch	mesh:D005351	Fibromatosis, Gingival	0.95	semapv:LexicalMatching	gilda
+icd10:K07.6	Temporomandibular joint disorders	skos:exactMatch	mesh:D013705	Temporomandibular Joint Disorders	1.0	semapv:LexicalMatching	gilda
+icd10:K10.3	Alveolitis of jaws	skos:exactMatch	mesh:D004368	Dry Socket	0.95	semapv:LexicalMatching	gilda
+icd10:K10.8	Other specified diseases of jaws	skos:exactMatch	mesh:D002636	Cherubism	0.95	semapv:LexicalMatching	gilda
+icd10:K11.2	Sialoadenitis	skos:exactMatch	mesh:D012793	Sialadenitis	1.0	semapv:LexicalMatching	gilda
+icd10:K11.5	Sialolithiasis	skos:exactMatch	mesh:D015494	Salivary Gland Calculi	1.0	semapv:LexicalMatching	gilda
+icd10:K11.6	Mucocele of salivary gland	skos:exactMatch	mesh:D011900	Ranula	0.95	semapv:LexicalMatching	gilda
+icd10:K11.7	Disturbances of salivary secretion	skos:exactMatch	mesh:D014987	Xerostomia	0.95	semapv:LexicalMatching	gilda
+icd10:K11.8	Other diseases of salivary glands	skos:exactMatch	mesh:D008882	Mikulicz' Disease	0.95	semapv:LexicalMatching	gilda
+icd10:K13.3	Hairy leukoplakia	skos:exactMatch	mesh:D017733	Leukoplakia, Hairy	1.0	semapv:LexicalMatching	gilda
+icd10:K13.5	Oral submucous fibrosis	skos:exactMatch	mesh:D009914	Oral Submucous Fibrosis	1.0	semapv:LexicalMatching	gilda
+icd10:K14.0	Glossitis	skos:exactMatch	mesh:D005928	Glossitis	1.0	semapv:LexicalMatching	gilda
+icd10:K14.1	Geographic tongue	skos:exactMatch	mesh:D005929	Glossitis, Benign Migratory	1.0	semapv:LexicalMatching	gilda
+icd10:K14.3	Hypertrophy of tongue papillae	skos:exactMatch	mesh:C538420	Black hairy tongue	0.95	semapv:LexicalMatching	gilda
+icd10:K14.6	Glossodynia	skos:exactMatch	mesh:D005926	Glossalgia	1.0	semapv:LexicalMatching	gilda
+icd10:K22.0	Achalasia of cardia	skos:exactMatch	mesh:D004931	Esophageal Achalasia	0.95	semapv:LexicalMatching	gilda
+icd10:K22.6	Gastro-oesophageal laceration-haemorrhage syndrome	skos:exactMatch	mesh:D008309	Mallory-Weiss Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:K25	Gastric ulcer	skos:exactMatch	mesh:D013276	Stomach Ulcer	1.0	semapv:LexicalMatching	gilda
+icd10:K26	Duodenal ulcer	skos:exactMatch	mesh:D004381	Duodenal Ulcer	1.0	semapv:LexicalMatching	gilda
+icd10:K29.6	Other gastritis	skos:exactMatch	mesh:D005758	Gastritis, Hypertrophic	0.95	semapv:LexicalMatching	gilda
+icd10:K29.8	Duodenitis	skos:exactMatch	mesh:D004382	Duodenitis	1.0	semapv:LexicalMatching	gilda
+icd10:K30	Functional dyspepsia	skos:exactMatch	mesh:D004415	Dyspepsia	0.95	semapv:LexicalMatching	gilda
+icd10:K31.4	Gastric diverticulum	skos:exactMatch	mesh:D013273	Diverticulum, Stomach	1.0	semapv:LexicalMatching	gilda
+icd10:K31.8	Other specified diseases of stomach and duodenum	skos:exactMatch	mesh:D000126	Achlorhydria	0.95	semapv:LexicalMatching	gilda
+icd10:K40	Inguinal hernia	skos:exactMatch	mesh:D006552	Hernia, Inguinal	1.0	semapv:LexicalMatching	gilda
+icd10:K40-K46	Hernia	skos:exactMatch	mesh:D006547	Hernia	1.0	semapv:LexicalMatching	gilda
+icd10:K41	Femoral hernia	skos:exactMatch	mesh:D006550	Hernia, Femoral	1.0	semapv:LexicalMatching	gilda
+icd10:K43	Ventral hernia	skos:exactMatch	mesh:D006555	Hernia, Ventral	1.0	semapv:LexicalMatching	gilda
+icd10:K44	Diaphragmatic hernia	skos:exactMatch	mesh:D006548	Hernia, Diaphragmatic	1.0	semapv:LexicalMatching	gilda
+icd10:K51	Ulcerative colitis	skos:exactMatch	mesh:D003093	Colitis, Ulcerative	1.0	semapv:LexicalMatching	gilda
+icd10:K52.8	Other specified noninfective gastroenteritis and colitis	skos:exactMatch	mesh:D046729	Colitis, Collagenous	0.95	semapv:LexicalMatching	gilda
+icd10:K56.1	Intussusception	skos:exactMatch	mesh:D007443	Intussusception	1.0	semapv:LexicalMatching	gilda
+icd10:K56.2	Volvulus	skos:exactMatch	mesh:D045822	Intestinal Volvulus	1.0	semapv:LexicalMatching	gilda
+icd10:K58	Irritable bowel syndrome	skos:exactMatch	mesh:D043183	Irritable Bowel Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:K59.0	Constipation	skos:exactMatch	mesh:D003248	Constipation	1.0	semapv:LexicalMatching	gilda
+icd10:K59.3	Megacolon, not elsewhere classified	skos:exactMatch	mesh:D008532	Megacolon, Toxic	0.95	semapv:LexicalMatching	gilda
+icd10:K60.4	Rectal fistula	skos:exactMatch	mesh:D012003	Rectal Fistula	1.0	semapv:LexicalMatching	gilda
+icd10:K62.3	Rectal prolapse	skos:exactMatch	mesh:D012005	Rectal Prolapse	1.0	semapv:LexicalMatching	gilda
+icd10:K65	Peritonitis	skos:exactMatch	mesh:D010538	Peritonitis	1.0	semapv:LexicalMatching	gilda
+icd10:K66.2	Retroperitoneal fibrosis	skos:exactMatch	mesh:D012185	Retroperitoneal Fibrosis	1.0	semapv:LexicalMatching	gilda
+icd10:K70	Alcoholic liver disease	skos:exactMatch	mesh:D008108	Liver Diseases, Alcoholic	1.0	semapv:LexicalMatching	gilda
+icd10:K70.0	Alcoholic fatty liver	skos:exactMatch	mesh:D005235	Fatty Liver, Alcoholic	1.0	semapv:LexicalMatching	gilda
+icd10:K70.1	Alcoholic hepatitis	skos:exactMatch	mesh:D006519	Hepatitis, Alcoholic	1.0	semapv:LexicalMatching	gilda
+icd10:K75.4	Autoimmune hepatitis	skos:exactMatch	mesh:D019693	Hepatitis, Autoimmune	1.0	semapv:LexicalMatching	gilda
+icd10:K76.4	Peliosis hepatis	skos:exactMatch	mesh:D010382	Peliosis Hepatis	1.0	semapv:LexicalMatching	gilda
+icd10:K76.5	Hepatic veno-occlusive disease	skos:exactMatch	mesh:D006504	Hepatic Veno-Occlusive Disease	1.0	semapv:LexicalMatching	gilda
+icd10:K76.6	Portal hypertension	skos:exactMatch	mesh:D006975	Hypertension, Portal	1.0	semapv:LexicalMatching	gilda
+icd10:K76.7	Hepatorenal syndrome	skos:exactMatch	mesh:D006530	Hepatorenal Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:K80	Cholelithiasis	skos:exactMatch	mesh:D002769	Cholelithiasis	1.0	semapv:LexicalMatching	gilda
+icd10:K81	Cholecystitis	skos:exactMatch	mesh:D002764	Cholecystitis	1.0	semapv:LexicalMatching	gilda
+icd10:K81.0	Acute cholecystitis	skos:exactMatch	mesh:D041881	Cholecystitis, Acute	1.0	semapv:LexicalMatching	gilda
+icd10:K83.0	Cholangitis	skos:exactMatch	mesh:D002761	Cholangitis	1.0	semapv:LexicalMatching	gilda
+icd10:K90.0	Coeliac disease	skos:exactMatch	mesh:D002446	Celiac Disease	0.95	semapv:LexicalMatching	gilda
+icd10:K90.1	Tropical sprue	skos:exactMatch	mesh:D013182	Sprue, Tropical	1.0	semapv:LexicalMatching	gilda
+icd10:K91.5	Postcholecystectomy syndrome	skos:exactMatch	mesh:D017562	Postcholecystectomy Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:L00	Staphylococcal scalded skin syndrome	skos:exactMatch	mesh:D013206	Staphylococcal Scalded Skin Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:L01	Impetigo	skos:exactMatch	mesh:D007169	Impetigo	1.0	semapv:LexicalMatching	gilda
+icd10:L02	Cutaneous abscess, furuncle and carbuncle	skos:exactMatch	mesh:D005667	Furunculosis	0.95	semapv:LexicalMatching	gilda
+icd10:L03	Cellulitis	skos:exactMatch	mesh:D002481	Cellulitis	1.0	semapv:LexicalMatching	gilda
+icd10:L03.0	Cellulitis of finger and toe	skos:exactMatch	mesh:D010304	Paronychia	0.95	semapv:LexicalMatching	gilda
+icd10:L05	Pilonidal cyst	skos:exactMatch	mesh:D010864	Pilonidal Sinus	1.0	semapv:LexicalMatching	gilda
+icd10:L08.0	Pyoderma	skos:exactMatch	mesh:D011711	Pyoderma	1.0	semapv:LexicalMatching	gilda
+icd10:L08.1	Erythrasma	skos:exactMatch	mesh:D004894	Erythrasma	1.0	semapv:LexicalMatching	gilda
+icd10:L10	Pemphigus	skos:exactMatch	mesh:D010392	Pemphigus	1.0	semapv:LexicalMatching	gilda
+icd10:L12.0	Bullous pemphigoid	skos:exactMatch	mesh:D010391	Pemphigoid, Bullous	1.0	semapv:LexicalMatching	gilda
+icd10:L12.1	Cicatricial pemphigoid	skos:exactMatch	mesh:D010390	Pemphigoid, Benign Mucous Membrane	1.0	semapv:LexicalMatching	gilda
+icd10:L12.3	Acquired epidermolysis bullosa	skos:exactMatch	mesh:D016107	Epidermolysis Bullosa Acquisita	1.0	semapv:LexicalMatching	gilda
+icd10:L13.0	Dermatitis herpetiformis	skos:exactMatch	mesh:D003874	Dermatitis Herpetiformis	1.0	semapv:LexicalMatching	gilda
+icd10:L20	Atopic dermatitis	skos:exactMatch	mesh:D003876	Dermatitis, Atopic	1.0	semapv:LexicalMatching	gilda
+icd10:L23	Allergic contact dermatitis	skos:exactMatch	mesh:D017449	Dermatitis, Allergic Contact	1.0	semapv:LexicalMatching	gilda
+icd10:L23.0	Allergic contact dermatitis due to metals	skos:exactMatch	mesh:D002857	Chromium	0.95	semapv:LexicalMatching	gilda
+icd10:L23.5	Allergic contact dermatitis due to other chemical products	skos:exactMatch	mesh:D010969	Plastics	0.95	semapv:LexicalMatching	gilda
+icd10:L26	Exfoliative dermatitis	skos:exactMatch	mesh:D003873	Dermatitis, Exfoliative	1.0	semapv:LexicalMatching	gilda
+icd10:L29	Pruritus	skos:exactMatch	mesh:D011537	Pruritus	1.0	semapv:LexicalMatching	gilda
+icd10:L29.0	Pruritus ani	skos:exactMatch	mesh:D011538	Pruritus Ani	1.0	semapv:LexicalMatching	gilda
+icd10:L29.2	Pruritus vulvae	skos:exactMatch	mesh:D011539	Pruritus Vulvae	1.0	semapv:LexicalMatching	gilda
+icd10:L40	Psoriasis	skos:exactMatch	mesh:D011565	Psoriasis	1.0	semapv:LexicalMatching	gilda
+icd10:L40-L45	Papulosquamous disorders	skos:exactMatch	mesh:D017444	Skin Diseases, Papulosquamous	1.0	semapv:LexicalMatching	gilda
+icd10:L41	Parapsoriasis	skos:exactMatch	mesh:D010267	Parapsoriasis	1.0	semapv:LexicalMatching	gilda
+icd10:L42	Pityriasis rosea	skos:exactMatch	mesh:D017515	Pityriasis Rosea	1.0	semapv:LexicalMatching	gilda
+icd10:L43	Lichen planus	skos:exactMatch	mesh:D008010	Lichen Planus	1.0	semapv:LexicalMatching	gilda
+icd10:L44.0	Pityriasis rubra pilaris	skos:exactMatch	mesh:D010916	Pityriasis Rubra Pilaris	1.0	semapv:LexicalMatching	gilda
+icd10:L44.1	Lichen nitidus	skos:exactMatch	mesh:D017513	Lichen Nitidus	1.0	semapv:LexicalMatching	gilda
+icd10:L50	Urticaria	skos:exactMatch	mesh:D014581	Urticaria	1.0	semapv:LexicalMatching	gilda
+icd10:L51	Erythema multiforme	skos:exactMatch	mesh:D004892	Erythema Multiforme	1.0	semapv:LexicalMatching	gilda
+icd10:L51.1	Bullous erythema multiforme	skos:exactMatch	mesh:D013262	Stevens-Johnson Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:L52	Erythema nodosum	skos:exactMatch	mesh:D004893	Erythema Nodosum	1.0	semapv:LexicalMatching	gilda
+icd10:L55	Sunburn	skos:exactMatch	mesh:D013471	Sunburn	1.0	semapv:LexicalMatching	gilda
+icd10:L56.3	Solar urticaria	skos:exactMatch	mesh:D000092130	Urticaria, Solar	1.0	semapv:LexicalMatching	gilda
+icd10:L57.0	Actinic keratosis	skos:exactMatch	mesh:D055623	Keratosis, Actinic	1.0	semapv:LexicalMatching	gilda
+icd10:L58	Radiodermatitis	skos:exactMatch	mesh:D011855	Radiodermatitis	1.0	semapv:LexicalMatching	gilda
+icd10:L60.1	Onycholysis	skos:exactMatch	mesh:D054039	Onycholysis	1.0	semapv:LexicalMatching	gilda
+icd10:L60.5	Yellow nail syndrome	skos:exactMatch	mesh:D056684	Yellow Nail Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:L63	Alopecia areata	skos:exactMatch	mesh:D000506	Alopecia Areata	1.0	semapv:LexicalMatching	gilda
+icd10:L63.1	Alopecia universalis	skos:exactMatch	mesh:C537055	Alopecia universalis	1.0	semapv:LexicalMatching	gilda
+icd10:L65.2	Alopecia mucinosa	skos:exactMatch	mesh:D000507	Mucinosis, Follicular	1.0	semapv:LexicalMatching	gilda
+icd10:L68	Hypertrichosis	skos:exactMatch	mesh:D006983	Hypertrichosis	1.0	semapv:LexicalMatching	gilda
+icd10:L68.0	Hirsutism	skos:exactMatch	mesh:D006628	Hirsutism	1.0	semapv:LexicalMatching	gilda
+icd10:L70.0	Acne vulgaris	skos:exactMatch	mesh:D000152	Acne Vulgaris	1.0	semapv:LexicalMatching	gilda
+icd10:L70.1	Acne conglobata	skos:exactMatch	mesh:D000069316	Acne Conglobata	1.0	semapv:LexicalMatching	gilda
+icd10:L71	Rosacea	skos:exactMatch	mesh:D012393	Rosacea	1.0	semapv:LexicalMatching	gilda
+icd10:L71.0	Perioral dermatitis	skos:exactMatch	mesh:D019557	Dermatitis, Perioral	1.0	semapv:LexicalMatching	gilda
+icd10:L71.1	Rhinophyma	skos:exactMatch	mesh:D012224	Rhinophyma	1.0	semapv:LexicalMatching	gilda
+icd10:L72.0	Epidermal cyst	skos:exactMatch	mesh:D004814	Epidermal Cyst	1.0	semapv:LexicalMatching	gilda
+icd10:L72.2	Steatocystoma multiplex	skos:exactMatch	mesh:D062685	Steatocystoma Multiplex	1.0	semapv:LexicalMatching	gilda
+icd10:L73.0	Acne keloid	skos:exactMatch	mesh:D000153	Acne Keloid	1.0	semapv:LexicalMatching	gilda
+icd10:L73.1	Pseudofolliculitis barbae	skos:exactMatch	mesh:C563016	pseudofolliculitis barbae	1.0	semapv:LexicalMatching	gilda
+icd10:L73.2	Hidradenitis suppurativa	skos:exactMatch	mesh:D017497	Hidradenitis Suppurativa	1.0	semapv:LexicalMatching	gilda
+icd10:L74.4	Anhidrosis	skos:exactMatch	mesh:D007007	Hypohidrosis	0.95	semapv:LexicalMatching	gilda
+icd10:L75.0	Bromhidrosis	skos:exactMatch	mesh:D000089083	Body Odor	1.0	semapv:LexicalMatching	gilda
+icd10:L75.2	Apocrine miliaria	skos:exactMatch	mesh:D005588	Fox-Fordyce Disease	1.0	semapv:LexicalMatching	gilda
+icd10:L80	Vitiligo	skos:exactMatch	mesh:D014820	Vitiligo	1.0	semapv:LexicalMatching	gilda
+icd10:L81.3	Café au lait spots	skos:exactMatch	mesh:D019080	Cafe-au-Lait Spots	1.0	semapv:LexicalMatching	gilda
+icd10:L81.4	Other melanin hyperpigmentation	skos:exactMatch	mesh:D007911	Lentigo	0.95	semapv:LexicalMatching	gilda
+icd10:L82	Seborrhoeic keratosis	skos:exactMatch	mesh:C562379	Dermatosis Papulosa Nigra	0.95	semapv:LexicalMatching	gilda
+icd10:L83	Acanthosis nigricans	skos:exactMatch	mesh:D000052	Acanthosis Nigricans	1.0	semapv:LexicalMatching	gilda
+icd10:L84	Corns and callosities	skos:exactMatch	mesh:D002146	Bony Callus	0.95	semapv:LexicalMatching	gilda
+icd10:L85.0	Acquired ichthyosis	skos:exactMatch	mesh:C538175	Acquired ichthyosis	1.0	semapv:LexicalMatching	gilda
+icd10:L87.2	Elastosis perforans serpiginosa	skos:exactMatch	mesh:C536202	Elastosis perforans serpiginosa	1.0	semapv:LexicalMatching	gilda
+icd10:L88	Pyoderma gangrenosum	skos:exactMatch	mesh:D017511	Pyoderma Gangrenosum	1.0	semapv:LexicalMatching	gilda
+icd10:L89	Decubitus ulcer and pressure area	skos:exactMatch	mesh:D003668	Pressure Ulcer	0.95	semapv:LexicalMatching	gilda
+icd10:L90.0	Lichen sclerosus et atrophicus	skos:exactMatch	mesh:D018459	Lichen Sclerosus et Atrophicus	1.0	semapv:LexicalMatching	gilda
+icd10:L90.5	Scar conditions and fibrosis of skin	skos:exactMatch	mesh:D002921	Cicatrix	0.95	semapv:LexicalMatching	gilda
+icd10:L91.0	Hypertrophic scar	skos:exactMatch	mesh:D017439	Cicatrix, Hypertrophic	1.0	semapv:LexicalMatching	gilda
+icd10:L92.0	Granuloma annulare	skos:exactMatch	mesh:D016460	Granuloma Annulare	1.0	semapv:LexicalMatching	gilda
+icd10:L93.0	Discoid lupus erythematosus	skos:exactMatch	mesh:D008179	Lupus Erythematosus, Discoid	1.0	semapv:LexicalMatching	gilda
+icd10:L94.0	Localized scleroderma [morphea]	skos:exactMatch	mesh:D012594	Scleroderma, Localized	0.95	semapv:LexicalMatching	gilda
+icd10:L94.2	Calcinosis cutis	skos:exactMatch	mesh:D000092182	Calcinosis Cutis	1.0	semapv:LexicalMatching	gilda
+icd10:L94.6	Ainhum	skos:exactMatch	mesh:D000387	Ainhum	1.0	semapv:LexicalMatching	gilda
+icd10:L95.0	Livedoid vasculitis	skos:exactMatch	mesh:D000090122	Livedoid Vasculopathy	1.0	semapv:LexicalMatching	gilda
+icd10:L95.1	Erythema elevatum diutinum	skos:exactMatch	mesh:C535509	Erythema elevatum diutinum	1.0	semapv:LexicalMatching	gilda
+icd10:L98.0	Pyogenic granuloma	skos:exactMatch	mesh:D017789	Granuloma, Pyogenic	1.0	semapv:LexicalMatching	gilda
+icd10:M00-M25	Arthropathies	skos:exactMatch	mesh:D007592	Joint Diseases	1.0	semapv:LexicalMatching	gilda
+icd10:M05.0	Felty syndrome	skos:exactMatch	mesh:D005258	Felty Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:M05.2	Rheumatoid vasculitis	skos:exactMatch	mesh:D056653	Rheumatoid Vasculitis	1.0	semapv:LexicalMatching	gilda
+icd10:M06.1	Adult-onset Still disease	skos:exactMatch	mesh:D016706	Still's Disease, Adult-Onset	1.0	semapv:LexicalMatching	gilda
+icd10:M06.3	Rheumatoid nodule	skos:exactMatch	mesh:D012218	Rheumatoid Nodule	1.0	semapv:LexicalMatching	gilda
+icd10:M08	Juvenile arthritis	skos:exactMatch	mesh:D001171	Arthritis, Juvenile	1.0	semapv:LexicalMatching	gilda
+icd10:M10	Gout	skos:exactMatch	mesh:D006073	Gout	1.0	semapv:LexicalMatching	gilda
+icd10:M12.3	Palindromic rheumatism	skos:exactMatch	mesh:C538103	Palindromic rheumatism	1.0	semapv:LexicalMatching	gilda
+icd10:M20.1	Hallux valgus (acquired)	skos:exactMatch	mesh:D000071378	Bunion	0.95	semapv:LexicalMatching	gilda
+icd10:M20.2	Hallux rigidus	skos:exactMatch	mesh:D020859	Hallux Rigidus	1.0	semapv:LexicalMatching	gilda
+icd10:M20.3	Other deformity of hallux (acquired)	skos:exactMatch	mesh:D050488	Hallux Varus	0.95	semapv:LexicalMatching	gilda
+icd10:M22.4	Chondromalacia patellae	skos:exactMatch	mesh:D046789	Chondromalacia Patellae	1.0	semapv:LexicalMatching	gilda
+icd10:M25.7	Osteophyte	skos:exactMatch	mesh:D054850	Osteophyte	1.0	semapv:LexicalMatching	gilda
+icd10:M30.0	Polyarteritis nodosa	skos:exactMatch	mesh:D010488	Polyarteritis Nodosa	1.0	semapv:LexicalMatching	gilda
+icd10:M30.1	Polyarteritis with lung involvement [Churg-Strauss]	skos:exactMatch	mesh:D015267	Churg-Strauss Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:M31.0	Hypersensitivity angiitis	skos:exactMatch	mesh:D018366	Vasculitis, Leukocytoclastic, Cutaneous	1.0	semapv:LexicalMatching	gilda
+icd10:M31.1	Thrombotic microangiopathy	skos:exactMatch	mesh:D057049	Thrombotic Microangiopathies	1.0	semapv:LexicalMatching	gilda
+icd10:M31.3	Wegener granulomatosis	skos:exactMatch	mesh:D014890	Granulomatosis with Polyangiitis	1.0	semapv:LexicalMatching	gilda
+icd10:M31.7	Microscopic polyangiitis	skos:exactMatch	mesh:D055953	Microscopic Polyangiitis	1.0	semapv:LexicalMatching	gilda
+icd10:M32	Systemic lupus erythematosus	skos:exactMatch	mesh:D008180	Lupus Erythematosus, Systemic	1.0	semapv:LexicalMatching	gilda
+icd10:M33	Dermatopolymyositis	skos:exactMatch	mesh:D003882	Dermatomyositis	1.0	semapv:LexicalMatching	gilda
+icd10:M33.2	Polymyositis	skos:exactMatch	mesh:D017285	Polymyositis	1.0	semapv:LexicalMatching	gilda
+icd10:M34	Systemic sclerosis	skos:exactMatch	mesh:D012595	Scleroderma, Systemic	1.0	semapv:LexicalMatching	gilda
+icd10:M34.0	Progressive systemic sclerosis	skos:exactMatch	mesh:D045743	Scleroderma, Diffuse	1.0	semapv:LexicalMatching	gilda
+icd10:M35.1	Other overlap syndromes	skos:exactMatch	mesh:D008947	Mixed Connective Tissue Disease	0.95	semapv:LexicalMatching	gilda
+icd10:M35.2	Behçet disease	skos:exactMatch	mesh:D001528	Behcet Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:M35.3	Polymyalgia rheumatica	skos:exactMatch	mesh:D011111	Polymyalgia Rheumatica	1.0	semapv:LexicalMatching	gilda
+icd10:M35.5	Multifocal fibrosclerosis	skos:exactMatch	mesh:C537375	Multifocal fibrosclerosis	1.0	semapv:LexicalMatching	gilda
+icd10:M41	Scoliosis	skos:exactMatch	mesh:D012600	Scoliosis	1.0	semapv:LexicalMatching	gilda
+icd10:M42	Spinal osteochondrosis	skos:exactMatch	mesh:D055035	Spinal Osteochondrosis	1.0	semapv:LexicalMatching	gilda
+icd10:M42.0	Juvenile osteochondrosis of spine	skos:exactMatch	mesh:D012544	Scheuermann Disease	1.0	semapv:LexicalMatching	gilda
+icd10:M43.0	Spondylolysis	skos:exactMatch	mesh:D013169	Spondylolysis	1.0	semapv:LexicalMatching	gilda
+icd10:M43.1	Spondylolisthesis	skos:exactMatch	mesh:D013168	Spondylolisthesis	1.0	semapv:LexicalMatching	gilda
+icd10:M43.6	Torticollis	skos:exactMatch	mesh:D014103	Torticollis	1.0	semapv:LexicalMatching	gilda
+icd10:M45	Ankylosing spondylitis	skos:exactMatch	mesh:D013167	Spondylitis, Ankylosing	1.0	semapv:LexicalMatching	gilda
+icd10:M47	Spondylosis	skos:exactMatch	mesh:D055009	Spondylosis	1.0	semapv:LexicalMatching	gilda
+icd10:M48.0	Spinal stenosis	skos:exactMatch	mesh:D013130	Spinal Stenosis	1.0	semapv:LexicalMatching	gilda
+icd10:M48.8	Other specified spondylopathies	skos:exactMatch	mesh:D017887	Ossification of Posterior Longitudinal Ligament	0.95	semapv:LexicalMatching	gilda
+icd10:M53.0	Cervicocranial syndrome	skos:exactMatch	mesh:D055010	Posterior Cervical Sympathetic Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:M54.1	Radiculopathy	skos:exactMatch	mesh:D011843	Radiculopathy	1.0	semapv:LexicalMatching	gilda
+icd10:M54.2	Cervicalgia	skos:exactMatch	mesh:D019547	Neck Pain	1.0	semapv:LexicalMatching	gilda
+icd10:M54.3	Sciatica	skos:exactMatch	mesh:D012585	Sciatica	1.0	semapv:LexicalMatching	gilda
+icd10:M54.5	Low back pain	skos:exactMatch	mesh:D017116	Low Back Pain	1.0	semapv:LexicalMatching	gilda
+icd10:M60	Myositis	skos:exactMatch	mesh:D009220	Myositis	1.0	semapv:LexicalMatching	gilda
+icd10:M62.5	Muscle wasting and atrophy, not elsewhere classified	skos:exactMatch	mesh:D055948	Sarcopenia	0.95	semapv:LexicalMatching	gilda
+icd10:M67.4	Ganglion	skos:exactMatch	mesh:D045888	Ganglion Cysts	1.0	semapv:LexicalMatching	gilda
+icd10:M72.2	Plantar fascial fibromatosis	skos:exactMatch	mesh:D036981	Fasciitis, Plantar	0.95	semapv:LexicalMatching	gilda
+icd10:M72.6	Necrotizing fasciitis	skos:exactMatch	mesh:D019115	Fasciitis, Necrotizing	1.0	semapv:LexicalMatching	gilda
+icd10:M76.3	Iliotibial band syndrome	skos:exactMatch	mesh:D058745	Iliotibial Band Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:M76.8	Other enthesopathies of lower limb, excluding foot	skos:exactMatch	mesh:D000868	Anterior Compartment Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:M77.1	Lateral epicondylitis	skos:exactMatch	mesh:D013716	Tennis Elbow	1.0	semapv:LexicalMatching	gilda
+icd10:M77.3	Calcaneal spur	skos:exactMatch	mesh:D036982	Heel Spur	1.0	semapv:LexicalMatching	gilda
+icd10:M77.4	Metatarsalgia	skos:exactMatch	mesh:D037061	Metatarsalgia	1.0	semapv:LexicalMatching	gilda
+icd10:M79.1	Myalgia	skos:exactMatch	mesh:D063806	Myalgia	1.0	semapv:LexicalMatching	gilda
+icd10:M79.7	Fibromyalgia	skos:exactMatch	mesh:D005356	Fibromyalgia	1.0	semapv:LexicalMatching	gilda
+icd10:M81.0	Postmenopausal osteoporosis	skos:exactMatch	mesh:D015663	Osteoporosis, Postmenopausal	1.0	semapv:LexicalMatching	gilda
+icd10:M86	Osteomyelitis	skos:exactMatch	mesh:D010019	Osteomyelitis	1.0	semapv:LexicalMatching	gilda
+icd10:M86.3	Chronic multifocal osteomyelitis	skos:exactMatch	mesh:C535456	Chronic recurrent multifocal osteomyelitis	1.0	semapv:LexicalMatching	gilda
+icd10:M87	Osteonecrosis	skos:exactMatch	mesh:D010020	Osteonecrosis	1.0	semapv:LexicalMatching	gilda
+icd10:M89.4	Other hypertrophic osteoarthropathy	skos:exactMatch	mesh:D010005	Osteoarthropathy, Secondary Hypertrophic	0.95	semapv:LexicalMatching	gilda
+icd10:M89.5	Osteolysis	skos:exactMatch	mesh:D010014	Osteolysis	1.0	semapv:LexicalMatching	gilda
+icd10:M89.8	Other specified disorders of bone	skos:exactMatch	mesh:D006958	Hyperostosis, Cortical, Congenital	0.95	semapv:LexicalMatching	gilda
+icd10:M91.2	Coxa plana	skos:exactMatch	mesh:D007873	Legg-Calve-Perthes Disease	1.0	semapv:LexicalMatching	gilda
+icd10:M92.5	Juvenile osteochondrosis of tibia and fibula	skos:exactMatch	mesh:C536237	Blount disease	0.95	semapv:LexicalMatching	gilda
+icd10:M93.2	Osteochondritis dissecans	skos:exactMatch	mesh:D010008	Osteochondritis Dissecans	1.0	semapv:LexicalMatching	gilda
+icd10:M94.1	Relapsing polychondritis	skos:exactMatch	mesh:D011081	Polychondritis, Relapsing	1.0	semapv:LexicalMatching	gilda
+icd10:N04	Nephrotic syndrome	skos:exactMatch	mesh:D009404	Nephrotic Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:N10	Acute tubulo-interstitial nephritis	skos:exactMatch	mesh:C564356	Acute Tubulointerstitial Nephritis	1.0	semapv:LexicalMatching	gilda
+icd10:N10-N16	Renal tubulo-interstitial diseases	skos:exactMatch	mesh:D011704	Pyelonephritis	0.95	semapv:LexicalMatching	gilda
+icd10:N13.6	Pyonephrosis	skos:exactMatch	mesh:D053018	Pyonephrosis	1.0	semapv:LexicalMatching	gilda
+icd10:N15.0	Balkan nephropathy	skos:exactMatch	mesh:D001449	Balkan Nephropathy	1.0	semapv:LexicalMatching	gilda
+icd10:N18	Chronic kidney disease	skos:exactMatch	mesh:D007676	Kidney Failure, Chronic	0.95	semapv:LexicalMatching	gilda
+icd10:N20-N23	Urolithiasis	skos:exactMatch	mesh:D052878	Urolithiasis	1.0	semapv:LexicalMatching	gilda
+icd10:N20.0	Calculus of kidney	skos:exactMatch	mesh:D000069856	Staghorn Calculi	0.95	semapv:LexicalMatching	gilda
+icd10:N21.0	Calculus in bladder	skos:exactMatch	mesh:D001744	Urinary Bladder Calculi	0.95	semapv:LexicalMatching	gilda
+icd10:N25.1	Nephrogenic diabetes insipidus	skos:exactMatch	mesh:D018500	Diabetes Insipidus, Nephrogenic	1.0	semapv:LexicalMatching	gilda
+icd10:N28.8	Other specified disorders of kidney and ureter	skos:exactMatch	mesh:D014518	Ureterocele	0.95	semapv:LexicalMatching	gilda
+icd10:N29.8	Other disorders of kidney and ureter in other diseases classified elsewhere	skos:exactMatch	mesh:D003554	Cystinosis	0.95	semapv:LexicalMatching	gilda
+icd10:N30	Cystitis	skos:exactMatch	mesh:D003556	Cystitis	1.0	semapv:LexicalMatching	gilda
+icd10:N35	Urethral stricture	skos:exactMatch	mesh:D014525	Urethral Stricture	1.0	semapv:LexicalMatching	gilda
+icd10:N43.4	Spermatocele	skos:exactMatch	mesh:D013088	Spermatocele	1.0	semapv:LexicalMatching	gilda
+icd10:N46	Male infertility	skos:exactMatch	mesh:D007248	Infertility, Male	1.0	semapv:LexicalMatching	gilda
+icd10:N48.0	Leukoplakia of penis	skos:exactMatch	mesh:D052798	Balanitis Xerotica Obliterans	0.95	semapv:LexicalMatching	gilda
+icd10:N48.1	Balanoposthitis	skos:exactMatch	mesh:D001446	Balanitis	0.95	semapv:LexicalMatching	gilda
+icd10:N48.3	Priapism	skos:exactMatch	mesh:D011317	Priapism	1.0	semapv:LexicalMatching	gilda
+icd10:N48.6	Induratio penis plastica	skos:exactMatch	mesh:D010411	Penile Induration	0.95	semapv:LexicalMatching	gilda
+icd10:N60	Benign mammary dysplasia	skos:exactMatch	mesh:D005348	Fibrocystic Breast Disease	0.95	semapv:LexicalMatching	gilda
+icd10:N64.4	Mastodynia	skos:exactMatch	mesh:D059373	Mastodynia	1.0	semapv:LexicalMatching	gilda
+icd10:N64.5	Other signs and symptoms in breast	skos:exactMatch	mesh:D000071936	Nipple Discharge	0.95	semapv:LexicalMatching	gilda
+icd10:N64.8	Other specified disorders of breast	skos:exactMatch	mesh:C535998	Galactocele	0.95	semapv:LexicalMatching	gilda
+icd10:N71	Inflammatory disease of uterus, except cervix	skos:exactMatch	mesh:D055112	Pyometra	0.95	semapv:LexicalMatching	gilda
+icd10:N80	Endometriosis	skos:exactMatch	mesh:D004715	Endometriosis	1.0	semapv:LexicalMatching	gilda
+icd10:N80.0	Endometriosis of uterus	skos:exactMatch	mesh:D062788	Adenomyosis	0.95	semapv:LexicalMatching	gilda
+icd10:N81.1	Cystocele	skos:exactMatch	mesh:D052858	Cystocele	1.0	semapv:LexicalMatching	gilda
+icd10:N81.6	Rectocele	skos:exactMatch	mesh:D020047	Rectocele	1.0	semapv:LexicalMatching	gilda
+icd10:N82.0	Vesicovaginal fistula	skos:exactMatch	mesh:D014719	Vesicovaginal Fistula	1.0	semapv:LexicalMatching	gilda
+icd10:N82.3	Fistula of vagina to large intestine	skos:exactMatch	mesh:D012006	Rectovaginal Fistula	0.95	semapv:LexicalMatching	gilda
+icd10:N85.5	Inversion of uterus	skos:exactMatch	mesh:D019687	Uterine Inversion	1.0	semapv:LexicalMatching	gilda
+icd10:N87	Dysplasia of cervix uteri	skos:exactMatch	mesh:D002578	Uterine Cervical Dysplasia	1.0	semapv:LexicalMatching	gilda
+icd10:N92.1	Excessive and frequent menstruation with irregular cycle	skos:exactMatch	mesh:D008796	Metrorrhagia	0.95	semapv:LexicalMatching	gilda
+icd10:N94.1	Dyspareunia	skos:exactMatch	mesh:D004414	Dyspareunia	1.0	semapv:LexicalMatching	gilda
+icd10:N94.2	Vaginismus	skos:exactMatch	mesh:D052065	Vaginismus	1.0	semapv:LexicalMatching	gilda
+icd10:N97	Female infertility	skos:exactMatch	mesh:D007247	Infertility, Female	1.0	semapv:LexicalMatching	gilda
+icd10:O00	Ectopic pregnancy	skos:exactMatch	mesh:D011271	Pregnancy, Ectopic	1.0	semapv:LexicalMatching	gilda
+icd10:O00.0	Abdominal pregnancy	skos:exactMatch	mesh:D011269	Pregnancy, Abdominal	1.0	semapv:LexicalMatching	gilda
+icd10:O00.1	Tubal pregnancy	skos:exactMatch	mesh:D011274	Pregnancy, Tubal	1.0	semapv:LexicalMatching	gilda
+icd10:O00.2	Ovarian pregnancy	skos:exactMatch	mesh:D065172	Pregnancy, Ovarian	1.0	semapv:LexicalMatching	gilda
+icd10:O01	Hydatidiform mole	skos:exactMatch	mesh:D006828	Hydatidiform Mole	1.0	semapv:LexicalMatching	gilda
+icd10:O02.1	Missed abortion	skos:exactMatch	mesh:D000030	Abortion, Missed	1.0	semapv:LexicalMatching	gilda
+icd10:O03	Spontaneous abortion	skos:exactMatch	mesh:D000022	Abortion, Spontaneous	1.0	semapv:LexicalMatching	gilda
+icd10:O04	Medical abortion	skos:exactMatch	mesh:D000032	Abortion, Therapeutic	0.95	semapv:LexicalMatching	gilda
+icd10:O14	Pre-eclampsia	skos:exactMatch	mesh:D011225	Pre-Eclampsia	1.0	semapv:LexicalMatching	gilda
+icd10:O14.2	HELLP syndrome	skos:exactMatch	mesh:D017359	HELLP Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:O15	Eclampsia	skos:exactMatch	mesh:D004461	Eclampsia	1.0	semapv:LexicalMatching	gilda
+icd10:O20.0	Threatened abortion	skos:exactMatch	mesh:D000033	Abortion, Threatened	1.0	semapv:LexicalMatching	gilda
+icd10:O26.4	Herpes gestationis	skos:exactMatch	mesh:D006559	Pemphigoid Gestationis	1.0	semapv:LexicalMatching	gilda
+icd10:O26.6	Liver disorders in pregnancy, childbirth and the puerperium	skos:exactMatch	mesh:C535932	Intrahepatic Cholestasis of Pregnancy	0.95	semapv:LexicalMatching	gilda
+icd10:O30.0	Twin pregnancy	skos:exactMatch	mesh:D059285	Pregnancy, Twin	1.0	semapv:LexicalMatching	gilda
+icd10:O30.1	Triplet pregnancy	skos:exactMatch	mesh:D059286	Pregnancy, Triplet	1.0	semapv:LexicalMatching	gilda
+icd10:O30.2	Quadruplet pregnancy	skos:exactMatch	mesh:D059287	Pregnancy, Quadruplet	1.0	semapv:LexicalMatching	gilda
+icd10:O40	Polyhydramnios	skos:exactMatch	mesh:D006831	Polyhydramnios	1.0	semapv:LexicalMatching	gilda
+icd10:O41.0	Oligohydramnios	skos:exactMatch	mesh:D016104	Oligohydramnios	1.0	semapv:LexicalMatching	gilda
+icd10:O41.1	Infection of amniotic sac and membranes	skos:exactMatch	mesh:D002821	Chorioamnionitis	0.95	semapv:LexicalMatching	gilda
+icd10:O44	Placenta praevia	skos:exactMatch	mesh:D010923	Placenta Previa	1.0	semapv:LexicalMatching	gilda
+icd10:O48	Prolonged pregnancy	skos:exactMatch	mesh:D011273	Pregnancy, Prolonged	1.0	semapv:LexicalMatching	gilda
+icd10:O88.1	Amniotic fluid embolism	skos:exactMatch	mesh:D004619	Embolism, Amniotic Fluid	1.0	semapv:LexicalMatching	gilda
+icd10:O90.5	Postpartum thyroiditis	skos:exactMatch	mesh:D050032	Postpartum Thyroiditis	1.0	semapv:LexicalMatching	gilda
+icd10:P02.1	Fetus and newborn affected by other forms of placental separation and haemorrhage	skos:exactMatch	mesh:D000037	Abruptio Placentae	0.95	semapv:LexicalMatching	gilda
+icd10:P02.6	Fetus and newborn affected by other and unspecified conditions of umbilical cord	skos:exactMatch	mesh:D055949	Vasa Previa	0.95	semapv:LexicalMatching	gilda
+icd10:P03.6	Fetus and newborn affected by abnormal uterine contractions	skos:exactMatch	mesh:D014593	Uterine Inertia	0.95	semapv:LexicalMatching	gilda
+icd10:P22.0	Respiratory distress syndrome of newborn	skos:exactMatch	mesh:D006819	Hyaline Membrane Disease	0.95	semapv:LexicalMatching	gilda
+icd10:P23.6	Congenital pneumonia due to other bacterial agents	skos:exactMatch	mesh:D006193	Haemophilus influenzae	0.95	semapv:LexicalMatching	gilda
+icd10:P29.3	Persistent fetal circulation	skos:exactMatch	mesh:D010547	Persistent Fetal Circulation Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:P35.0	Congenital rubella syndrome	skos:exactMatch	mesh:D012410	Rubella Syndrome, Congenital	1.0	semapv:LexicalMatching	gilda
+icd10:P37.1	Congenital toxoplasmosis	skos:exactMatch	mesh:D014125	Toxoplasmosis, Congenital	1.0	semapv:LexicalMatching	gilda
+icd10:P57	Kernicterus	skos:exactMatch	mesh:D007647	Kernicterus	1.0	semapv:LexicalMatching	gilda
+icd10:P83.0	Sclerema neonatorum	skos:exactMatch	mesh:D012593	Sclerema Neonatorum	1.0	semapv:LexicalMatching	gilda
+icd10:P96.1	Neonatal withdrawal symptoms from maternal use of drugs of addiction	skos:exactMatch	mesh:D009357	Neonatal Abstinence Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q00.0	Anencephaly	skos:exactMatch	mesh:D000757	Anencephaly	1.0	semapv:LexicalMatching	gilda
+icd10:Q01	Encephalocele	skos:exactMatch	mesh:D004677	Encephalocele	1.0	semapv:LexicalMatching	gilda
+icd10:Q02	Microcephaly	skos:exactMatch	mesh:D008831	Microcephaly	1.0	semapv:LexicalMatching	gilda
+icd10:Q03.1	Atresia of foramina of Magendie and Luschka	skos:exactMatch	mesh:D003616	Dandy-Walker Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q04.0	Congenital malformations of corpus callosum	skos:exactMatch	mesh:D061085	Agenesis of Corpus Callosum	0.95	semapv:LexicalMatching	gilda
+icd10:Q04.2	Holoprosencephaly	skos:exactMatch	mesh:D016142	Holoprosencephaly	1.0	semapv:LexicalMatching	gilda
+icd10:Q04.3	Other reduction deformities of brain	skos:exactMatch	mesh:D006832	Hydranencephaly	0.95	semapv:LexicalMatching	gilda
+icd10:Q04.4	Septo-optic dysplasia	skos:exactMatch	mesh:D025962	Septo-Optic Dysplasia	1.0	semapv:LexicalMatching	gilda
+icd10:Q04.6	Congenital cerebral cysts	skos:exactMatch	mesh:D065708	Porencephaly	0.95	semapv:LexicalMatching	gilda
+icd10:Q05	Spina bifida	skos:exactMatch	mesh:D016135	Spinal Dysraphism	1.0	semapv:LexicalMatching	gilda
+icd10:Q07.0	Arnold-Chiari syndrome	skos:exactMatch	mesh:D001139	Arnold-Chiari Malformation	1.0	semapv:LexicalMatching	gilda
+icd10:Q10.3	Other congenital malformations of eyelid	skos:exactMatch	mesh:C000721288	Cleft eyelid	0.95	semapv:LexicalMatching	gilda
+icd10:Q11.2	Microphthalmos	skos:exactMatch	mesh:D008850	Microphthalmos	1.0	semapv:LexicalMatching	gilda
+icd10:Q13.1	Absence of iris	skos:exactMatch	mesh:D015783	Aniridia	0.95	semapv:LexicalMatching	gilda
+icd10:Q13.8	Other congenital malformations of anterior segment of eye	skos:exactMatch	mesh:C535679	Axenfeld-Rieger syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q15.0	Congenital glaucoma	skos:exactMatch	mesh:D006871	Hydrophthalmos	0.95	semapv:LexicalMatching	gilda
+icd10:Q18.2	Other branchial cleft malformations	skos:exactMatch	mesh:C562503	Otocephaly	0.95	semapv:LexicalMatching	gilda
+icd10:Q18.4	Macrostomia	skos:exactMatch	mesh:D008265	Macrostomia	1.0	semapv:LexicalMatching	gilda
+icd10:Q18.5	Microstomia	skos:exactMatch	mesh:D008865	Microstomia	1.0	semapv:LexicalMatching	gilda
+icd10:Q20.0	Common arterial trunk	skos:exactMatch	mesh:D014339	Truncus Arteriosus, Persistent	0.95	semapv:LexicalMatching	gilda
+icd10:Q20.1	Double outlet right ventricle	skos:exactMatch	mesh:D004310	Double Outlet Right Ventricle	1.0	semapv:LexicalMatching	gilda
+icd10:Q21.0	Ventricular septal defect	skos:exactMatch	mesh:D006345	Heart Septal Defects, Ventricular	1.0	semapv:LexicalMatching	gilda
+icd10:Q21.1	Atrial septal defect	skos:exactMatch	mesh:D006344	Heart Septal Defects, Atrial	1.0	semapv:LexicalMatching	gilda
+icd10:Q21.2	Atrioventricular septal defect	skos:exactMatch	mesh:C562831	Atrioventricular Septal Defect	1.0	semapv:LexicalMatching	gilda
+icd10:Q21.3	Tetralogy of Fallot	skos:exactMatch	mesh:D013771	Tetralogy of Fallot	1.0	semapv:LexicalMatching	gilda
+icd10:Q21.4	Aortopulmonary septal defect	skos:exactMatch	mesh:D001028	Aortopulmonary Septal Defect	1.0	semapv:LexicalMatching	gilda
+icd10:Q22.0	Pulmonary valve atresia	skos:exactMatch	mesh:D018633	Pulmonary Atresia	1.0	semapv:LexicalMatching	gilda
+icd10:Q22.4	Congenital tricuspid stenosis	skos:exactMatch	mesh:D018785	Tricuspid Atresia	0.95	semapv:LexicalMatching	gilda
+icd10:Q22.5	Ebstein anomaly	skos:exactMatch	mesh:D004437	Ebstein Anomaly	1.0	semapv:LexicalMatching	gilda
+icd10:Q23.1	Congenital insufficiency of aortic valve	skos:exactMatch	mesh:D000082882	Bicuspid Aortic Valve Disease	0.95	semapv:LexicalMatching	gilda
+icd10:Q23.4	Hypoplastic left heart syndrome	skos:exactMatch	mesh:D018636	Hypoplastic Left Heart Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q24.0	Dextrocardia	skos:exactMatch	mesh:D003914	Dextrocardia	1.0	semapv:LexicalMatching	gilda
+icd10:Q24.2	Cor triatriatum	skos:exactMatch	mesh:D003310	Cor Triatriatum	1.0	semapv:LexicalMatching	gilda
+icd10:Q24.3	Pulmonary infundibular stenosis	skos:exactMatch	mesh:D011662	Pulmonary Subvalvular Stenosis	1.0	semapv:LexicalMatching	gilda
+icd10:Q24.6	Congenital heart block	skos:exactMatch	mesh:C535758	Congenital heart block	1.0	semapv:LexicalMatching	gilda
+icd10:Q25.0	Patent ductus arteriosus	skos:exactMatch	mesh:D004374	Ductus Arteriosus, Patent	1.0	semapv:LexicalMatching	gilda
+icd10:Q25.1	Coarctation of aorta	skos:exactMatch	mesh:D001017	Aortic Coarctation	1.0	semapv:LexicalMatching	gilda
+icd10:Q25.3	Stenosis of aorta	skos:exactMatch	mesh:D021921	Aortic Stenosis, Supravalvular	0.95	semapv:LexicalMatching	gilda
+icd10:Q26.1	Persistent left superior vena cava	skos:exactMatch	mesh:D000083402	Persistent Left Superior Vena Cava	1.0	semapv:LexicalMatching	gilda
+icd10:Q26.8	Other congenital malformations of great veins	skos:exactMatch	mesh:D012587	Scimitar Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q27.0	Congenital absence and hypoplasia of umbilical artery	skos:exactMatch	mesh:D058529	Single Umbilical Artery	0.95	semapv:LexicalMatching	gilda
+icd10:Q27.8	Other specified congenital malformations of peripheral vascular system	skos:exactMatch	mesh:C535555	Aberrant subclavian artery	0.95	semapv:LexicalMatching	gilda
+icd10:Q30.0	Choanal atresia	skos:exactMatch	mesh:D002754	Choanal Atresia	1.0	semapv:LexicalMatching	gilda
+icd10:Q31.3	Laryngocele	skos:exactMatch	mesh:D059608	Laryngocele	1.0	semapv:LexicalMatching	gilda
+icd10:Q32.0	Congenital tracheomalacia	skos:exactMatch	mesh:C557675	Congenital tracheomalacia	1.0	semapv:LexicalMatching	gilda
+icd10:Q35	Cleft palate	skos:exactMatch	mesh:D002972	Cleft Palate	1.0	semapv:LexicalMatching	gilda
+icd10:Q35.3	Cleft soft palate	skos:exactMatch	mesh:C562950	Cleft Soft Palate	1.0	semapv:LexicalMatching	gilda
+icd10:Q36	Cleft lip	skos:exactMatch	mesh:D002971	Cleft Lip	1.0	semapv:LexicalMatching	gilda
+icd10:Q38.0	Congenital malformations of lips, not elsewhere classified	skos:exactMatch	mesh:C536528	Van der Woude syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q38.1	Ankyloglossia	skos:exactMatch	mesh:D000072676	Ankyloglossia	1.0	semapv:LexicalMatching	gilda
+icd10:Q38.2	Macroglossia	skos:exactMatch	mesh:D008260	Macroglossia	1.0	semapv:LexicalMatching	gilda
+icd10:Q41.1	Congenital absence, atresia and stenosis of jejunum	skos:exactMatch	mesh:D007409	Intestinal Atresia	0.95	semapv:LexicalMatching	gilda
+icd10:Q42.3	Congenital absence, atresia and stenosis of anus without fistula	skos:exactMatch	mesh:D001006	Anus, Imperforate	0.95	semapv:LexicalMatching	gilda
+icd10:Q43.1	Hirschsprung disease	skos:exactMatch	mesh:D006627	Hirschsprung Disease	1.0	semapv:LexicalMatching	gilda
+icd10:Q43.8	Other specified congenital malformations of intestine	skos:exactMatch	mesh:C562563	Microcolon	0.95	semapv:LexicalMatching	gilda
+icd10:Q44.4	Choledochal cyst	skos:exactMatch	mesh:D015529	Choledochal Cyst	1.0	semapv:LexicalMatching	gilda
+icd10:Q44.7	Other congenital malformations of liver	skos:exactMatch	mesh:D016738	Alagille Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q45.1	Annular pancreas	skos:exactMatch	mesh:C536376	Annular pancreas	1.0	semapv:LexicalMatching	gilda
+icd10:Q45.3	Other congenital malformations of pancreas and pancreatic duct	skos:exactMatch	mesh:C536003	Accessory pancreas	0.95	semapv:LexicalMatching	gilda
+icd10:Q54	Hypospadias	skos:exactMatch	mesh:D007021	Hypospadias	1.0	semapv:LexicalMatching	gilda
+icd10:Q60.0	Renal agenesis, unilateral	skos:exactMatch	mesh:D000075529	Solitary Kidney	1.0	semapv:LexicalMatching	gilda
+icd10:Q60.6	Potter syndrome	skos:exactMatch	mesh:C536482	Hereditary renal agenesis	1.0	semapv:LexicalMatching	gilda
+icd10:Q61	Cystic kidney disease	skos:exactMatch	mesh:D052177	Kidney Diseases, Cystic	1.0	semapv:LexicalMatching	gilda
+icd10:Q61.1	Polycystic kidney, autosomal recessive	skos:exactMatch	mesh:D017044	Polycystic Kidney, Autosomal Recessive	1.0	semapv:LexicalMatching	gilda
+icd10:Q61.2	Polycystic kidney, autosomal dominant	skos:exactMatch	mesh:D016891	Polycystic Kidney, Autosomal Dominant	1.0	semapv:LexicalMatching	gilda
+icd10:Q61.9	Cystic kidney disease, unspecified	skos:exactMatch	mesh:C536133	Meckel syndrome type 1	0.95	semapv:LexicalMatching	gilda
+icd10:Q64.0	Epispadias	skos:exactMatch	mesh:D004842	Epispadias	1.0	semapv:LexicalMatching	gilda
+icd10:Q66.0	Talipes equinovarus	skos:exactMatch	mesh:D003025	Clubfoot	1.0	semapv:LexicalMatching	gilda
+icd10:Q66.2	Metatarsus varus	skos:exactMatch	mesh:D000070592	Metatarsus Varus	1.0	semapv:LexicalMatching	gilda
+icd10:Q66.6	Other congenital valgus deformities of feet	skos:exactMatch	mesh:D000070591	Metatarsal Valgus	0.95	semapv:LexicalMatching	gilda
+icd10:Q66.7	Pes cavus	skos:exactMatch	mesh:D000070589	Talipes Cavus	1.0	semapv:LexicalMatching	gilda
+icd10:Q66.8	Other congenital deformities of feet	skos:exactMatch	mesh:D000070604	Tarsal Coalition	0.95	semapv:LexicalMatching	gilda
+icd10:Q67.0	Facial asymmetry	skos:exactMatch	mesh:D005146	Facial Asymmetry	1.0	semapv:LexicalMatching	gilda
+icd10:Q67.3	Plagiocephaly	skos:exactMatch	mesh:D059041	Plagiocephaly	1.0	semapv:LexicalMatching	gilda
+icd10:Q67.6	Pectus excavatum	skos:exactMatch	mesh:D005660	Funnel Chest	1.0	semapv:LexicalMatching	gilda
+icd10:Q67.7	Pectus carinatum	skos:exactMatch	mesh:D066166	Pectus Carinatum	1.0	semapv:LexicalMatching	gilda
+icd10:Q69	Polydactyly	skos:exactMatch	mesh:D017689	Polydactyly	1.0	semapv:LexicalMatching	gilda
+icd10:Q70	Syndactyly	skos:exactMatch	mesh:D013576	Syndactyly	1.0	semapv:LexicalMatching	gilda
+icd10:Q74.0	Other congenital malformations of upper limb(s), including shoulder girdle	skos:exactMatch	mesh:D002973	Cleidocranial Dysplasia	0.95	semapv:LexicalMatching	gilda
+icd10:Q74.3	Arthrogryposis multiplex congenita	skos:exactMatch	mesh:D001176	Arthrogryposis	1.0	semapv:LexicalMatching	gilda
+icd10:Q75.0	Craniosynostosis	skos:exactMatch	mesh:D003398	Craniosynostoses	1.0	semapv:LexicalMatching	gilda
+icd10:Q75.1	Craniofacial dysostosis	skos:exactMatch	mesh:D003394	Craniofacial Dysostosis	1.0	semapv:LexicalMatching	gilda
+icd10:Q75.2	Hypertelorism	skos:exactMatch	mesh:D006972	Hypertelorism	1.0	semapv:LexicalMatching	gilda
+icd10:Q75.3	Macrocephaly	skos:exactMatch	mesh:D058627	Megalencephaly	1.0	semapv:LexicalMatching	gilda
+icd10:Q75.4	Mandibulofacial dysostosis	skos:exactMatch	mesh:D008342	Mandibulofacial Dysostosis	1.0	semapv:LexicalMatching	gilda
+icd10:Q75.8	Other specified congenital malformations of skull and face bones	skos:exactMatch	mesh:D010985	Platybasia	0.95	semapv:LexicalMatching	gilda
+icd10:Q76.0	Spina bifida occulta	skos:exactMatch	mesh:D016136	Spina Bifida Occulta	1.0	semapv:LexicalMatching	gilda
+icd10:Q76.1	Klippel-Feil syndrome	skos:exactMatch	mesh:D007714	Klippel-Feil Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q76.5	Cervical rib	skos:exactMatch	mesh:D057070	Cervical Rib	1.0	semapv:LexicalMatching	gilda
+icd10:Q77.0	Achondrogenesis	skos:exactMatch	mesh:C579878	Achondrogenesis	1.0	semapv:LexicalMatching	gilda
+icd10:Q77.1	Thanatophoric short stature	skos:exactMatch	mesh:D013796	Thanatophoric Dysplasia	1.0	semapv:LexicalMatching	gilda
+icd10:Q77.3	Chondrodysplasia punctata	skos:exactMatch	mesh:D002806	Chondrodysplasia Punctata	1.0	semapv:LexicalMatching	gilda
+icd10:Q77.4	Achondroplasia	skos:exactMatch	mesh:D000130	Achondroplasia	1.0	semapv:LexicalMatching	gilda
+icd10:Q77.6	Chondroectodermal dysplasia	skos:exactMatch	mesh:D004613	Ellis-Van Creveld Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q78.0	Osteogenesis imperfecta	skos:exactMatch	mesh:D010013	Osteogenesis Imperfecta	1.0	semapv:LexicalMatching	gilda
+icd10:Q78.1	Polyostotic fibrous dysplasia	skos:exactMatch	mesh:D005359	Fibrous Dysplasia, Polyostotic	1.0	semapv:LexicalMatching	gilda
+icd10:Q78.2	Osteopetrosis	skos:exactMatch	mesh:D010022	Osteopetrosis	1.0	semapv:LexicalMatching	gilda
+icd10:Q78.3	Progressive diaphyseal dysplasia	skos:exactMatch	mesh:D003966	Camurati-Engelmann Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q78.4	Enchondromatosis	skos:exactMatch	mesh:D004687	Enchondromatosis	1.0	semapv:LexicalMatching	gilda
+icd10:Q78.5	Metaphyseal dysplasia	skos:exactMatch	mesh:C536252	Pyle disease	1.0	semapv:LexicalMatching	gilda
+icd10:Q78.6	Multiple congenital exostoses	skos:exactMatch	mesh:D005097	Exostoses, Multiple Hereditary	0.95	semapv:LexicalMatching	gilda
+icd10:Q78.8	Other specified osteochondrodysplasias	skos:exactMatch	mesh:D010023	Osteopoikilosis	0.95	semapv:LexicalMatching	gilda
+icd10:Q79.0	Congenital diaphragmatic hernia	skos:exactMatch	mesh:D065630	Hernias, Diaphragmatic, Congenital	1.0	semapv:LexicalMatching	gilda
+icd10:Q79.1	Other congenital malformations of diaphragm	skos:exactMatch	mesh:D003965	Diaphragmatic Eventration	0.95	semapv:LexicalMatching	gilda
+icd10:Q79.2	Exomphalos	skos:exactMatch	mesh:D006554	Hernia, Umbilical	1.0	semapv:LexicalMatching	gilda
+icd10:Q79.3	Gastroschisis	skos:exactMatch	mesh:D020139	Gastroschisis	1.0	semapv:LexicalMatching	gilda
+icd10:Q79.4	Prune belly syndrome	skos:exactMatch	mesh:D011535	Prune Belly Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q79.6	Ehlers-Danlos syndrome	skos:exactMatch	mesh:D004535	Ehlers-Danlos Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q79.8	Other congenital malformations of musculoskeletal system	skos:exactMatch	mesh:D011045	Poland Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q80.0	Ichthyosis vulgaris	skos:exactMatch	mesh:D016112	Ichthyosis Vulgaris	1.0	semapv:LexicalMatching	gilda
+icd10:Q80.2	Lamellar ichthyosis	skos:exactMatch	mesh:D017490	Ichthyosis, Lamellar	1.0	semapv:LexicalMatching	gilda
+icd10:Q80.3	Congenital bullous ichthyosiform erythroderma	skos:exactMatch	mesh:D017488	Hyperkeratosis, Epidermolytic	1.0	semapv:LexicalMatching	gilda
+icd10:Q81	Epidermolysis bullosa	skos:exactMatch	mesh:D004820	Epidermolysis Bullosa	1.0	semapv:LexicalMatching	gilda
+icd10:Q81.0	Epidermolysis bullosa simplex	skos:exactMatch	mesh:D016110	Epidermolysis Bullosa Simplex	1.0	semapv:LexicalMatching	gilda
+icd10:Q81.2	Epidermolysis bullosa dystrophica	skos:exactMatch	mesh:D016108	Epidermolysis Bullosa Dystrophica	1.0	semapv:LexicalMatching	gilda
+icd10:Q82.1	Xeroderma pigmentosum	skos:exactMatch	mesh:D014983	Xeroderma Pigmentosum	1.0	semapv:LexicalMatching	gilda
+icd10:Q82.2	Mastocytosis	skos:exactMatch	mesh:D008415	Mastocytosis	1.0	semapv:LexicalMatching	gilda
+icd10:Q82.3	Incontinentia pigmenti	skos:exactMatch	mesh:D007184	Incontinentia Pigmenti	1.0	semapv:LexicalMatching	gilda
+icd10:Q84.0	Congenital alopecia	skos:exactMatch	mesh:C535981	Congenital alopecia X-linked	1.0	semapv:LexicalMatching	gilda
+icd10:Q84.1	Congenital morphological disturbances of hair, not elsewhere classified	skos:exactMatch	mesh:D056734	Monilethrix	0.95	semapv:LexicalMatching	gilda
+icd10:Q84.3	Anonychia	skos:exactMatch	mesh:C536377	Anonychia congenita	1.0	semapv:LexicalMatching	gilda
+icd10:Q85.0	Neurofibromatosis (nonmalignant)	skos:exactMatch	mesh:D009456	Neurofibromatosis 1	0.95	semapv:LexicalMatching	gilda
+icd10:Q85.1	Tuberous sclerosis	skos:exactMatch	mesh:D014402	Tuberous Sclerosis	1.0	semapv:LexicalMatching	gilda
+icd10:Q86.1	Fetal hydantoin syndrome	skos:exactMatch	mesh:C537922	Fetal hydantoin syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q87.0	Congenital malformation syndromes predominantly affecting facial appearance	skos:exactMatch	mesh:C562573	cyclopia sequence	0.95	semapv:LexicalMatching	gilda
+icd10:Q87.4	Marfan syndrome	skos:exactMatch	mesh:D008382	Marfan Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q89.2	Congenital malformations of other endocrine glands	skos:exactMatch	mesh:D013955	Thyroglossal Cyst	0.95	semapv:LexicalMatching	gilda
+icd10:Q89.3	Situs inversus	skos:exactMatch	mesh:D012857	Situs Inversus	1.0	semapv:LexicalMatching	gilda
+icd10:Q89.4	Conjoined twins	skos:exactMatch	mesh:D014428	Twins, Conjoined	1.0	semapv:LexicalMatching	gilda
+icd10:Q90	Down syndrome	skos:exactMatch	mesh:D004314	Down Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q93.4	Deletion of short arm of chromosome 5	skos:exactMatch	mesh:D003410	Cri-du-Chat Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q93.5	Other deletions of part of a chromosome	skos:exactMatch	mesh:D017204	Angelman Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:Q96	Turner syndrome	skos:exactMatch	mesh:D014424	Turner Syndrome	1.0	semapv:LexicalMatching	gilda
+icd10:Q99.2	Fragile X chromosome	skos:exactMatch	mesh:D005600	Fragile X Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:R04.0	Epistaxis	skos:exactMatch	mesh:D004844	Epistaxis	1.0	semapv:LexicalMatching	gilda
+icd10:R05	Cough	skos:exactMatch	mesh:D003371	Cough	1.0	semapv:LexicalMatching	gilda
+icd10:R06.0	Dyspnoea	skos:exactMatch	mesh:D004417	Dyspnea	0.95	semapv:LexicalMatching	gilda
+icd10:R06.4	Hyperventilation	skos:exactMatch	mesh:D006985	Hyperventilation	1.0	semapv:LexicalMatching	gilda
+icd10:R06.5	Mouth breathing	skos:exactMatch	mesh:D009058	Mouth Breathing	1.0	semapv:LexicalMatching	gilda
+icd10:R06.6	Hiccough	skos:exactMatch	mesh:D006606	Hiccup	1.0	semapv:LexicalMatching	gilda
+icd10:R06.7	Sneezing	skos:exactMatch	mesh:D012912	Sneezing	1.0	semapv:LexicalMatching	gilda
+icd10:R09.0	Asphyxia	skos:exactMatch	mesh:D001237	Asphyxia	1.0	semapv:LexicalMatching	gilda
+icd10:R09.1	Pleurisy	skos:exactMatch	mesh:D010998	Pleurisy	1.0	semapv:LexicalMatching	gilda
+icd10:R10.0	Acute abdomen	skos:exactMatch	mesh:D000006	Abdomen, Acute	1.0	semapv:LexicalMatching	gilda
+icd10:R12	Heartburn	skos:exactMatch	mesh:D006356	Heartburn	1.0	semapv:LexicalMatching	gilda
+icd10:R13	Dysphagia	skos:exactMatch	mesh:D003680	Deglutition Disorders	1.0	semapv:LexicalMatching	gilda
+icd10:R14	Flatulence and related conditions	skos:exactMatch	mesh:D004884	Eructation	0.95	semapv:LexicalMatching	gilda
+icd10:R18	Ascites	skos:exactMatch	mesh:D001201	Ascites	1.0	semapv:LexicalMatching	gilda
+icd10:R19.6	Halitosis	skos:exactMatch	mesh:D006209	Halitosis	1.0	semapv:LexicalMatching	gilda
+icd10:R23.0	Cyanosis	skos:exactMatch	mesh:D003490	Cyanosis	1.0	semapv:LexicalMatching	gilda
+icd10:R23.1	Pallor	skos:exactMatch	mesh:D010167	Pallor	1.0	semapv:LexicalMatching	gilda
+icd10:R23.2	Flushing	skos:exactMatch	mesh:D005483	Flushing	1.0	semapv:LexicalMatching	gilda
+icd10:R25.3	Fasciculation	skos:exactMatch	mesh:D005207	Fasciculation	1.0	semapv:LexicalMatching	gilda
+icd10:R29.0	Tetany	skos:exactMatch	mesh:D013746	Tetany	1.0	semapv:LexicalMatching	gilda
+icd10:R29.1	Meningismus	skos:exactMatch	mesh:D008580	Meningism	1.0	semapv:LexicalMatching	gilda
+icd10:R29.2	Abnormal reflex	skos:exactMatch	mesh:D012021	Reflex, Abnormal	1.0	semapv:LexicalMatching	gilda
+icd10:R30.0	Dysuria	skos:exactMatch	mesh:D053159	Dysuria	1.0	semapv:LexicalMatching	gilda
+icd10:R35	Polyuria	skos:exactMatch	mesh:D011141	Polyuria	1.0	semapv:LexicalMatching	gilda
+icd10:R40.0	Somnolence	skos:exactMatch	mesh:D000077260	Sleepiness	1.0	semapv:LexicalMatching	gilda
+icd10:R40.1	Stupor	skos:exactMatch	mesh:D053608	Stupor	1.0	semapv:LexicalMatching	gilda
+icd10:R41.1	Anterograde amnesia	skos:exactMatch	mesh:D020324	Amnesia, Anterograde	1.0	semapv:LexicalMatching	gilda
+icd10:R41.2	Retrograde amnesia	skos:exactMatch	mesh:D000648	Amnesia, Retrograde	1.0	semapv:LexicalMatching	gilda
+icd10:R43.0	Anosmia	skos:exactMatch	mesh:D000086582	Anosmia	1.0	semapv:LexicalMatching	gilda
+icd10:R45.2	Unhappiness	skos:exactMatch	mesh:D000078602	Sadness	1.0	semapv:LexicalMatching	gilda
+icd10:R45.5	Hostility	skos:exactMatch	mesh:D006791	Hostility	1.0	semapv:LexicalMatching	gilda
+icd10:R48.1	Agnosia	skos:exactMatch	mesh:D000377	Agnosia	1.0	semapv:LexicalMatching	gilda
+icd10:R48.2	Apraxia	skos:exactMatch	mesh:D001072	Apraxias	1.0	semapv:LexicalMatching	gilda
+icd10:R48.8	Other and unspecified symbolic dysfunctions	skos:exactMatch	mesh:D000381	Agraphia	0.95	semapv:LexicalMatching	gilda
+icd10:R49.0	Dysphonia	skos:exactMatch	mesh:D055154	Dysphonia	1.0	semapv:LexicalMatching	gilda
+icd10:R49.1	Aphonia	skos:exactMatch	mesh:D001044	Aphonia	1.0	semapv:LexicalMatching	gilda
+icd10:R50.2	Drug-induced fever	skos:exactMatch	mesh:D000092582	Drug Fever	1.0	semapv:LexicalMatching	gilda
+icd10:R51	Headache	skos:exactMatch	mesh:D006261	Headache	1.0	semapv:LexicalMatching	gilda
+icd10:R52.0	Acute pain	skos:exactMatch	mesh:D059787	Acute Pain	1.0	semapv:LexicalMatching	gilda
+icd10:R53	Malaise and fatigue	skos:exactMatch	mesh:D053609	Lethargy	0.95	semapv:LexicalMatching	gilda
+icd10:R55	Syncope and collapse	skos:exactMatch	mesh:D013575	Syncope	0.95	semapv:LexicalMatching	gilda
+icd10:R56.0	Febrile convulsions	skos:exactMatch	mesh:D003294	Seizures, Febrile	1.0	semapv:LexicalMatching	gilda
+icd10:R57.0	Cardiogenic shock	skos:exactMatch	mesh:D012770	Shock, Cardiogenic	1.0	semapv:LexicalMatching	gilda
+icd10:R57.2	Septic shock	skos:exactMatch	mesh:D012772	Shock, Septic	1.0	semapv:LexicalMatching	gilda
+icd10:R61	Hyperhidrosis	skos:exactMatch	mesh:D006945	Hyperhidrosis	1.0	semapv:LexicalMatching	gilda
+icd10:R63.0	Anorexia	skos:exactMatch	mesh:D000855	Anorexia	1.0	semapv:LexicalMatching	gilda
+icd10:R63.1	Polydipsia	skos:exactMatch	mesh:D059606	Polydipsia	1.0	semapv:LexicalMatching	gilda
+icd10:R63.2	Polyphagia	skos:exactMatch	mesh:D006963	Hyperphagia	1.0	semapv:LexicalMatching	gilda
+icd10:R64	Cachexia	skos:exactMatch	mesh:D002100	Cachexia	1.0	semapv:LexicalMatching	gilda
+icd10:R73.0	Abnormal glucose tolerance test	skos:exactMatch	mesh:D018149	Glucose Intolerance	0.95	semapv:LexicalMatching	gilda
+icd10:R81	Glycosuria	skos:exactMatch	mesh:D006029	Glycosuria	1.0	semapv:LexicalMatching	gilda
+icd10:R82.1	Myoglobinuria	skos:exactMatch	mesh:D009212	Myoglobinuria	1.0	semapv:LexicalMatching	gilda
+icd10:R82.9	Other and unspecified abnormal findings in urine	skos:exactMatch	mesh:D000092162	Crystalluria	0.95	semapv:LexicalMatching	gilda
+icd10:R86	Abnormal findings in specimens from male genital organs	skos:exactMatch	mesh:D000072660	Teratozoospermia	0.95	semapv:LexicalMatching	gilda
+icd10:R95	Sudden infant death syndrome	skos:exactMatch	mesh:D013398	Sudden Infant Death	1.0	semapv:LexicalMatching	gilda
+icd10:S02.0	Fracture of vault of skull	skos:exactMatch	mesh:D005624	Frontal Bone	0.95	semapv:LexicalMatching	gilda
+icd10:S02.1	Fracture of base of skull	skos:exactMatch	mesh:D013701	Temporal Bone	0.95	semapv:LexicalMatching	gilda
+icd10:S02.4	Fracture of malar and maxillary bones	skos:exactMatch	mesh:D015050	Zygoma	0.95	semapv:LexicalMatching	gilda
+icd10:S02.8	Fractures of other skull and facial bones	skos:exactMatch	mesh:D010159	Palate	0.95	semapv:LexicalMatching	gilda
+icd10:S04.0	Injury of optic nerve and pathways	skos:exactMatch	mesh:D009897	Optic Chiasm	0.95	semapv:LexicalMatching	gilda
+icd10:S06.0	Concussion	skos:exactMatch	mesh:D001924	Brain Concussion	0.95	semapv:LexicalMatching	gilda
+icd10:S06.2	Diffuse brain injury	skos:exactMatch	mesh:D000070625	Brain Injuries, Diffuse	1.0	semapv:LexicalMatching	gilda
+icd10:S10.0	Contusion of throat	skos:exactMatch	mesh:D010614	Pharynx	0.95	semapv:LexicalMatching	gilda
+icd10:S12.0	Fracture of first cervical vertebra	skos:exactMatch	mesh:D020466	Atlas	0.95	semapv:LexicalMatching	gilda
+icd10:S12.8	Fracture of other parts of neck	skos:exactMatch	mesh:D006928	Hyoid Bone	0.95	semapv:LexicalMatching	gilda
+icd10:S13.4	Sprain and strain of cervical spine	skos:exactMatch	mesh:D014911	Whiplash Injuries	0.95	semapv:LexicalMatching	gilda
+icd10:S18	Traumatic amputation at neck level	skos:exactMatch	mesh:D049248	Decapitation	0.95	semapv:LexicalMatching	gilda
+icd10:S22.5	Flail chest	skos:exactMatch	mesh:D005409	Flail Chest	1.0	semapv:LexicalMatching	gilda
+icd10:S24.4	Injury of thoracic sympathetic nerves	skos:exactMatch	mesh:D013233	Stellate Ganglion	0.95	semapv:LexicalMatching	gilda
+icd10:S25.8	Injury of other blood vessels of thorax	skos:exactMatch	mesh:D001401	Azygos Vein	0.95	semapv:LexicalMatching	gilda
+icd10:S27.8	Injury of other specified intrathoracic organs	skos:exactMatch	mesh:D013950	Thymus Gland	0.95	semapv:LexicalMatching	gilda
+icd10:S30.2	Contusion of external genital organs	skos:exactMatch	mesh:D014621	Vagina	0.95	semapv:LexicalMatching	gilda
+icd10:S34.5	Injury of lumbar, sacral and pelvic sympathetic nerves	skos:exactMatch	mesh:D007001	Hypogastric Plexus	0.95	semapv:LexicalMatching	gilda
+icd10:S35.1	Injury of inferior vena cava	skos:exactMatch	mesh:D006503	Hepatic Veins	0.95	semapv:LexicalMatching	gilda
+icd10:S35.2	Injury of coeliac or mesenteric artery	skos:exactMatch	mesh:D000077426	Gastric Artery	0.95	semapv:LexicalMatching	gilda
+icd10:S36.1	Injury of liver or gallbladder	skos:exactMatch	mesh:D001652	Bile Ducts	0.95	semapv:LexicalMatching	gilda
+icd10:S37.8	Injury of other pelvic organs	skos:exactMatch	mesh:D000311	Adrenal Glands	0.95	semapv:LexicalMatching	gilda
+icd10:S42.1	Fracture of scapula	skos:exactMatch	mesh:D012540	Scapula	0.95	semapv:LexicalMatching	gilda
+icd10:S43.0	Dislocation of shoulder joint	skos:exactMatch	mesh:D012785	Shoulder Joint	0.95	semapv:LexicalMatching	gilda
+icd10:S52.0	Fracture of upper end of ulna	skos:exactMatch	mesh:D056740	Olecranon Process	0.95	semapv:LexicalMatching	gilda
+icd10:S52.1	Fracture of upper end of radius	skos:exactMatch	mesh:D006257	Head	0.95	semapv:LexicalMatching	gilda
+icd10:S52.5	Fracture of lower end of radius	skos:exactMatch	mesh:D003100	Colles' Fracture	0.95	semapv:LexicalMatching	gilda
+icd10:S82.0	Fracture of patella	skos:exactMatch	mesh:D010329	Patella	0.95	semapv:LexicalMatching	gilda
+icd10:S92.0	Fracture of calcaneus	skos:exactMatch	mesh:D002111	Calcaneus	0.95	semapv:LexicalMatching	gilda
+icd10:S93.0	Dislocation of ankle joint	skos:exactMatch	mesh:D013628	Talus	0.95	semapv:LexicalMatching	gilda
+icd10:T17.8	Foreign body in other and multiple parts of respiratory tract	skos:exactMatch	mesh:D055745	Bronchioles	0.95	semapv:LexicalMatching	gilda
+icd10:T27.2	Burn of other parts of respiratory tract	skos:exactMatch	mesh:D035423	Thoracic Cavity	0.95	semapv:LexicalMatching	gilda
+icd10:T33-T35	Frostbite	skos:exactMatch	mesh:D005627	Frostbite	1.0	semapv:LexicalMatching	gilda
+icd10:T40.0	Opium	skos:exactMatch	mesh:D009892	Opium	1.0	semapv:LexicalMatching	gilda
+icd10:T40.1	Heroin	skos:exactMatch	mesh:D003932	Heroin	1.0	semapv:LexicalMatching	gilda
+icd10:T40.3	Methadone	skos:exactMatch	mesh:D008691	Methadone	1.0	semapv:LexicalMatching	gilda
+icd10:T40.4	Other synthetic narcotics	skos:exactMatch	mesh:D008614	Meperidine	0.95	semapv:LexicalMatching	gilda
+icd10:T40.5	Cocaine	skos:exactMatch	mesh:D003042	Cocaine	1.0	semapv:LexicalMatching	gilda
+icd10:T40.9	Other and unspecified psychodysleptics [hallucinogens]	skos:exactMatch	mesh:C009105	psilocin	0.95	semapv:LexicalMatching	gilda
+icd10:T41.5	Therapeutic gases	skos:exactMatch	mesh:D010100	Oxygen	0.95	semapv:LexicalMatching	gilda
+icd10:T42.3	Barbiturates	skos:exactMatch	mesh:D001463	Barbiturates	1.0	semapv:LexicalMatching	gilda
+icd10:T50.5	Appetite depressants	skos:exactMatch	mesh:D001067	Appetite Depressants	1.0	semapv:LexicalMatching	gilda
+icd10:T51.0	Ethanol	skos:exactMatch	mesh:D000431	Ethanol	1.0	semapv:LexicalMatching	gilda
+icd10:T51.1	Methanol	skos:exactMatch	mesh:D000432	Methanol	1.0	semapv:LexicalMatching	gilda
+icd10:T51.2	2-Propanol	skos:exactMatch	mesh:D019840	2-Propanol	1.0	semapv:LexicalMatching	gilda
+icd10:T51.3	Fusel oil	skos:exactMatch	mesh:C007807	fusel oil	1.0	semapv:LexicalMatching	gilda
+icd10:T52.1	Benzene	skos:exactMatch	mesh:D001554	Benzene	1.0	semapv:LexicalMatching	gilda
+icd10:T52.3	Glycols	skos:exactMatch	mesh:D006018	Glycols	1.0	semapv:LexicalMatching	gilda
+icd10:T52.4	Ketones	skos:exactMatch	mesh:D007659	Ketones	1.0	semapv:LexicalMatching	gilda
+icd10:T53.0	Carbon tetrachloride	skos:exactMatch	mesh:D002251	Carbon Tetrachloride	1.0	semapv:LexicalMatching	gilda
+icd10:T53.1	Chloroform	skos:exactMatch	mesh:D002725	Chloroform	1.0	semapv:LexicalMatching	gilda
+icd10:T53.2	Trichloroethylene	skos:exactMatch	mesh:D014241	Trichloroethylene	1.0	semapv:LexicalMatching	gilda
+icd10:T53.3	Tetrachloroethylene	skos:exactMatch	mesh:D013750	Tetrachloroethylene	1.0	semapv:LexicalMatching	gilda
+icd10:T53.4	Dichloromethane	skos:exactMatch	mesh:D008752	Methylene Chloride	1.0	semapv:LexicalMatching	gilda
+icd10:T53.5	Chlorofluorocarbons	skos:exactMatch	mesh:D017402	Chlorofluorocarbons	1.0	semapv:LexicalMatching	gilda
+icd10:T54.3	Corrosive alkalis and alkali-like substances	skos:exactMatch	mesh:C029943	potassium hydroxide	0.95	semapv:LexicalMatching	gilda
+icd10:T56.8	Other metals	skos:exactMatch	mesh:D013793	Thallium	0.95	semapv:LexicalMatching	gilda
+icd10:T57.3	Hydrogen cyanide	skos:exactMatch	mesh:D006856	Hydrogen Cyanide	1.0	semapv:LexicalMatching	gilda
+icd10:T59	Toxic effect of other gases, fumes and vapours	skos:exactMatch	mesh:D000335	Aerosol Propellants	0.95	semapv:LexicalMatching	gilda
+icd10:T59.0	Nitrogen oxides	skos:exactMatch	mesh:D009589	Nitrogen Oxides	1.0	semapv:LexicalMatching	gilda
+icd10:T59.1	Sulfur dioxide	skos:exactMatch	mesh:D013458	Sulfur Dioxide	1.0	semapv:LexicalMatching	gilda
+icd10:T59.2	Formaldehyde	skos:exactMatch	mesh:D005557	Formaldehyde	1.0	semapv:LexicalMatching	gilda
+icd10:T59.3	Lacrimogenic gas	skos:exactMatch	mesh:D013665	Tear Gases	0.95	semapv:LexicalMatching	gilda
+icd10:T59.6	Hydrogen sulfide	skos:exactMatch	mesh:D006862	Hydrogen Sulfide	1.0	semapv:LexicalMatching	gilda
+icd10:T59.7	Carbon dioxide	skos:exactMatch	mesh:D002245	Carbon Dioxide	1.0	semapv:LexicalMatching	gilda
+icd10:T60.4	Rodenticides	skos:exactMatch	mesh:D012378	Rodenticides	1.0	semapv:LexicalMatching	gilda
+icd10:T61.0	Ciguatera fish poisoning	skos:exactMatch	mesh:D036841	Ciguatera Poisoning	1.0	semapv:LexicalMatching	gilda
+icd10:T63.0	Snake venom	skos:exactMatch	mesh:D012910	Snake Venoms	1.0	semapv:LexicalMatching	gilda
+icd10:T63.6	Toxic effect of contact with other marine animals	skos:exactMatch	mesh:D012615	Sea Anemones	0.95	semapv:LexicalMatching	gilda
+icd10:T65.0	Cyanides	skos:exactMatch	mesh:D003486	Cyanides	1.0	semapv:LexicalMatching	gilda
+icd10:T65.3	Nitroderivatives and aminoderivatives of benzene and its homologues	skos:exactMatch	mesh:C036077	nitrobenzene	0.95	semapv:LexicalMatching	gilda
+icd10:T65.4	Carbon disulfide	skos:exactMatch	mesh:D002246	Carbon Disulfide	1.0	semapv:LexicalMatching	gilda
+icd10:T68	Hypothermia	skos:exactMatch	mesh:D007035	Hypothermia	1.0	semapv:LexicalMatching	gilda
+icd10:T69.1	Chilblains	skos:exactMatch	mesh:D002647	Chilblains	1.0	semapv:LexicalMatching	gilda
+icd10:T73.0	Effects of hunger	skos:exactMatch	mesh:D013217	Starvation	0.95	semapv:LexicalMatching	gilda
+icd10:T74.1	Physical abuse	skos:exactMatch	mesh:D000066550	Physical Abuse	1.0	semapv:LexicalMatching	gilda
+icd10:T74.3	Psychological abuse	skos:exactMatch	mesh:D000085202	Emotional Abuse	1.0	semapv:LexicalMatching	gilda
+icd10:T75.1	Drowning and nonfatal submersion	skos:exactMatch	mesh:D007101	Immersion	0.95	semapv:LexicalMatching	gilda
+icd10:T75.3	Motion sickness	skos:exactMatch	mesh:D009041	Motion Sickness	1.0	semapv:LexicalMatching	gilda
+icd10:T78.3	Angioneurotic oedema	skos:exactMatch	mesh:D000799	Angioedema	0.95	semapv:LexicalMatching	gilda
+icd10:T79.4	Traumatic shock	skos:exactMatch	mesh:D012774	Shock, Traumatic	1.0	semapv:LexicalMatching	gilda
+icd10:T79.5	Traumatic anuria	skos:exactMatch	mesh:D003444	Crush Syndrome	0.95	semapv:LexicalMatching	gilda
+icd10:T79.6	Traumatic ischaemia of muscle	skos:exactMatch	mesh:D003161	Compartment Syndromes	0.95	semapv:LexicalMatching	gilda
+icd10:T80	Complications following infusion, transfusion and therapeutic injection	skos:exactMatch	mesh:D010477	Perfusion	0.95	semapv:LexicalMatching	gilda
+icd10:V01-X59	Accidents	skos:exactMatch	mesh:D000059	Accidents	1.0	semapv:LexicalMatching	gilda
+icd10:W00-W19	Falls	skos:exactMatch	mesh:D000058	Accidental Falls	1.0	semapv:LexicalMatching	gilda
+icd10:W27	Contact with nonpowered hand tool	skos:exactMatch	mesh:D009339	Needles	0.95	semapv:LexicalMatching	gilda
+icd10:W59	Bitten or crushed by other reptiles	skos:exactMatch	mesh:D008116	Lizards	0.95	semapv:LexicalMatching	gilda
+icd10:W69	Drowning and submersion while in natural water	skos:exactMatch	mesh:D060106	Lakes	0.95	semapv:LexicalMatching	gilda
+icd10:W88	Exposure to ionizing radiation	skos:exactMatch	mesh:D011868	Radioisotopes	0.95	semapv:LexicalMatching	gilda
+icd10:X01	Exposure to uncontrolled fire, not in building or structure	skos:exactMatch	mesh:D000075923	Wildfires	0.95	semapv:LexicalMatching	gilda
+icd10:X20	Contact with venomous snakes and lizards	skos:exactMatch	mesh:D000097142	Bothrops atrox	0.95	semapv:LexicalMatching	gilda
+icd10:X21	Contact with venomous spiders	skos:exactMatch	mesh:D001740	Black Widow Spider	0.95	semapv:LexicalMatching	gilda
+icd10:X25	Contact with other venomous arthropods	skos:exactMatch	mesh:D001000	Ants	0.95	semapv:LexicalMatching	gilda
+icd10:X26	Contact with venomous marine animals and plants	skos:exactMatch	mesh:D058894	Nematocyst	0.95	semapv:LexicalMatching	gilda
+icd10:X37	Victim of cataclysmic storm	skos:exactMatch	mesh:D055867	Cyclonic Storms	0.95	semapv:LexicalMatching	gilda
+icd10:X50	Overexertion and strenuous or repetitive movements	skos:exactMatch	mesh:D000081642	Marathon Running	0.95	semapv:LexicalMatching	gilda
+icd10:X85-Y09	Assault	skos:exactMatch	mesh:D006708	Homicide	0.95	semapv:LexicalMatching	gilda
+icd10:Y07	Other maltreatment	skos:exactMatch	mesh:D014104	Torture	0.95	semapv:LexicalMatching	gilda
+icd10:Y36.0	War operations involving explosion of marine weapons	skos:exactMatch	mesh:D014101	Torpedo	0.95	semapv:LexicalMatching	gilda
+icd10:Y36.7	War operations involving chemical weapons and other forms of unconventional warfare	skos:exactMatch	mesh:D007834	Lasers	0.95	semapv:LexicalMatching	gilda
+icd10:Y43.1	Antineoplastic antimetabolites	skos:exactMatch	mesh:D000964	Antimetabolites, Antineoplastic	1.0	semapv:LexicalMatching	gilda
+icd10:Y43.4	Immunosuppressive agents	skos:exactMatch	mesh:D007166	Immunosuppressive Agents	1.0	semapv:LexicalMatching	gilda
+icd10:Y44.5	Thrombolytic drugs	skos:exactMatch	mesh:D005343	Fibrinolytic Agents	1.0	semapv:LexicalMatching	gilda
+icd10:Y44.7	Plasma substitutes	skos:exactMatch	mesh:D010952	Plasma Substitutes	1.0	semapv:LexicalMatching	gilda
+icd10:Y46.0	Succinimides	skos:exactMatch	mesh:D013388	Succinimides	1.0	semapv:LexicalMatching	gilda
+icd10:Y46.5	Valproic acid	skos:exactMatch	mesh:D014635	Valproic Acid	1.0	semapv:LexicalMatching	gilda
+icd10:Y47.3	Paraldehyde	skos:exactMatch	mesh:D010242	Paraldehyde	1.0	semapv:LexicalMatching	gilda
+icd10:Y47.4	Bromine compounds	skos:exactMatch	mesh:D017605	Bromine Compounds	1.0	semapv:LexicalMatching	gilda
+icd10:Y50.1	Opioid receptor antagonists	skos:exactMatch	mesh:D009292	Narcotic Antagonists	1.0	semapv:LexicalMatching	gilda
+icd10:Y50.2	Methylxanthines, not elsewhere classified	skos:exactMatch	mesh:D002110	Caffeine	0.95	semapv:LexicalMatching	gilda
+icd10:Y54.0	Mineralocorticoids	skos:exactMatch	mesh:D008901	Mineralocorticoids	1.0	semapv:LexicalMatching	gilda
+icd10:Y55.0	Oxytocic drugs	skos:exactMatch	mesh:D004876	Ergot Alkaloids	0.95	semapv:LexicalMatching	gilda
+icd10:Y55.6	Antiasthmatics, not elsewhere classified	skos:exactMatch	mesh:D000628	Aminophylline	0.95	semapv:LexicalMatching	gilda
+icd10:Y57.3	Alcohol deterrents	skos:exactMatch	mesh:D000427	Alcohol Deterrents	1.0	semapv:LexicalMatching	gilda
+icd10:Y58	Bacterial vaccines	skos:exactMatch	mesh:D001428	Bacterial Vaccines	1.0	semapv:LexicalMatching	gilda
+icd10:Y58.0	BCG vaccine	skos:exactMatch	mesh:D001500	BCG Vaccine	1.0	semapv:LexicalMatching	gilda
+icd10:Y58.2	Cholera vaccine	skos:exactMatch	mesh:D022121	Cholera Vaccines	1.0	semapv:LexicalMatching	gilda
+icd10:Y58.3	Plague vaccine	skos:exactMatch	mesh:D010931	Plague Vaccine	1.0	semapv:LexicalMatching	gilda
+icd10:Y58.5	Diphtheria vaccine	skos:exactMatch	mesh:D004168	Diphtheria Toxoid	1.0	semapv:LexicalMatching	gilda
+icd10:Y59.0	Viral vaccines	skos:exactMatch	mesh:D014765	Viral Vaccines	1.0	semapv:LexicalMatching	gilda
+icd10:Y59.1	Rickettsial vaccines	skos:exactMatch	mesh:D012290	Rickettsial Vaccines	1.0	semapv:LexicalMatching	gilda
+icd10:Y59.3	Immunoglobulin	skos:exactMatch	mesh:D007136	Immunoglobulins	1.0	semapv:LexicalMatching	gilda
+icd10:Y84.0	Cardiac catheterization	skos:exactMatch	mesh:D006328	Cardiac Catheterization	1.0	semapv:LexicalMatching	gilda
+icd10:Y84.3	Shock therapy	skos:exactMatch	mesh:D003295	Convulsive Therapy	1.0	semapv:LexicalMatching	gilda
+icd10:Y84.6	Urinary catheterization	skos:exactMatch	mesh:D014546	Urinary Catheterization	1.0	semapv:LexicalMatching	gilda
+icd10:Z10.8	Routine general health check-up of other defined subpopulations	skos:exactMatch	mesh:D013334	Students	0.95	semapv:LexicalMatching	gilda
+icd10:Z13.3	Special screening examination for mental and behavioural disorders	skos:exactMatch	mesh:D000437	Alcoholism	0.95	semapv:LexicalMatching	gilda
+icd10:Z22.7	Latent tuberculosis	skos:exactMatch	mesh:D055985	Latent Tuberculosis	1.0	semapv:LexicalMatching	gilda
+icd10:Z29.2	Other prophylactic chemotherapy	skos:exactMatch	mesh:D018890	Chemoprevention	0.95	semapv:LexicalMatching	gilda
+icd10:Z30.2	Sterilization	skos:exactMatch	mesh:D013242	Sterilization	1.0	semapv:LexicalMatching	gilda
+icd10:Z31.1	Artificial insemination	skos:exactMatch	mesh:D007315	Insemination, Artificial	1.0	semapv:LexicalMatching	gilda
+icd10:Z31.4	Procreative investigation and testing	skos:exactMatch	mesh:D013076	Sperm Count	0.95	semapv:LexicalMatching	gilda
+icd10:Z36.0	Antenatal screening for chromosomal anomalies	skos:exactMatch	mesh:D000649	Amniocentesis	0.95	semapv:LexicalMatching	gilda
+icd10:Z41.1	Other plastic surgery for unacceptable cosmetic appearance	skos:exactMatch	mesh:D018427	Breast Implants	0.95	semapv:LexicalMatching	gilda
+icd10:Z46.8	Fitting and adjustment of other specified devices	skos:exactMatch	mesh:D014910	Wheelchairs	0.95	semapv:LexicalMatching	gilda
+icd10:Z49.2	Other dialysis	skos:exactMatch	mesh:D010530	Peritoneal Dialysis	0.95	semapv:LexicalMatching	gilda
+icd10:Z50.0	Cardiac rehabilitation	skos:exactMatch	mesh:D000072038	Cardiac Rehabilitation	1.0	semapv:LexicalMatching	gilda
+icd10:Z50.5	Speech therapy	skos:exactMatch	mesh:D013070	Speech Therapy	1.0	semapv:LexicalMatching	gilda
+icd10:Z51.5	Palliative care	skos:exactMatch	mesh:D010166	Palliative Care	1.0	semapv:LexicalMatching	gilda
+icd10:Z52.0	Blood donor	skos:exactMatch	mesh:D001782	Blood Donors	1.0	semapv:LexicalMatching	gilda
+icd10:Z54	Convalescence	skos:exactMatch	mesh:D003289	Convalescence	1.0	semapv:LexicalMatching	gilda
+icd10:Z70.8	Other sex counselling	skos:exactMatch	mesh:D012736	Sex Education	0.95	semapv:LexicalMatching	gilda
+icd10:Z72.0	Tobacco use	skos:exactMatch	mesh:D064424	Tobacco Use	1.0	semapv:LexicalMatching	gilda
+icd10:Z73.0	Burn-out	skos:exactMatch	mesh:D000077062	Burnout, Psychological	1.0	semapv:LexicalMatching	gilda
+icd10:Z75.5	Holiday relief care	skos:exactMatch	mesh:D012144	Respite Care	0.95	semapv:LexicalMatching	gilda
+icd10:Z90.0	Acquired absence of part of head and neck	skos:exactMatch	mesh:D009666	Nose	0.95	semapv:LexicalMatching	gilda
+icd10:Z91.5	Personal history of self-harm	skos:exactMatch	mesh:D013406	Suicide, Attempted	0.95	semapv:LexicalMatching	gilda
+icd10:Z91.7	Personal history of female genital mutilation	skos:exactMatch	mesh:D019093	Circumcision, Female	0.95	semapv:LexicalMatching	gilda
+icd10:Z92.2	Personal history of long-term (current) use of other medicaments	skos:exactMatch	mesh:D001241	Aspirin	0.95	semapv:LexicalMatching	gilda
+icd10:Z94.8	Other transplanted organ and tissue status	skos:exactMatch	mesh:D001853	Bone Marrow	0.95	semapv:LexicalMatching	gilda
+icd10:Z96.1	Presence of intraocular lens	skos:exactMatch	mesh:D019591	Pseudophakia	0.95	semapv:LexicalMatching	gilda
+icd10:Z96.2	Presence of otological and audiological implants	skos:exactMatch	mesh:D003054	Cochlear Implants	0.95	semapv:LexicalMatching	gilda
