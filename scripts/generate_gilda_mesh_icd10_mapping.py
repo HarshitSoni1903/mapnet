@@ -130,6 +130,16 @@ def _provenance():
 def _write_sssom(df, out_path, provenance):
     if df.is_empty():
         return
+    stem = out_path.name.removesuffix(".sssom.tsv")
+    set_url = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
+               f"{out_path.parent.name}/{out_path.name}")
+    header = ("#curie_map:\n#  icd10: https://icd.who.int/browse10/2019/en#/\n"
+              "#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=\n"
+              "#  skos: http://www.w3.org/2004/02/skos/core#\n"
+              "#  semapv: https://w3id.org/semapv/vocab/\n"
+              f"#mapping_set_id: {set_url}\n"
+              f"#mapping_set_title: {stem}\n"
+              "#mapping_tool: gilda\n")
     rows = [{"subject_id": r["source identifier"], "subject_label": r["source name"],
              "predicate_id": "skos:exactMatch",
              "object_id": r.get("predicted identifier", r.get("target identifier")),
@@ -138,7 +148,9 @@ def _write_sssom(df, out_path, provenance):
              "confidence": r.get("confidence", ""), **provenance}
             for r in df.iter_rows(named=True)]
     out = pd.DataFrame(rows, columns=SSSOM_COLUMNS).fillna("")
-    out.to_csv(out_path, sep="\t", index=False)
+    with open(out_path, "w") as f:
+        f.write(header)
+    out.to_csv(out_path, sep="\t", index=False, mode="a")
     print(f"[sssom] {len(rows)} -> {out_path}")
 
 
