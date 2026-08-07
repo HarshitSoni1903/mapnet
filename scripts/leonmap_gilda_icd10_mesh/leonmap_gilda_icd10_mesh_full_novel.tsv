@@ -1,11 +1,3 @@
-#curie_map:
-#  icd10: https://icd.who.int/browse10/2019/en#/
-#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=
-#  skos: http://www.w3.org/2004/02/skos/core#
-#  semapv: https://w3id.org/semapv/vocab/
-#mapping_set_id: https://github.com/gyorilab/mapnet/blob/main/scripts/leonmap_icd10_mesh_full_classified/leonmap_icd10_mesh_full_novel.sssom.tsv
-#mapping_set_title: leonmap_icd10_mesh_full_novel
-#mapping_tool: leonmap
 subject_id	subject_label	predicate_id	object_id	object_label	mapping_justification	subject_source_version	object_source_version	mapping_tool	mapping_tool_id	mapping_tool_version	mapping_date	confidence
 icd10:A22.2	Gastrointestinal anthrax	skos:exactMatch	mesh:C571911	Gastrointestinal anthrax	semapv:LexicalMatching	2019	2025	https://github.com/gyorilab/mapnet/blob/main/scripts/generate_leonmap_mesh_icd10_mapping.py	leonmap	0.1.0	2026-08-04	1.0
 icd10:C86.3	Subcutaneous panniculitis-like T-cell lymphoma	skos:exactMatch	mesh:C537503	Subcutaneous panniculitis-like T-cell lymphoma	semapv:LexicalMatching	2019	2025	https://github.com/gyorilab/mapnet/blob/main/scripts/generate_leonmap_mesh_icd10_mapping.py	leonmap	0.1.0	2026-08-04	1.0

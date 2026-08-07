@@ -1,27 +1,90 @@
+# /// script
+# requires-python = ">=3.11,<3.12"
+# dependencies = [
+#     "leonmap @ git+https://github.com/HarshitSoni1903/Weakly-Supervised-Representation-Learning-for-Cross-Ontology-Mapping.git",
+#     "mapnet @ git+https://github.com/gyorilab/mapnet.git@969d11b915",
+#     "openacme @ git+https://github.com/gyorilab/openacme.git",
+#     "biomappings==0.4.2",
+#     "pyobo==0.12.18",
+#     "bioregistry==0.13.23",
+#     "bioversions==0.8.289",
+#     "bioontologies==0.7.4",
+#     "networkx==3.6.1",
+#     "polars==1.39.3",
+#     "pandas==2.3.3",
+#     "pyarrow",
+#     "pystow==0.7.28",
+#     "faiss-cpu==1.13.2",
+#     "huggingface-hub",
+# ]
+#
+# [tool.uv]
+# override-dependencies = [
+#     "torchvision ; sys_platform == 'nope'",
+#     "torchaudio ; sys_platform == 'nope'",
+#     "deeponto ; sys_platform == 'nope'",
+#     "jpype1 ; sys_platform == 'nope'",
+#     "black ; sys_platform == 'nope'",
+#     "indra ; sys_platform == 'nope'",
+#     "pysb ; sys_platform == 'nope'",
+#     "transformers>=4.44",
+# ]
+# ///
+"""WHO ICD-10 -> full MeSH with leonmap (SapBERT + FAISS), a depth-decayed tree blend, and lexical-hit labeling.
+
+    uv run --script https://raw.githubusercontent.com/gyorilab/mapnet/refs/heads/main/scripts/generate_leonmap_mesh_icd10_mapping.py
+"""
 import argparse
+import importlib.metadata as md
 import json
 import os
 import re
 import sys
+from datetime import date
 from itertools import chain
 from pathlib import Path
 
+import bioontologies.robot
 import faiss
 import networkx as nx
 import numpy as np
 import pandas as pd
 import polars as pl
+import pystow
+from biomappings.resources import POSITIVES_SSSOM_PATH, PREDICTIONS_SSSOM_PATH
+from huggingface_hub import snapshot_download
+from openacme.icd10.icd10 import ICD10_XML_URL, get_icd10_graph
+from openacme.icd10.map_definitions import map_icd10_to_definitions
 
-_REPO = Path(__file__).resolve().parents[1]
-if str(_REPO) not in sys.path:
-    sys.path.insert(0, str(_REPO))
+if not hasattr(bioontologies.robot, "ROBOT_COMMAND"):
+    bioontologies.robot.ROBOT_COMMAND = ["robot"]
 
-from leonmap.utils import canonicalize_id
+faiss.get_num_gpus = lambda: 0
+
+import leonmap.config as config
+from leonmap.config import BuildConfig, COLLECTIONS, MAPPINGS, resolve_path
+from leonmap.utils import canonicalize_id, load_collection
+from mapnet.utils.filtering import ( 
+    get_right_wrong_mappings,
+    repair_names_with_semra,
+)
+from mapnet.utils.utils import make_undirected, sssom_to_biomappings
+
+HF_MODEL_REPO = "harshitsoni1903/sapbert-finetuned-semra"
+MESH_OWL_GZ_URL = "https://w3id.org/biopragmatics/resources/mesh/mesh.owl.gz"
+SEMRA_URL = "https://zenodo.org/records/15826693/files/processed.sssom.tsv.gz?download=1"
+SEMRA_NAME = "semra_disease_landscape_mappings.tsv.gz"
+MAPPING_TOOL = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
+                "generate_leonmap_mesh_icd10_mapping.py")
 
 STUDY = "icd10_mesh_full"
-HF_MODEL_REPO = "harshitsoni1903/sapbert-finetuned-semra"
 
-# own-weight decays with distance to the frontier: alpha = max(MIN, A0 * DECAY**(dist-1))
+SSSOM_COLUMNS = ["subject_id", "subject_label", "predicate_id", "object_id", "object_label",
+                 "mapping_justification", "subject_source_version", "object_source_version",
+                 "mapping_tool", "mapping_tool_id", "mapping_tool_version", "mapping_date",
+                 "confidence"]
+
+# Weight decays with distance: alpha = max(MIN, A0 * DECAY**(dist-1))
 A0, DECAY, ALPHA_MIN = 0.7, 0.7, 0.3
 
 COLLECTION = {"icd10": {"source": "csv", "model": "ft",
@@ -50,19 +113,42 @@ def _cosine(remarks):
     return float(m.group(1)) if m else None
 
 
-# ICD-10 preprocessing
+def _run(entry_main, cli_name, argv):
+    old = sys.argv
+    sys.argv = [cli_name] + argv
+    try:
+        entry_main()
+    finally:
+        sys.argv = old
+
+
+# Inputs
+
+def ensure_mesh_owl(data_dir):
+    """Cache the full MeSH OWL under ~/.data/mesh/ and expose it where leonmap reads it."""
+    dst = data_dir / "mesh.owl"
+    if dst.exists():
+        return dst
+    src = pystow.ensure_gunzip("mesh", url=MESH_OWL_GZ_URL, name="mesh.owl.gz")
+    data_dir.mkdir(parents=True, exist_ok=True)
+    dst.symlink_to(src)
+    print(f"[mesh] {src} -> {dst}")
+    return dst
+
+
+def load_semra_sssom():
+    """Cache the SemRA disease landscape and return it in raw SSSOM form."""
+    path = pystow.ensure_gunzip("semra", url=SEMRA_URL, name=SEMRA_NAME)
+    return pl.read_csv(path, separator="\t")
+
 
 def _umls_definitions():
-    # {code: {definition, synonyms}} from UMLS; caller falls back to ClaML if this raises
-    from openacme.icd10.map_definitions import map_icd10_to_definitions
     raw = map_icd10_to_definitions(umls_api_key=os.environ["UMLS_API_KEY"])
     return {code: {"definition": next(iter(_flat(v.get("definition"))), ""),
                    "synonyms": _flat(v.get("synonyms"))} for code, v in raw.items()}
 
 
 def load_icd10():
-    # ICD-10 graph and code->immediate-children map (is_a edges run child->parent)
-    from openacme.icd10.icd10 import get_icd10_graph
     g = get_icd10_graph()
     children = {c: kids for c in g.nodes
                 if (kids := [u for u, _, d in g.in_edges(c, data=True) if d.get("kind") == "is_a"])}
@@ -70,7 +156,6 @@ def load_icd10():
 
 
 def write_concepts(g, data_dir, use_umls):
-    # write icd10_concepts.tsv (id/label/definition/synonyms) -- only needed when (re)building the index
     defs = {}
     if use_umls:
         try:
@@ -91,10 +176,30 @@ def write_concepts(g, data_dir, use_umls):
     print(f"[icd10] wrote {len(rows)} concepts -> icd10_concepts.tsv")
 
 
+def build_collections(g, cfg, args, build_main):
+    """Embed whatever is missing. leonmap builds a collection once its spec is registered."""
+    db_dir, data_dir = resolve_path(cfg.db_dir), resolve_path(cfg.data_dir)
+    raw = db_dir / "icd10" / "index.raw.faiss"
+
+    todo = []
+    if args.rebuild or not raw.exists():
+        write_concepts(g, data_dir, use_umls=not args.no_umls)
+        todo.append("icd10")
+    if not (db_dir / "mesh_full" / "index.faiss").exists():
+        ensure_mesh_owl(data_dir)
+        todo.append("mesh_full")
+
+    if todo:
+        print(f"[build] embedding {', '.join(todo)}")
+        _run(build_main, "leonmap-build", ["--collections", *todo, "--monitor", "0", "--rebuild"])
+    if "icd10" in todo:
+        raw.write_bytes((db_dir / "icd10" / "index.faiss").read_bytes())  # pristine pre-blend snapshot
+    return raw
+
+
 # Hierarchical vector blend
 
 def _blend_pass(vecs, pos, order, neighbors_of):
-    # one directional tree blend: own-weight decays with distance to the frontier, blended against neighbors
     dist = {}
     for code in order:
         nbrs = [pos[f"icd10:{c}"] for c in neighbors_of.get(code, []) if f"icd10:{c}" in pos]
@@ -108,8 +213,8 @@ def _blend_pass(vecs, pos, order, neighbors_of):
     return vecs
 
 
+# rewrite the icd10 index: blend every node toward descendants (bottom-up) and ancestors (top-down), then average
 def blend_collection(db_dir, children):
-    # rewrite the icd10 index: blend every node toward descendants (bottom-up) and ancestors (top-down), then average
     cdir = db_dir / "icd10"
     index = faiss.read_index(str(cdir / "index.raw.faiss"))
     pos = json.loads((cdir / "id2pos.json").read_text())
@@ -120,7 +225,6 @@ def blend_collection(db_dir, children):
     root_first = list(reversed(leaves_first))
     parent_of = {c: [p] for p, kids in children.items() for c in kids}
 
-    # leaves are exempt from the top-down pass: a leaf's own label is its strongest signal (often an exact MeSH match), so pulling it toward its ancestors only buries it below the retrieval cutoff.
     down_order = [c for c in root_first if c in children]
     up = _blend_pass(vecs.copy(), pos, leaves_first, children)
     down = _blend_pass(vecs.copy(), pos, down_order, parent_of)
@@ -138,7 +242,6 @@ def blend_collection(db_dir, children):
 
 def refine_mapping(mapper_tsv, g, cfg):
     # label each baseline top-1 as exact/synonym/semantic via lexical lookup; else it defaults to semantic
-    from leonmap.utils import load_collection
     mesh = load_collection(cfg, "mesh_full")
 
     rows = []
@@ -165,8 +268,8 @@ def refine_mapping(mapper_tsv, g, cfg):
 
 # Classification + SSSOM
 
+
 def _predictions_df(tsv):
-    # refined mapper TSV -> (predictions frame, {(src, tgt): remark})
     d = pd.read_csv(tsv, sep="\t").fillna("")
     d["src"], d["tgt"] = d.src_id.map(canonicalize_id), d.tgt_id.map(canonicalize_id)
     remark = {(s, t): r for s, t, r in zip(d.src, d.tgt, d.remarks)}
@@ -178,7 +281,6 @@ def _predictions_df(tsv):
 
 
 def _to_common(df):
-    # right/novel carry 'target *'; wrong carries 'predicted *' -- reduce both to one schema
     tid = "predicted identifier" if "predicted identifier" in df.columns else "target identifier"
     tnm = "predicted name" if "predicted name" in df.columns else "target name"
     conf = pl.col("confidence") if "confidence" in df.columns else pl.lit(1.0).alias("confidence")
@@ -186,33 +288,54 @@ def _to_common(df):
                       pl.col(tid).alias("target identifier"), pl.col(tnm).alias("target name"), conf])
 
 
-def _write_sssom(df, out_path, set_id, remark):
-    # emit SSSOM; remark is looked up by (src, tgt) since get_right_wrong_mappings drops it as a column
-    records = []
-    for r in df.iter_rows(named=True):
-        obj = r.get("predicted identifier", r["target identifier"])
-        kind, _, comment = remark.get((r["source identifier"], obj), "semantic").partition(";")
-        records.append({"subject_id": r["source identifier"], "subject_label": r["source name"],
-                        "predicate_id": "skos:exactMatch" if kind == "exact" else "skos:closeMatch",
-                        "object_id": obj, "object_label": r.get("predicted name", r["target name"]),
-                        "confidence": r["confidence"],
-                        "mapping_justification": "semapv:LexicalMatching" if kind in ("exact", "synonym")
-                        else "semapv:SemanticSimilarity",
-                        "mapping_tool": "leonmap", "comment": comment})
+def _provenance(mesh_owl):
+    """Column values shared by every row: source releases and tool identity."""
+    icd10 = re.search(r"icd10(\d{4})en", ICD10_XML_URL)
+    mesh = None
+    if mesh_owl.exists():  # absent when mapping against a prebuilt index
+        with open(mesh_owl, encoding="utf-8", errors="replace") as f:
+            mesh = re.search(r"/resources/mesh/(\d{4})/", f.read(4000))
+    return {"subject_source_version": icd10.group(1) if icd10 else "",
+            "object_source_version": mesh.group(1) if mesh else "",
+            "mapping_tool": MAPPING_TOOL,
+            "mapping_tool_id": "leonmap",
+            "mapping_tool_version": md.version("leonmap"),
+            "mapping_date": date.today().isoformat()}
+
+
+def _write_sssom(df, out_path, remark, provenance):
+    # remark is looked up by (src, tgt) since get_right_wrong_mappings drops it as a column
+    if df.is_empty():
+        return
+    stem = out_path.name.removesuffix(".sssom.tsv")
+    set_url = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
+               f"{out_path.parent.name}/{out_path.name}")
     header = ("#curie_map:\n#  icd10: https://icd.who.int/browse10/2019/en#/\n"
               "#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=\n"
               "#  skos: http://www.w3.org/2004/02/skos/core#\n"
               "#  semapv: https://w3id.org/semapv/vocab/\n"
-              f"#mapping_set_id: {set_id}\n#mapping_tool: leonmap\n")
-    out_path.write_text(header)
-    pd.DataFrame(records).to_csv(out_path, sep="\t", index=False, mode="a")
+              f"#mapping_set_id: {set_url}\n"
+              f"#mapping_set_title: {stem}\n"
+              "#mapping_tool: leonmap\n")
+    records = []
+    for r in df.iter_rows(named=True):
+        obj = r.get("predicted identifier", r["target identifier"])
+        kind, _, _ = remark.get((r["source identifier"], obj), "semantic").partition(";")
+        records.append({"subject_id": r["source identifier"], "subject_label": r["source name"],
+                        "predicate_id": "skos:exactMatch" if kind == "exact" else "skos:closeMatch",
+                        "object_id": obj, "object_label": r.get("predicted name", r["target name"]),
+                        "mapping_justification": "semapv:LexicalMatching" if kind in ("exact", "synonym")
+                        else "semapv:SemanticSimilarity",
+                        "confidence": r["confidence"], **provenance})
+    out = pd.DataFrame(records, columns=SSSOM_COLUMNS).fillna("")
+    with open(out_path, "w") as f:
+        f.write(header)
+    out.to_csv(out_path, sep="\t", index=False, mode="a")
     print(f"[sssom] {len(records)} -> {out_path.name}")
 
 
 def _biomappings_evidence():
     # icd10:<->mesh: pairs from Biomappings SSSOM exports (read directly; mapnet's own loader expects an old schema)
-    from biomappings.resources import PREDICTIONS_SSSOM_PATH, POSITIVES_SSSOM_PATH
-    from mapnet.utils.utils import sssom_to_biomappings
     frames = []
     for path in (PREDICTIONS_SSSOM_PATH, POSITIVES_SSSOM_PATH):
         d = pd.read_csv(path, comment="#", sep="\t").fillna("")
@@ -226,10 +349,8 @@ def _biomappings_evidence():
     return sssom_to_biomappings(pl.from_pandas(ev[["subject_id", "subject_label", "object_id", "object_label"]]))
 
 
-def classify(predictions, remark, out_dir, semra_raw):
+def classify(predictions, remark, out_dir, semra_raw, mesh_owl):
     # flatten n:1 collisions to the best 1:1 pick, split right/wrong/novel against evidence, write SSSOM
-    from mapnet.utils.filtering import repair_names_with_semra, get_right_wrong_mappings
-    from mapnet.utils.utils import make_undirected, sssom_to_biomappings
     out_dir.mkdir(parents=True, exist_ok=True)
 
     semra = sssom_to_biomappings(semra_raw, {"icd10": {}, "mesh": {}}, {"icd10": "icd10", "mesh": "mesh"})
@@ -258,30 +379,30 @@ def classify(predictions, remark, out_dir, semra_raw):
     right, wrong, novel = get_right_wrong_mappings(predictions, evidence)
     right, novel = _to_common(right), _to_common(novel)
     wrong = pl.concat([_to_common(wrong), _to_common(dup_losers)])
+    provenance = _provenance(mesh_owl)
     for tag, part in (("novel", novel), ("right", right), ("wrong", wrong)):
-        _write_sssom(part, out_dir / f"leonmap_{STUDY}_{tag}.sssom.tsv", f"leonmap_{STUDY}_{tag}", remark)
+        _write_sssom(part, out_dir / f"leonmap_{STUDY}_{tag}.sssom.tsv", remark, provenance)
     print(f"[classify] right={right.height} wrong={wrong.height} novel={novel.height} "
           f"(dup_collisions={dup_losers.height})")
 
 
-# Orchestration
-
-if __name__ == "__main__":
-    ap = argparse.ArgumentParser()
+def main():
+    ap = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     ap.add_argument("-r", "--rebuild", action="store_true", help="re-embed the icd10 collection")
-    ap.add_argument("-t", "--threshold", type=float, default=0.99, help="mapper confidence threshold")
+    ap.add_argument("-t", "--threshold", type=float, default=0.9, help="mapper confidence threshold")
     ap.add_argument("--no-blend", action="store_true",
                     help="map against the original db (skip the tree re-arrangement)")
     ap.add_argument("--no-umls", action="store_true", help="rebuild without UMLS enrichment (ClaML labels only)")
     ap.add_argument("--no-refine", action="store_true",
                     help="skip lexical-hit labeling (exact/synonym predicates fall back to semantic)")
+    ap.add_argument("--work-dir", type=Path, default=Path("."),
+                    help="root for db/, data/, models/, mapper_results/")
     ap.add_argument("--out-dir", default=f"leonmap_{STUDY}_classified")
     args = ap.parse_args()
 
-    root = Path(os.path.abspath("."))
-    import leonmap.config as config
+    root = args.work_dir.resolve()
+    root.mkdir(parents=True, exist_ok=True)
     config.PROJECT_ROOT = root
-    from leonmap.config import BuildConfig, COLLECTIONS, MAPPINGS, resolve_path
     from leonmap.build_vdb import main as build_main
     from leonmap.mapper import main as mapper_main
     COLLECTIONS.update(COLLECTION)
@@ -289,39 +410,30 @@ if __name__ == "__main__":
 
     cfg = BuildConfig()
     if not resolve_path(cfg.ft_model_path).exists():
-        from huggingface_hub import snapshot_download
         snapshot_download(repo_id=HF_MODEL_REPO, local_dir=str(resolve_path(cfg.ft_model_path)))
 
     g, children = load_icd10()
-    icd10_dir = resolve_path(cfg.db_dir) / "icd10"
-    raw = icd10_dir / "index.raw.faiss"
+    raw = build_collections(g, cfg, args, build_main)
 
-    # UMLS enrichment, the concepts write, and re-embedding only matter when rebuilding
-    if args.rebuild:
-        write_concepts(g, resolve_path(cfg.data_dir), use_umls=not args.no_umls)
-        sys.argv = ["leonmap-build", "--collections", "icd10", "--monitor", "0", "--rebuild"]
-        build_main()
-        raw.write_bytes((icd10_dir / "index.faiss").read_bytes())   # snapshot the pristine build
-    elif not raw.exists():
-        raise SystemExit("No index.raw.faiss — run once with --rebuild first.")
+    semra_raw = load_semra_sssom()
 
-    from mapnet.utils.filtering import load_semera_landscape_df
-    semra_raw = load_semera_landscape_df(
-        "disease", {"icd10": {}, "mesh": {}}, {"icd10": "icd10", "mesh": "mesh"}, sssom=True)
-
+    db_dir = resolve_path(cfg.db_dir)
     if args.no_blend:
-        (icd10_dir / "index.faiss").write_bytes(raw.read_bytes())
+        (db_dir / "icd10" / "index.faiss").write_bytes(raw.read_bytes())
         print("[blend] skipped; mapping against the original db")
     else:
-        blend_collection(resolve_path(cfg.db_dir), children)
+        blend_collection(db_dir, children)
 
-    sys.argv = ["leonmap-map", "--study", STUDY, "--threshold", str(args.threshold)]
-    mapper_main()
+    _run(mapper_main, "leonmap-map", ["--study", STUDY, "--threshold", str(args.threshold)])
 
     run = max((resolve_path("mapper_results") / STUDY).glob("run_*"), key=lambda p: p.name)
     tsv = run / "icd10_to_mesh_full.tsv"
     if not args.no_refine:
         tsv = refine_mapping(tsv, g, cfg)
     predictions, remark = _predictions_df(tsv)
-    classify(predictions, remark, root / args.out_dir, semra_raw)
+    classify(predictions, remark, root / args.out_dir, semra_raw,
+             resolve_path(cfg.data_dir) / "mesh.owl")
     print(f"Done -> {root / args.out_dir}/")
+
+if __name__ == "__main__":
+    main()

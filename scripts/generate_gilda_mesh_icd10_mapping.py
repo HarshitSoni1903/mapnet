@@ -1,19 +1,79 @@
-import sys
+# /// script
+# requires-python = ">=3.11,<3.12"
+# dependencies = [
+#     "mapnet @ git+https://github.com/gyorilab/mapnet.git@969d11b915",
+#     "openacme @ git+https://github.com/gyorilab/openacme.git",
+#     "gilda==1.5.0",
+#     "indra==1.24.0",
+#     "biomappings==0.4.2",
+#     "pyobo==0.12.18",
+#     "bioregistry==0.13.23",
+#     "bioversions==0.8.289",
+#     "bioontologies==0.7.4",
+#     "networkx==3.6.1",
+#     "polars==1.39.3",
+#     "pandas==2.3.3",
+#     "pystow==0.7.28",
+# ]
+#
+# [tool.uv]
+# override-dependencies = [
+#     "torch ; sys_platform == 'nope'",
+#     "torchvision ; sys_platform == 'nope'",
+#     "torchaudio ; sys_platform == 'nope'",
+#     "deeponto ; sys_platform == 'nope'",
+#     "jpype1 ; sys_platform == 'nope'",
+#     "transformers ; sys_platform == 'nope'",
+#     "black ; sys_platform == 'nope'",
+# ]
+# ///
+"""WHO ICD-10 -> full MeSH by Gilda lexical matching, classified against SemRA + Biomappings.
+    uv run --script https://raw.githubusercontent.com/gyorilab/mapnet/refs/heads/main/scripts/generate_gilda_mesh_icd10_mapping.py
+"""
+import argparse
+import importlib.metadata as md
+import re
 from collections import defaultdict
+from datetime import date
 from pathlib import Path
 
+import bioontologies.robot
 import pandas as pd
 import polars as pl
-from gilda.process import normalize
+import pystow
+from biomappings.resources import POSITIVES_SSSOM_PATH, PREDICTIONS_SSSOM_PATH
 from gilda.generate_terms import generate_mesh_terms
+from gilda.process import normalize
 from indra.databases import mesh_client
-from openacme.icd10.icd10 import get_icd10_graph
+from openacme.icd10.icd10 import ICD10_XML_URL, get_icd10_graph
 
-_REPO = Path(__file__).resolve().parents[1]
-if str(_REPO) not in sys.path:
-    sys.path.insert(0, str(_REPO))
+if not hasattr(bioontologies.robot, "ROBOT_COMMAND"):
+    bioontologies.robot.ROBOT_COMMAND = ["robot"]
+
+from mapnet.utils.filtering import (
+    get_right_wrong_mappings,
+    repair_names_with_semra,
+)
+from mapnet.utils.utils import make_undirected, sssom_to_biomappings
+
+# Pinned data sources. Only SemRA's disease landscape carries icd10.
+SEMRA_URL = "https://zenodo.org/records/15826693/files/processed.sssom.tsv.gz?download=1"
+SEMRA_NAME = "semra_disease_landscape_mappings.tsv.gz"
+MAPPING_TOOL = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
+                "generate_gilda_mesh_icd10_mapping.py")
 
 BASE = "gilda_icd10_mesh"
+
+SSSOM_COLUMNS = ["subject_id", "subject_label", "predicate_id", "object_id", "object_label",
+                 "mapping_justification", "subject_source_version", "object_source_version",
+                 "mapping_tool", "mapping_tool_id", "mapping_tool_version", "mapping_date",
+                 "confidence"]
+
+
+def load_semra_landscape_df():
+    """Fetch (once, cached) the SemRA disease landscape in biomappings column layout."""
+    path = pystow.ensure_gunzip("semra", url=SEMRA_URL, name=SEMRA_NAME)
+    return sssom_to_biomappings(pl.read_csv(path, separator="\t"))
 
 
 def _canonical(curie):
@@ -23,7 +83,6 @@ def _canonical(curie):
 
 def _biomappings_evidence():
     """icd10:<->mesh: pairs from Biomappings SSSOM exports."""
-    from biomappings.resources import PREDICTIONS_SSSOM_PATH, POSITIVES_SSSOM_PATH
     frames = []
     for path in (PREDICTIONS_SSSOM_PATH, POSITIVES_SSSOM_PATH):
         d = pd.read_csv(path, comment="#", sep="\t").fillna("")
@@ -56,45 +115,65 @@ def greedy_match(pref, incl, mesh):
     return pairs
 
 
-def _write_sssom(df, out_path, set_id):
-    rows = [{"subject_id": r["source identifier"], "subject_label": r["source name"],
-             "predicate_id": "skos:exactMatch",
-             "object_id": r.get("predicted identifier", r.get("target identifier")),
-             "object_label": r.get("predicted name", r.get("target name", "")),
-             "confidence": str(r.get("confidence", "")),
-             "mapping_justification": "semapv:LexicalMatching", "mapping_tool": "gilda"}
-            for r in df.iter_rows(named=True)]
+def _provenance():
+    """Column values shared by every row: source releases and tool identity."""
+    icd10 = re.search(r"icd10(\d{4})en", ICD10_XML_URL)
+    return {"subject_source_version": icd10.group(1) if icd10 else "",
+            # indra's bundled mesh_id_label_mappings.tsv states no release.
+            "object_source_version": "",
+            "mapping_tool": MAPPING_TOOL,
+            "mapping_tool_id": "gilda",
+            "mapping_tool_version": md.version("gilda"),
+            "mapping_date": date.today().isoformat()}
+
+
+def _write_sssom(df, out_path, provenance):
+    if df.is_empty():
+        return
+    stem = out_path.name.removesuffix(".sssom.tsv")
+    set_url = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
+               f"{out_path.parent.name}/{out_path.name}")
     header = ("#curie_map:\n#  icd10: https://icd.who.int/browse10/2019/en#/\n"
               "#  mesh: https://meshb.nlm.nih.gov/record/ui?ui=\n"
               "#  skos: http://www.w3.org/2004/02/skos/core#\n"
               "#  semapv: https://w3id.org/semapv/vocab/\n"
-              f"#mapping_set_id: {set_id}\n#mapping_tool: gilda\n")
+              f"#mapping_set_id: {set_url}\n"
+              f"#mapping_set_title: {stem}\n"
+              "#mapping_tool: gilda\n")
+    rows = [{"subject_id": r["source identifier"], "subject_label": r["source name"],
+             "predicate_id": "skos:exactMatch",
+             "object_id": r.get("predicted identifier", r.get("target identifier")),
+             "object_label": r.get("predicted name", r.get("target name", "")),
+             "mapping_justification": "semapv:LexicalMatching",
+             "confidence": r.get("confidence", ""), **provenance}
+            for r in df.iter_rows(named=True)]
+    out = pd.DataFrame(rows, columns=SSSOM_COLUMNS).fillna("")
     with open(out_path, "w") as f:
         f.write(header)
-    pd.DataFrame(rows).to_csv(out_path, sep="\t", index=False, mode="a")
+    out.to_csv(out_path, sep="\t", index=False, mode="a")
     print(f"[sssom] {len(rows)} -> {out_path}")
 
 
 def classify(df, out_dir):
     """Split predictions into right/wrong/novel against SemRA + Biomappings evidence."""
-    from mapnet.utils.filtering import (load_semera_landscape_df, repair_names_with_semra,
-                                        get_right_wrong_mappings)
-    from mapnet.utils.utils import make_undirected
     out_dir.mkdir(parents=True, exist_ok=True)
-    semra = load_semera_landscape_df("disease", {"icd10": {}, "mesh": {}}, {"icd10": "icd10", "mesh": "mesh"})
+    semra = load_semra_landscape_df()
     df = repair_names_with_semra(df, semra)
     evidence = make_undirected(pl.concat([semra, _biomappings_evidence()]).unique())
     print(f"[evidence] {evidence.height} undirected pairs")
     right, wrong, novel = get_right_wrong_mappings(df, evidence)
+    provenance = _provenance()
     for tag, part in (("novel", novel), ("right", right), ("wrong", wrong)):
-        _write_sssom(part, out_dir / f"{BASE}_{tag}.sssom.tsv", f"{BASE}_{tag}")
+        _write_sssom(part, out_dir / f"{BASE}_{tag}.sssom.tsv", provenance)
     print(f"[classify] right={right.height} wrong={wrong.height} novel={novel.height}")
 
 
-if __name__ == "__main__":
-    g = get_icd10_graph()
+def main():
+    parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
+    parser.add_argument("--out-dir", type=Path, default=Path(f"{BASE}_classified"), help="directory for the right/wrong/novel SSSOM files")
+    args = parser.parse_args()
 
-    # Index ICD-10 nodes by normalized preferred label and by normalized inclusion terms.
+    g = get_icd10_graph()
     pref_by_norm, incl_by_norm, icd_label = defaultdict(set), defaultdict(set), {}
     for code, data in g.nodes(data=True):
         rub = data.get("rubrics", {}) or {}
@@ -124,4 +203,8 @@ if __name__ == "__main__":
     print(f"[gilda] predictions: {predictions.height} "
           f"(preferred={n_pref}, inclusion={predictions.height - n_pref})")
 
-    classify(predictions, Path(f"{BASE}_classified"))
+    classify(predictions, args.out_dir)
+
+
+if __name__ == "__main__":
+    main()
