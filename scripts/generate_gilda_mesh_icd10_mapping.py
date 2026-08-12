@@ -6,6 +6,7 @@
 #     "gilda==1.5.0",
 #     "indra==1.24.0",
 #     "biomappings==0.4.2",
+#     "sssom-pydantic>=0.5.1",
 #     "pyobo==0.12.18",
 #     "bioregistry==0.13.23",
 #     "bioversions==0.8.289",
@@ -13,7 +14,7 @@
 #     "networkx==3.6.1",
 #     "polars==1.39.3",
 #     "pandas==2.3.3",
-#     "pystow==0.7.28",
+#     "pystow>=0.8.6",
 # ]
 #
 # [tool.uv]
@@ -38,9 +39,11 @@ from datetime import date
 from pathlib import Path
 
 import bioontologies.robot
+import curies
 import pandas as pd
 import polars as pl
 import pystow
+import sssom_pydantic
 from biomappings.resources import POSITIVES_SSSOM_PATH, PREDICTIONS_SSSOM_PATH
 from gilda.generate_terms import generate_mesh_terms
 from gilda.process import normalize
@@ -63,6 +66,8 @@ MAPPING_TOOL = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
                 "generate_gilda_mesh_icd10_mapping.py")
 
 BASE = "gilda_icd10_mesh"
+
+PREDICTIONS_RELPATH = Path("src/biomappings/resources/predictions.sssom.tsv")
 
 SSSOM_COLUMNS = ["subject_id", "subject_label", "predicate_id", "object_id", "object_label",
                  "mapping_justification", "subject_source_version", "object_source_version",
@@ -154,7 +159,38 @@ def _write_sssom(df, out_path, provenance):
     print(f"[sssom] {len(rows)} -> {out_path}")
 
 
-def classify(df, out_dir):
+def append_predictions(df, provenance, predictions_path):
+    """Append the novel mappings to a Biomappings predictions file."""
+    tool = sssom_pydantic.MappingTool(name=provenance["mapping_tool"],
+                                      version=provenance["mapping_tool_version"])
+    mappings = [
+        sssom_pydantic.SemanticMapping(
+            subject=curies.NamableReference.from_curie(
+                r["source identifier"], name=r["source name"] or None),
+            predicate=curies.NamableReference(prefix="skos", identifier="exactMatch"),
+            object=curies.NamableReference.from_curie(
+                r.get("predicted identifier", r.get("target identifier")),
+                name=r.get("predicted name", r.get("target name")) or None),
+            justification=curies.Reference(prefix="semapv", identifier="LexicalMatching"),
+            confidence=r.get("confidence"),
+            mapping_tool=tool,
+            subject_source_version=provenance["subject_source_version"] or None,
+            object_source_version=provenance["object_source_version"] or None,
+            mapping_date=date.today(),
+        )
+        for r in df.iter_rows(named=True)
+    ]
+    existing, converter, metadata = sssom_pydantic.read(predictions_path)
+    if converter.standardize_prefix("icd10") is None:
+        converter = curies.Converter([*converter.records, curies.Record(
+            prefix="icd10", uri_prefix="https://icd.who.int/browse10/2019/en#/")])
+    sssom_pydantic.write([*existing, *mappings], predictions_path, metadata=metadata,
+                         converter=converter, drop_duplicates=True, sort=True)
+    added = len(sssom_pydantic.read(predictions_path)[0]) - len(existing)
+    print(f"[predictions] +{added} of {len(mappings)} -> {predictions_path}")
+
+
+def classify(df, out_dir, predictions_path):
     """Split predictions into right/wrong/novel against SemRA + Biomappings evidence."""
     out_dir.mkdir(parents=True, exist_ok=True)
     semra = load_semra_landscape_df()
@@ -166,12 +202,26 @@ def classify(df, out_dir):
     for tag, part in (("novel", novel), ("right", right), ("wrong", wrong)):
         _write_sssom(part, out_dir / f"{BASE}_{tag}.sssom.tsv", provenance)
     print(f"[classify] right={right.height} wrong={wrong.height} novel={novel.height}")
+    if predictions_path is not None:
+        append_predictions(novel, provenance, predictions_path)
 
 
 def main():
     parser = argparse.ArgumentParser(description=__doc__.splitlines()[0])
     parser.add_argument("--out-dir", type=Path, default=Path(f"{BASE}_classified"), help="directory for the right/wrong/novel SSSOM files")
+    parser.add_argument("--predictions-path",
+                        help=f"Biomappings predictions.sssom.tsv to append to "
+                             f"(default: {PREDICTIONS_RELPATH} under the working directory)")
+    parser.add_argument("--no-append", action="store_true",
+                        help="only write the classified files, don't append to predictions")
     args = parser.parse_args()
+
+    predictions_path = None
+    if not args.no_append:
+        predictions_path = Path(args.predictions_path or PREDICTIONS_RELPATH).expanduser().resolve()
+        if not predictions_path.is_file():
+            raise SystemExit(f"predictions file not found at {predictions_path}; pass "
+                             "--predictions-path with the full path to predictions.sssom.tsv")
 
     g = get_icd10_graph()
     pref_by_norm, incl_by_norm, icd_label = defaultdict(set), defaultdict(set), {}
@@ -203,7 +253,7 @@ def main():
     print(f"[gilda] predictions: {predictions.height} "
           f"(preferred={n_pref}, inclusion={predictions.height - n_pref})")
 
-    classify(predictions, args.out_dir)
+    classify(predictions, args.out_dir, predictions_path)
 
 
 if __name__ == "__main__":
