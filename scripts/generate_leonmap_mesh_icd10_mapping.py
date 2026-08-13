@@ -5,6 +5,7 @@
 #     "mapnet @ git+https://github.com/gyorilab/mapnet.git@969d11b915",
 #     "openacme @ git+https://github.com/gyorilab/openacme.git",
 #     "biomappings==0.4.2",
+#     "sssom-pydantic>=0.5.1",
 #     "pyobo==0.12.18",
 #     "bioregistry==0.13.23",
 #     "bioversions==0.8.289",
@@ -13,7 +14,7 @@
 #     "polars==1.39.3",
 #     "pandas==2.3.3",
 #     "pyarrow",
-#     "pystow==0.7.28",
+#     "pystow>=0.8.6",
 #     "faiss-cpu==1.13.2",
 #     "huggingface-hub",
 # ]
@@ -45,12 +46,14 @@ from itertools import chain
 from pathlib import Path
 
 import bioontologies.robot
+import curies
 import faiss
 import networkx as nx
 import numpy as np
 import pandas as pd
 import polars as pl
 import pystow
+import sssom_pydantic
 from biomappings.resources import POSITIVES_SSSOM_PATH, PREDICTIONS_SSSOM_PATH
 from huggingface_hub import snapshot_download
 from openacme.icd10.icd10 import ICD10_XML_URL, get_icd10_graph
@@ -78,6 +81,8 @@ MAPPING_TOOL = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
                 "generate_leonmap_mesh_icd10_mapping.py")
 
 STUDY = "icd10_mesh_full"
+
+PREDICTIONS_RELPATH = Path("src/biomappings/resources/predictions.sssom.tsv")
 
 SSSOM_COLUMNS = ["subject_id", "subject_label", "predicate_id", "object_id", "object_label",
                  "mapping_justification", "subject_source_version", "object_source_version",
@@ -325,13 +330,49 @@ def _write_sssom(df, out_path, remark, provenance):
                         "predicate_id": "skos:exactMatch" if kind == "exact" else "skos:closeMatch",
                         "object_id": obj, "object_label": r.get("predicted name", r["target name"]),
                         "mapping_justification": "semapv:LexicalMatching" if kind in ("exact", "synonym")
-                        else "semapv:SemanticSimilarity",
+                        else "semapv:SemanticSimilarityThresholdMatching",
                         "confidence": r["confidence"], **provenance})
     out = pd.DataFrame(records, columns=SSSOM_COLUMNS).fillna("")
     with open(out_path, "w") as f:
         f.write(header)
     out.to_csv(out_path, sep="\t", index=False, mode="a")
     print(f"[sssom] {len(records)} -> {out_path.name}")
+
+
+def append_predictions(df, remark, provenance, predictions_path):
+    """Append the novel mappings to a Biomappings predictions file."""
+    tool = sssom_pydantic.MappingTool(name=provenance["mapping_tool"],
+                                      version=provenance["mapping_tool_version"])
+    mappings = []
+    for r in df.iter_rows(named=True):
+        obj = r.get("predicted identifier", r["target identifier"])
+        kind, _, _ = remark.get((r["source identifier"], obj), "semantic").partition(";")
+        lexical = kind in ("exact", "synonym")
+        mappings.append(sssom_pydantic.SemanticMapping(
+            subject=curies.NamableReference.from_curie(
+                r["source identifier"], name=r["source name"] or None),
+            predicate=curies.NamableReference(
+                prefix="skos", identifier="exactMatch" if kind == "exact" else "closeMatch"),
+            object=curies.NamableReference.from_curie(
+                obj, name=r.get("predicted name", r["target name"]) or None),
+            justification=curies.Reference(
+                prefix="semapv",
+                identifier="LexicalMatching" if lexical else "SemanticSimilarityThresholdMatching"),
+            confidence=r["confidence"],
+            mapping_tool=tool,
+            subject_source_version=provenance["subject_source_version"] or None,
+            object_source_version=provenance["object_source_version"] or None,
+            mapping_date=date.today(),
+        ))
+
+    existing, converter, metadata = sssom_pydantic.read(predictions_path)
+    if converter.standardize_prefix("icd10") is None:
+        converter = curies.Converter([*converter.records, curies.Record(
+            prefix="icd10", uri_prefix="https://icd.who.int/browse10/2019/en#/")])
+    sssom_pydantic.write([*existing, *mappings], predictions_path, metadata=metadata,
+                         converter=converter, drop_duplicates=True, sort=True)
+    added = len(sssom_pydantic.read(predictions_path)[0]) - len(existing)
+    print(f"[predictions] +{added} of {len(mappings)} -> {predictions_path}")
 
 
 def _biomappings_evidence():
@@ -349,7 +390,7 @@ def _biomappings_evidence():
     return sssom_to_biomappings(pl.from_pandas(ev[["subject_id", "subject_label", "object_id", "object_label"]]))
 
 
-def classify(predictions, remark, out_dir, semra_raw, mesh_owl):
+def classify(predictions, remark, out_dir, semra_raw, mesh_owl, predictions_path):
     # flatten n:1 collisions to the best 1:1 pick, split right/wrong/novel against evidence, write SSSOM
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -361,7 +402,9 @@ def classify(predictions, remark, out_dir, semra_raw, mesh_owl):
 
     def quality(r):
         kind, _, comment = remark.get((r["source identifier"], r["target identifier"]), "").partition(";")
-        cos = _cosine(comment) if kind else r["confidence"]
+        cos = _cosine(comment)
+        if cos is None:
+            cos = r["confidence"]
         return kind_rank.get(kind, 0), cos if cos is not None else 0.0
 
     keep, losers, used_src, used_tgt = [], [], set(), set()
@@ -384,6 +427,8 @@ def classify(predictions, remark, out_dir, semra_raw, mesh_owl):
         _write_sssom(part, out_dir / f"leonmap_{STUDY}_{tag}.sssom.tsv", remark, provenance)
     print(f"[classify] right={right.height} wrong={wrong.height} novel={novel.height} "
           f"(dup_collisions={dup_losers.height})")
+    if predictions_path is not None:
+        append_predictions(novel, remark, provenance, predictions_path)
 
 
 def main():
@@ -398,7 +443,19 @@ def main():
     ap.add_argument("--work-dir", type=Path, default=Path("."),
                     help="root for db/, data/, models/, mapper_results/")
     ap.add_argument("--out-dir", default=f"leonmap_{STUDY}_classified")
+    ap.add_argument("--predictions-path",
+                    help=f"Biomappings predictions.sssom.tsv to append to "
+                         f"(default: {PREDICTIONS_RELPATH} under the working directory)")
+    ap.add_argument("--no-append", action="store_true",
+                    help="only write the classified files, don't append to predictions")
     args = ap.parse_args()
+
+    predictions_path = None
+    if not args.no_append:
+        predictions_path = Path(args.predictions_path or PREDICTIONS_RELPATH).expanduser().resolve()
+        if not predictions_path.is_file():
+            raise SystemExit(f"predictions file not found at {predictions_path}; pass "
+                             "--predictions-path with the full path to predictions.sssom.tsv")
 
     root = args.work_dir.resolve()
     root.mkdir(parents=True, exist_ok=True)
@@ -432,8 +489,9 @@ def main():
         tsv = refine_mapping(tsv, g, cfg)
     predictions, remark = _predictions_df(tsv)
     classify(predictions, remark, root / args.out_dir, semra_raw,
-             resolve_path(cfg.data_dir) / "mesh.owl")
+             resolve_path(cfg.data_dir) / "mesh.owl", predictions_path)
     print(f"Done -> {root / args.out_dir}/")
+
 
 if __name__ == "__main__":
     main()
