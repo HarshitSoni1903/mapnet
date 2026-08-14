@@ -1,12 +1,11 @@
-"""MapNet: an aggregator for biomedical ontology mapping tools.
-
-The package facade. All public names are exported from here.
-"""
+"""MapNet: an aggregator for biomedical ontology mapping tools."""
 
 import logging
 
+from mapnet.mapper import Mapper, write
+
 __version__ = "2.0.0.dev0"
 
-__all__ = ["__version__"]
+__all__ = ["Mapper", "__version__", "write"]
 
 logging.getLogger(__name__).addHandler(logging.NullHandler())
