@@ -2,13 +2,24 @@
 
 from __future__ import annotations
 
+import json
+import re
+from itertools import islice
 from pathlib import Path
+from urllib.error import URLError
 from urllib.parse import urlparse
+from urllib.request import urlopen
 
 import bioregistry
 import pystow
 
 DATA_ROOT = Path("data")
+
+HEADER_LINES = 200
+
+GITHUB_TAGS = "https://api.github.com/repos/{repo}/tags?per_page=100"
+
+VERSION_INFO = re.compile(r"<owl:versionInfo[^>]*>([^<]+)</owl:versionInfo>")
 
 RELEASE_URL = (
     "http://purl.obolibrary.org/obo/{prefix}/releases/{version}/{prefix}.{fmt}"
@@ -46,13 +57,48 @@ def get_version(path: Path) -> str | None:
     stem = path.name.split(".")[0]
     if "_v_" in stem:
         return stem.split("_v_", 1)[1]
+    return _header_version(path)
+
+
+def list_versions(
+    prefix: str, refresh: bool = False, root: Path | None = None
+) -> list[str]:
+    """Return an ontology's published releases, newest first."""
+    cache = (root or DATA_ROOT) / prefix / "versions.json"
+    if cache.is_file() and not refresh:
+        versions: list[str] = json.loads(cache.read_text(encoding="utf-8"))
+        return versions
+    versions = _fetch_versions(prefix)
+    cache.parent.mkdir(parents=True, exist_ok=True)
+    cache.write_text(json.dumps(versions, indent=2), encoding="utf-8")
+    return versions
+
+
+def _fetch_versions(prefix: str) -> list[str]:
+    """Read an ontology's release tags from its GitHub repository."""
+    repo = bioregistry.get_repository(prefix)
+    if not repo or "github.com/" not in repo:
+        raise ValueError(f"{prefix!r} has no GitHub repository to list releases from")
+    url = GITHUB_TAGS.format(repo=repo.split("github.com/", 1)[1].strip("/"))
+    try:
+        with urlopen(url, timeout=30) as response:
+            tags = json.load(response)
+    except (URLError, TimeoutError) as error:
+        raise ValueError(f"cannot list releases for {prefix!r}: {error}") from error
+    return sorted({tag["name"].lstrip("v") for tag in tags}, reverse=True)
+
+
+def _header_version(path: Path) -> str | None:
+    """Read a version from an OBO or an OWL header."""
     with path.open(encoding="utf-8", errors="replace") as handle:
-        for line in handle:
-            if line.startswith("data-version:"):
-                return _version_part(line.split(":", 1)[1].strip())
-            if line.startswith("["):
-                break
-    return None
+        head = "".join(islice(handle, HEADER_LINES))
+    for line in head.splitlines():
+        if line.startswith("data-version:"):
+            return _version_part(line.split(":", 1)[1].strip())
+        if line.startswith("["):
+            break
+    match = VERSION_INFO.search(head)
+    return match.group(1).strip() if match else None
 
 
 def _download(url: str, path: Path) -> None:

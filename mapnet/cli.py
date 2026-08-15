@@ -7,7 +7,7 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-from mapnet.data import DATA_ROOT, get_ontology, get_version
+from mapnet.data import DATA_ROOT, get_ontology, get_version, list_versions
 from mapnet.matchers import load_tools, run
 
 
@@ -16,6 +16,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     parser = argparse.ArgumentParser(prog="mapnet")
     commands = parser.add_subparsers(dest="command", required=True)
     _add_fetch(commands)
+    _add_versions(commands)
     _add_tools(commands)
     _add_match(commands)
     args = parser.parse_args(argv)
@@ -35,6 +36,22 @@ def _add_fetch(commands: argparse._SubParsersAction) -> None:
     fetch.add_argument("--redownload", action="store_true")
     fetch.add_argument("--data", type=Path, default=DATA_ROOT)
     fetch.set_defaults(run=_fetch)
+
+
+def _add_versions(commands: argparse._SubParsersAction) -> None:
+    """Register the versions command."""
+    versions = commands.add_parser("versions", help="list an ontology's releases")
+    versions.add_argument("prefix")
+    versions.add_argument("--refresh", action="store_true", help="re-query the source")
+    versions.add_argument("--data", type=Path, default=DATA_ROOT)
+    versions.set_defaults(run=_versions)
+
+
+def _versions(args: argparse.Namespace) -> int:
+    """Print every release published for an ontology."""
+    for version in list_versions(args.prefix, refresh=args.refresh, root=args.data):
+        print(version)
+    return 0
 
 
 def _add_tools(commands: argparse._SubParsersAction) -> None:

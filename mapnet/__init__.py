@@ -2,7 +2,7 @@
 
 import logging
 
-from mapnet.data import get_ontology, get_version
+from mapnet.data import get_ontology, get_version, list_versions
 from mapnet.mapper import Mapper
 from mapnet.sssom import write
 from mapnet.utils import to_curie, to_reference
@@ -14,6 +14,7 @@ __all__ = [
     "__version__",
     "get_ontology",
     "get_version",
+    "list_versions",
     "to_curie",
     "to_reference",
     "write",
