@@ -9,6 +9,9 @@ dependencies = [
     "sssom-pydantic>=0.6.1",
 ]
 
+[project.scripts]
+mapnet = "mapnet.cli:main"
+
 [build-system]
 requires = ["hatchling"]
 build-backend = "hatchling.build"

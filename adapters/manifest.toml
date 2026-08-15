@@ -1,0 +1,3 @@
+[gilda]
+command = ["uv", "run", "--script", "gilda_utils.py"]
+wants_format = "obo"

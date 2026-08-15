@@ -8,6 +8,8 @@ from urllib.parse import urlparse
 import bioregistry
 import pystow
 
+DATA_ROOT = Path("data")
+
 RELEASE_URL = (
     "http://purl.obolibrary.org/obo/{prefix}/releases/{version}/{prefix}.{fmt}"
 )
@@ -23,16 +25,53 @@ def get_ontology(
     fmt: str = "obo",
     version: str | None = None,
     redownload: bool = False,
+    root: Path | None = None,
 ) -> Path:
     """Return a local path to an ontology, downloading it when absent."""
     prefix, url = _resolve(source, fmt, version)
     name = f"{prefix}_v_{version}.{fmt}" if version else f"{prefix}.{fmt}"
+    path = (root or DATA_ROOT) / prefix / name
+    if path.exists() and not redownload:
+        return path
+    path.parent.mkdir(parents=True, exist_ok=True)
     try:
-        return pystow.ensure(
-            "mapnet", "data", prefix, url=url, name=name, force=redownload
-        )
+        _download(url, path)
     except pystow.utils.DownloadError as error:
         raise ValueError(f"cannot download {name} from {url}") from error
+    return path
+
+
+def get_version(path: Path) -> str | None:
+    """Read an ontology's version from its filename or its header."""
+    stem = path.name.split(".")[0]
+    if "_v_" in stem:
+        return stem.split("_v_", 1)[1]
+    with path.open(encoding="utf-8", errors="replace") as handle:
+        for line in handle:
+            if line.startswith("data-version:"):
+                return _version_part(line.split(":", 1)[1].strip())
+            if line.startswith("["):
+                break
+    return None
+
+
+def _download(url: str, path: Path) -> None:
+    """Download a URL, decompressing it when the source is gzipped."""
+    if not url.endswith(".gz"):
+        pystow.utils.download(url, path, force=True)
+        return
+    archive = path.with_name(f"{path.name}.gz")
+    pystow.utils.download(url, archive, force=True)
+    pystow.utils.gunzip(archive, path, cleanup=True)
+
+
+def _version_part(value: str) -> str:
+    """Strip the release path OBO headers wrap a version in."""
+    parts = value.split("/")
+    if parts[-1].endswith((".obo", ".owl", ".json")):
+        parts.pop()
+    parts = [part for part in parts if part and part != "releases"]
+    return parts[-1] if parts else value
 
 
 def _resolve(source: str, fmt: str, version: str | None) -> tuple[str, str]:
