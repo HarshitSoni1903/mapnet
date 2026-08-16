@@ -139,7 +139,7 @@ Every core module is defined below by what it consumes, what it produces, and wh
 - Purpose: the command line surface.
 - Consumes: command line arguments or a config file path.
 - Produces: the effects of the chosen command by calling the modules above.
-- Holds: the argument definitions for the match, classify, and aggregate commands, and the `--store-results` flag.
+- Holds: the argument definitions for the map, classify, and aggregate commands, and the `--store-results` flag.
 
 ## Adapters
 
@@ -266,16 +266,16 @@ The curie map header is built from the prefixes actually used, resolved through 
 One tool name, one source, one target, and mappings happen directly.
 
 ```text
-mapnet match --tool leonmap --source mondo --target mesh
-mapnet match --tool leonmap --source mondo --target mesh --raw
-mapnet match --config configs/mondo_mesh.yaml
+mapnet map --tool leonmap --source mondo --target mesh
+mapnet map --tool leonmap --source mondo --target mesh --raw
+mapnet map --config configs/mondo_mesh.yaml
 mapnet classify predictions.sssom.tsv --evidence biomappings,obo-xref,semra:disease
 mapnet aggregate novel_a.sssom.tsv novel_b.sssom.tsv novel_c.sssom.tsv
-mapnet match --config configs/mondo_mesh.yaml --parallel
-mapnet match --tool leonmap --source mondo --target mesh --store-results novel
+mapnet map --config configs/mondo_mesh.yaml --parallel
+mapnet map --tool leonmap --source mondo --target mesh --store-results novel
 ```
 
-- `match` runs the full pipeline: fetch data, run the tool, classify, and write the right, wrong, and novel sets. `--raw` stops after predictions.
+- `map` runs the full pipeline: fetch data, run the tool, classify, and write the right, wrong, and novel sets. `--raw` stops after predictions.
 - `classify` runs classification on an existing predictions file against a chosen evidence set.
 - `aggregate` consolidates several tools' sets into one merged SSSOM plus a run provenance file, with the earliest tool in execution order winning a repeated pair.
 - `--parallel` runs the selected tools together instead of one at a time.

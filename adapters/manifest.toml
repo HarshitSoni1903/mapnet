@@ -1,3 +1,7 @@
 [gilda]
 command = ["uv", "run", "--script", "gilda_utils.py"]
 wants_format = "obo"
+
+[leonmap]
+command = ["uv", "run", "--script", "leonmap_utils.py"]
+wants_format = "owl"

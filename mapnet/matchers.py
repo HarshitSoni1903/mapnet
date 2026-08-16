@@ -8,6 +8,8 @@ from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
+from mapnet.utils import LOG_ROOT, run_log
+
 MANIFEST = Path(__file__).parent.parent / "adapters" / "manifest.toml"
 
 
@@ -33,18 +35,30 @@ def load_tools(manifests: Sequence[Path] | None = None) -> dict[str, Tool]:
     return tools
 
 
-def run(tool: Tool, source: Path, target: Path, out: Path) -> Path:
+def run(
+    tool: Tool, source: Path, target: Path, out: Path, logs: Path = LOG_ROOT
+) -> Path:
     """Run a tool over two ontologies and return the predictions it wrote."""
+    log = run_log(tool.name, source, target, logs)
     command = [*tool.command, "--source", str(source), "--target", str(target)]
-    command += ["--out", str(out)]
+    command += ["--out", str(out), "--logs", str(logs)]
     if tool.config:
         command += ["--config", str(tool.config)]
-    result = subprocess.run(command, capture_output=True, text=True)
+    with log.open("w", encoding="utf-8") as handle:
+        result = subprocess.run(
+            command, stdout=handle, stderr=subprocess.STDOUT, text=True
+        )
     if result.returncode != 0:
-        raise RuntimeError(f"{tool.name} failed:\n{result.stderr.strip()}")
+        raise RuntimeError(f"{tool.name} failed, see {log}: {_tail(log)}")
     if not out.is_file():
-        raise RuntimeError(f"{tool.name} wrote no predictions at {out}")
+        raise RuntimeError(f"{tool.name} wrote no predictions at {out}, see {log}")
     return out
+
+
+def _tail(log: Path) -> str:
+    """Read the last non-empty line of a log, for a one-line error."""
+    lines = [line.strip() for line in log.read_text(encoding="utf-8").splitlines()]
+    return next((line for line in reversed(lines) if line), "no output")
 
 
 def _tool(name: str, entry: dict, directory: Path) -> Tool:

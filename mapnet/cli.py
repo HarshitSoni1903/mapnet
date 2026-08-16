@@ -9,6 +9,7 @@ from pathlib import Path
 
 from mapnet.data import DATA_ROOT, get_ontology, get_version, list_versions
 from mapnet.matchers import load_tools, run
+from mapnet.utils import LOG_ROOT
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -18,7 +19,7 @@ def main(argv: Sequence[str] | None = None) -> int:
     _add_fetch(commands)
     _add_versions(commands)
     _add_tools(commands)
-    _add_match(commands)
+    _add_map(commands)
     args = parser.parse_args(argv)
     try:
         return args.run(args)
@@ -60,15 +61,16 @@ def _add_tools(commands: argparse._SubParsersAction) -> None:
     tools.set_defaults(run=_tools)
 
 
-def _add_match(commands: argparse._SubParsersAction) -> None:
-    """Register the match command."""
-    match = commands.add_parser("match", help="run a matcher over two ontologies")
-    match.add_argument("--tool", required=True)
-    match.add_argument("--src", required=True, help="source prefix or URL")
-    match.add_argument("--tgt", required=True, help="target prefix or URL")
-    match.add_argument("--out", type=Path, required=True)
-    match.add_argument("--data", type=Path, default=DATA_ROOT)
-    match.set_defaults(run=_match)
+def _add_map(commands: argparse._SubParsersAction) -> None:
+    """Register the map command."""
+    mapping = commands.add_parser("map", help="run a matcher over two ontologies")
+    mapping.add_argument("--tool", required=True)
+    mapping.add_argument("--src", required=True, help="source prefix or URL")
+    mapping.add_argument("--tgt", required=True, help="target prefix or URL")
+    mapping.add_argument("--out", type=Path, required=True)
+    mapping.add_argument("--data", type=Path, default=DATA_ROOT)
+    mapping.add_argument("--logs", type=Path, default=LOG_ROOT)
+    mapping.set_defaults(run=_map)
 
 
 def _tools(args: argparse.Namespace) -> int:
@@ -78,7 +80,7 @@ def _tools(args: argparse.Namespace) -> int:
     return 0
 
 
-def _match(args: argparse.Namespace) -> int:
+def _map(args: argparse.Namespace) -> int:
     """Fetch both ontologies, run the tool, and report the predictions."""
     tools = load_tools()
     tool = tools.get(args.tool)
@@ -86,7 +88,7 @@ def _match(args: argparse.Namespace) -> int:
         raise ValueError(f"unknown tool {args.tool!r}, have {sorted(tools)}")
     source = get_ontology(args.src, fmt=tool.wants_format, root=args.data)
     target = get_ontology(args.tgt, fmt=tool.wants_format, root=args.data)
-    out = run(tool, source, target, args.out)
+    out = run(tool, source, target, args.out, logs=args.logs)
     rows = sum(1 for line in out.open() if not line.startswith("#")) - 1
     print(f"{out}  ({rows} mappings)")
     return 0

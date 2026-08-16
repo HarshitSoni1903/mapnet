@@ -2,11 +2,22 @@
 
 from __future__ import annotations
 
+from datetime import datetime
 from functools import cache
+from pathlib import Path
 
 import bioregistry
 import curies
 from curies import NamableReference
+
+LOG_ROOT = Path("logs")
+
+
+def run_log(tool: str, source: Path, target: Path, root: Path = LOG_ROOT) -> Path:
+    """Build the log path for one tool run, creating its directory."""
+    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+    root.mkdir(parents=True, exist_ok=True)
+    return root / f"run_{tool}_{source.stem}_{target.stem}_{stamp}.log"
 
 
 @cache

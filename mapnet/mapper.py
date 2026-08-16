@@ -47,5 +47,6 @@ def parse_args(prog: str, argv: Sequence[str] | None = None) -> argparse.Namespa
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--target", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
+    parser.add_argument("--logs", type=Path, default=Path("logs"))
     parser.add_argument("--config", type=Path)
     return parser.parse_args(argv)
