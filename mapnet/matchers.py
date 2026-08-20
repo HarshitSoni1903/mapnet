@@ -56,7 +56,7 @@ def run(
 
 
 def _tail(log: Path) -> str:
-    """Read the last non-empty line of a log, for a one-line error."""
+    """Read the last non-empty line of a log."""
     lines = [line.strip() for line in log.read_text(encoding="utf-8").splitlines()]
     return next((line for line in reversed(lines) if line), "no output")
 

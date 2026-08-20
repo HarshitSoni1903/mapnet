@@ -20,7 +20,7 @@ import yaml
 from curies import Reference
 from sssom_pydantic import SemanticMapping
 
-from mapnet import Mapper, to_reference
+from mapnet import Mapper, to_prefix, to_reference
 
 WORKDIR = Path("data/leonmap")
 MODEL_REPO = "harshitsoni1903/sapbert-finetuned-semra"
@@ -32,13 +32,6 @@ CLOSE = Reference(prefix="skos", identifier="closeMatch")
 LEXICAL = Reference(prefix="semapv", identifier="LexicalMatching")
 SEMANTIC = Reference(prefix="semapv", identifier="SemanticSimilarityThresholdMatching")
 
-# Identifier prefixes LeonMap filters candidates by, per ontology.
-ID_PREFIXES = {
-    "mondo": ["MONDO_"],
-    "mesh": ["mesh_"],
-    "doid": ["DOID_"],
-    "icd10": ["icd10:"],
-}
 KINDS = {".owl": "owl_path", ".tsv": "csv_path"}
 
 
@@ -55,21 +48,17 @@ class LeonMapMapper(Mapper):
 
         config.PROJECT_ROOT = work
 
-        source, target = _name(args.source), _name(args.target)
+        source, target = to_prefix(args.source), to_prefix(args.target)
         _write_config(work / "config.yaml", args, work)
         _download_model(work)
 
         from leonmap.build_vdb import main as build
         from leonmap.mapper import main as mapper
 
-        _call(build, ["--collections", source, target])
+        _call(build, ["--collections", source, target, "--monitor", "0"])
+        before = _runs(work)
         _call(mapper, ["--study", STUDY])
-        yield from _rows(work, source, target)
-
-
-def _name(path):
-    """Read the collection name from an ontology filename."""
-    return path.stem.split("_")[0].lower()
+        yield from _rows(_new_run(work, before), source, target)
 
 
 def _collection(path):
@@ -77,18 +66,17 @@ def _collection(path):
     kind = KINDS.get(path.suffix)
     if kind is None:
         raise ValueError(f"leonmap cannot read {path.suffix!r}, want {sorted(KINDS)}")
-    name = _name(path)
     return {
         "source": "owl" if kind == "owl_path" else "csv",
         "model": "ft",
         kind: str(path.resolve()),
-        "id_prefixes": ID_PREFIXES.get(name, [f"{name}_"]),
+        "id_prefixes": [f"{to_prefix(path)}:"],
     }
 
 
 def _write_config(path, args, work):
     """Write the run config and patch it over LeonMap's defaults."""
-    source, target = _name(args.source), _name(args.target)
+    source, target = to_prefix(args.source), to_prefix(args.target)
     path.write_text(
         yaml.safe_dump(
             {
@@ -140,12 +128,22 @@ def _call(entry, argv):
         sys.argv = old
 
 
-def _rows(work, source, target):
-    """Yield every prediction from the newest run directory."""
-    runs = sorted((work / "mapper_results" / STUDY).glob("run_*"))
-    if not runs:
-        raise RuntimeError(f"leonmap wrote no run directory under {work}")
-    with open(runs[-1] / f"{source}_to_{target}.tsv", encoding="utf-8") as handle:
+def _runs(work):
+    """List the run directories under the workdir."""
+    return set((work / "mapper_results" / STUDY).glob("run_*"))
+
+
+def _new_run(work, before):
+    """Return the run directory this invocation created."""
+    fresh = _runs(work) - before
+    if not fresh:
+        raise RuntimeError(f"leonmap wrote no new run directory under {work}")
+    return max(fresh)
+
+
+def _rows(run, source, target):
+    """Yield every prediction from one run directory."""
+    with open(run / f"{source}_to_{target}.tsv", encoding="utf-8") as handle:
         for row in csv.DictReader(handle, delimiter="\t"):
             yield _mapping(row)
 

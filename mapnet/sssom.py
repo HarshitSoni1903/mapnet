@@ -1,4 +1,4 @@
-"""Write mapping predictions as SSSOM."""
+"""Read and write mapping predictions as SSSOM."""
 
 from __future__ import annotations
 
@@ -15,6 +15,12 @@ from sssom_pydantic import MappingSet, MappingTool, SemanticMapping
 
 # Placeholder namespace until the external mapping repository exists.
 SET_BASE = "https://w3id.org/mapnet/mappings"
+
+
+def read(path: Path) -> list[SemanticMapping]:
+    """Read every mapping from an SSSOM file."""
+    mappings, _, _ = sssom_pydantic.read(path)
+    return list(mappings)
 
 
 def write(

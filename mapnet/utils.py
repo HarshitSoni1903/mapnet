@@ -26,6 +26,11 @@ def converter() -> curies.Converter:
     return bioregistry.get_converter()
 
 
+def to_prefix(path: Path) -> str:
+    """Read the ontology prefix from a data filename."""
+    return path.stem.split("_")[0].lower()
+
+
 def to_curie(value: str) -> str:
     """Turn an IRI or a CURIE into a normalized CURIE."""
     text = value.strip()
