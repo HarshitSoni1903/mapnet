@@ -21,6 +21,8 @@ GITHUB_TAGS = "https://api.github.com/repos/{repo}/tags?per_page=100"
 
 VERSION_INFO = re.compile(r"<owl:versionInfo[^>]*>([^<]+)</owl:versionInfo>")
 
+VERSION_IRI = re.compile(r'<owl:versionIRI[^>]*rdf:resource="([^"]+)"')
+
 RELEASE_URL = (
     "http://purl.obolibrary.org/obo/{prefix}/releases/{version}/{prefix}.{fmt}"
 )
@@ -40,15 +42,18 @@ def get_ontology(
 ) -> Path:
     """Return a local path to an ontology, downloading it when absent."""
     prefix, url = _resolve(source, fmt, version)
-    name = f"{prefix}_v_{version}.{fmt}" if version else f"{prefix}.{fmt}"
-    path = (root or DATA_ROOT) / prefix / name
+    stem = f"{prefix}_v_{version}" if version else prefix
+    name = Path(urlparse(url).path).name
+    if name.endswith(".gz"):
+        name = pystow.utils.base_from_gzip_name(name)
+    path = (root or DATA_ROOT) / prefix / f"{stem}{Path(name).suffix}"
     if path.exists() and not redownload:
         return path
     path.parent.mkdir(parents=True, exist_ok=True)
     try:
         _download(url, path)
     except pystow.utils.DownloadError as error:
-        raise ValueError(f"cannot download {name} from {url}") from error
+        raise ValueError(f"cannot download {path.name} from {url}") from error
     return path
 
 
@@ -97,12 +102,15 @@ def _header_version(path: Path) -> str | None:
             return _version_part(line.split(":", 1)[1].strip())
         if line.startswith("["):
             break
-    match = VERSION_INFO.search(head)
-    return match.group(1).strip() if match else None
+    info = VERSION_INFO.search(head)
+    if info:
+        return info.group(1).strip()
+    iri = VERSION_IRI.search(head)
+    return _version_part(iri.group(1)) if iri else None
 
 
 def _download(url: str, path: Path) -> None:
-    """Download a URL, decompressing it when the source is gzipped."""
+    """Download a URL to a path, unzipping a gzipped source into it."""
     if not url.endswith(".gz"):
         pystow.utils.download(url, path, force=True)
         return
@@ -122,25 +130,15 @@ def _version_part(value: str) -> str:
 
 def _resolve(source: str, fmt: str, version: str | None) -> tuple[str, str]:
     """Return the cache key and download URL for a prefix or a URL."""
-    if _is_url(source):
+    if source.startswith(("http://", "https://")):
         return Path(urlparse(source).path).name.split(".")[0], source
     if fmt not in DOWNLOADERS:
         raise ValueError(f"unknown format {fmt!r}, expected {sorted(DOWNLOADERS)}")
     if version:
-        return source, _release_url(source, version, fmt)
+        if bioregistry.get_obofoundry_prefix(source) is None:
+            raise ValueError(f"{source!r} is not an OBO Foundry ontology, pass a URL")
+        return source, RELEASE_URL.format(prefix=source, version=version, fmt=fmt)
     url = DOWNLOADERS[fmt](source)
     if url is None:
         raise ValueError(f"bioregistry has no {fmt} download for {source!r}")
     return source, url
-
-
-def _release_url(prefix: str, version: str, fmt: str) -> str:
-    """Build the OBO Foundry release URL for a pinned version."""
-    if bioregistry.get_obofoundry_prefix(prefix) is None:
-        raise ValueError(f"{prefix!r} is not an OBO Foundry ontology, pass a URL")
-    return RELEASE_URL.format(prefix=prefix, version=version, fmt=fmt)
-
-
-def _is_url(source: str) -> bool:
-    """Whether the source is a URL rather than a prefix."""
-    return source.startswith(("http://", "https://"))

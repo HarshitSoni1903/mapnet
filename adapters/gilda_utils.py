@@ -1,6 +1,6 @@
 # /// script
 # requires-python = ">=3.11"
-# dependencies = ["mapnet", "gilda", "obonet"]
+# dependencies = ["mapnet", "gilda", "obonet", "indra"]
 #
 # [tool.uv.sources]
 # mapnet = { path = "..", editable = true }
@@ -8,15 +8,19 @@
 """Match two ontologies on Gilda-normalized labels."""
 
 import importlib.metadata as md
+import inspect
+import re
 from collections import defaultdict
 
-import gilda
+import gilda.generate_terms
 import obonet
 
 from mapnet import Mapper, Reference, SemanticMapping, to_curie, to_prefix, to_reference
 
 JUSTIFICATION = Reference(prefix="semapv", identifier="LexicalMatching")
 PREDICATE = Reference(prefix="skos", identifier="exactMatch")
+SYNONYM = re.compile(r'^"(.+)" (EXACT|RELATED|NARROW|BROAD|\[\])')
+CONFIDENCE = {2: 1.0, 1: 0.95, 0: 0.9}
 
 
 class GildaMapper(Mapper):
@@ -24,25 +28,25 @@ class GildaMapper(Mapper):
     version = md.version("gilda")
 
     def match(self, args):
-        """Match the two ontologies one to one, names before synonyms."""
+        """Match the two ontologies on every unambiguous shared label."""
         names, synonyms = _index(args.source, to_prefix(args.source))
         targets = _targets(to_prefix(args.target))
-        used_subjects, used_objects = set(), set()
-        for confidence, table in ((1.0, names), (0.95, synonyms)):
+        seen = set()
+        for named, table in ((True, names), (False, synonyms)):
             for text in sorted(table.keys() & targets.keys()):
                 subjects, objects = table[text], targets[text]
-                if len(subjects) != 1 or len(objects) != 1:
+                if len(subjects) != 1 or len({obj[0] for obj in objects}) != 1:
                     continue
-                subject, obj = next(iter(subjects)), next(iter(objects))
-                if subject[0] in used_subjects or obj[0] in used_objects:
+                subject = next(iter(subjects))
+                obj = min(objects, key=lambda entry: entry[2] != "name")
+                if (subject[0], obj[0]) in seen:
                     continue
-                used_subjects.add(subject[0])
-                used_objects.add(obj[0])
-                yield _mapping(subject, obj, confidence)
+                seen.add((subject[0], obj[0]))
+                yield _mapping(subject, obj, CONFIDENCE[named + (obj[2] == "name")])
 
 
 def _index(path, prefix):
-    """Index the ontology's own names and synonyms by normalized text."""
+    """Index the ontology's names and exact synonyms by normalized text."""
     names, synonyms = defaultdict(set), defaultdict(set)
     for node, data in obonet.read_obo(path).nodes(data=True):
         label = data.get("name")
@@ -50,22 +54,23 @@ def _index(path, prefix):
             continue
         names[gilda.process.normalize(label)].add((node, label))
         for raw in data.get("synonym", []):
-            text = raw.split('"')[1] if '"' in raw else ""
-            if text:
-                synonyms[gilda.process.normalize(text)].add((node, label))
+            found = SYNONYM.match(raw)
+            if found and found.group(2) == "EXACT":
+                text = gilda.process.normalize(found.group(1))
+                synonyms[text].add((node, label))
     return names, synonyms
 
 
 def _targets(prefix):
-    """Index one namespace's own Gilda terms by normalized text."""
+    """Index the target ontology's own Gilda terms by normalized text."""
+    generate = getattr(gilda.generate_terms, f"generate_{prefix}_terms", None)
+    if generate is None:
+        raise ValueError(f"gilda has no term generator for {prefix!r}")
+    drop = "ignore_mappings" in inspect.signature(generate).parameters
     index = defaultdict(set)
-    for group in gilda.get_grounder().entries.values():
-        for term in group:
-            if (term.source or "").lower() != prefix:
-                continue
-            curie = to_curie(f"{term.db}:{term.id}")
-            if curie.split(":")[0] == prefix:
-                index[term.norm_text].add((curie, term.entry_name))
+    for term in generate(ignore_mappings=True) if drop else generate():
+        curie = to_curie(f"{term.db}:{term.id}")
+        index[term.norm_text].add((curie, term.entry_name, term.status))
     return index
 
 
