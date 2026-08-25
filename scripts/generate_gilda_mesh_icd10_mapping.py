@@ -60,8 +60,8 @@ from mapnet.utils.filtering import (
 from mapnet.utils.utils import make_undirected, sssom_to_biomappings
 
 # Pinned data sources. Only SemRA's disease landscape carries icd10.
-SEMRA_URL = "https://zenodo.org/records/15826693/files/processed.sssom.tsv.gz?download=1"
-SEMRA_NAME = "semra_disease_landscape_mappings.tsv.gz"
+SEMRA_URL = "https://zenodo.org/records/21935586/files/processed.sssom.tsv.gz?download=1"
+SEMRA_NAME = "semra_disease_landscape_mappings_21935586.tsv.gz"
 MAPPING_TOOL = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
                 "generate_gilda_mesh_icd10_mapping.py")
 
@@ -78,7 +78,7 @@ SSSOM_COLUMNS = ["subject_id", "subject_label", "predicate_id", "object_id", "ob
 def load_semra_landscape_df():
     """Fetch (once, cached) the SemRA disease landscape in biomappings column layout."""
     path = pystow.ensure_gunzip("semra", url=SEMRA_URL, name=SEMRA_NAME)
-    return sssom_to_biomappings(pl.read_csv(path, separator="\t"))
+    return sssom_to_biomappings(pl.read_csv(path, separator="\t", comment_prefix="#"))
 
 
 def _canonical(curie):

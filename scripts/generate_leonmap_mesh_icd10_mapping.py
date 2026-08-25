@@ -75,8 +75,8 @@ from mapnet.utils.utils import make_undirected, sssom_to_biomappings
 
 HF_MODEL_REPO = "harshitsoni1903/sapbert-finetuned-semra"
 MESH_OWL_GZ_URL = "https://w3id.org/biopragmatics/resources/mesh/mesh.owl.gz"
-SEMRA_URL = "https://zenodo.org/records/15826693/files/processed.sssom.tsv.gz?download=1"
-SEMRA_NAME = "semra_disease_landscape_mappings.tsv.gz"
+SEMRA_URL = "https://zenodo.org/records/21935586/files/processed.sssom.tsv.gz?download=1"
+SEMRA_NAME = "semra_disease_landscape_mappings_21935586.tsv.gz"
 MAPPING_TOOL = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
                 "generate_leonmap_mesh_icd10_mapping.py")
 
@@ -144,7 +144,7 @@ def ensure_mesh_owl(data_dir):
 def load_semra_sssom():
     """Cache the SemRA disease landscape and return it in raw SSSOM form."""
     path = pystow.ensure_gunzip("semra", url=SEMRA_URL, name=SEMRA_NAME)
-    return pl.read_csv(path, separator="\t")
+    return pl.read_csv(path, separator="\t", comment_prefix="#")
 
 
 def _umls_definitions():
