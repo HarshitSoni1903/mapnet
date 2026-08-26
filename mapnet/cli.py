@@ -107,3 +107,7 @@ def _fetch(args: argparse.Namespace) -> int:
     size = path.stat().st_size / 1e6
     print(f"{path}  ({size:.1f} MB, version {get_version(path) or 'unknown'})")
     return 0
+
+
+if __name__ == "__main__":
+    raise SystemExit(main())

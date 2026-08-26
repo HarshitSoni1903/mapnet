@@ -18,10 +18,14 @@ on the path to run a matcher.
 ## Usage
 
 ```bash
+mapnet fetch mondo
+mapnet fetch mondo --format owl
 mapnet fetch mondo --version 2026-08-04
+mapnet fetch https://example.org/my.obo
 mapnet versions mondo
 mapnet tools
 mapnet map --tool gilda --src mondo --tgt mesh --out predictions.sssom.tsv
+mapnet map --tool gilda --src https://example.org/my.obo --tgt mesh --out predictions.sssom.tsv
 ```
 
 | Command | Options |
@@ -34,19 +38,43 @@ mapnet map --tool gilda --src mondo --tgt mesh --out predictions.sssom.tsv
 `map` fetches both ontologies in the format the tool declares, runs the tool as a subprocess,
 and writes SSSOM. Each run is logged to `logs/`.
 
-A source or target is a [Bioregistry](https://bioregistry.io) prefix or a download URL:
+A source, `--src` or `--tgt` is a [Bioregistry](https://bioregistry.io) prefix or a download
+URL. Files land in `data/<prefix>/`, named after the prefix and the extension they were served
+with.
 
-```bash
-mapnet map --tool gilda --src https://example.org/my.obo --tgt mesh --out predictions.sssom.tsv
-```
+`--version` names an OBO Foundry release. It applies to prefixes only, since a URL serves one
+release and cannot be versioned. `fetch` prints the path, the size and the version it read from
+the file.
 
 ## Python API
 
 ```python
-from mapnet import get_ontology, get_version, list_versions, read, write
+from mapnet import get_ontology, get_evidence, get_version, list_versions
+from mapnet import read, write, aggregate
 from mapnet import to_curie, to_prefix, to_reference
 from mapnet import Mapper, Reference, SemanticMapping
 ```
+
+Evidence sets and aggregation have no command line yet.
+
+```python
+path = get_evidence("semra:disease")          # data/evidence/semra_disease/<record>/
+count = aggregate([gilda_out, leonmap_out], combined)
+```
+
+`get_evidence` resolves the Zenodo concept record to its newest version at fetch time.
+`aggregate` unions prediction files, keeping the first row for each subject and object pair.
+
+## Configuration
+
+`mapnet/manifest.py` is the central registry. Adding a source, an evidence set or a matcher is
+an edit there.
+
+| Name | Holds |
+| --- | --- |
+| `URLS` | download and API endpoints |
+| `EVIDENCE` | evidence sets, keyed by Zenodo concept record |
+| `TOOLS` | registered matchers and the format each one wants |
 
 ## Layout
 
