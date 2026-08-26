@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+import importlib.metadata as md
 import os
-from collections.abc import Iterable
+from collections.abc import Iterable, Iterator
 from datetime import date
 from pathlib import Path
 
@@ -14,6 +15,9 @@ from pydantic import AnyUrl
 from sssom_pydantic import MappingSet, MappingTool, SemanticMapping
 
 from mapnet.manifest import MAPPING_SET_BASE
+from mapnet.utils import table, to_curie
+
+MAPNET = MappingTool(name="mapnet", version=md.version("mapnet"))
 
 
 def read(path: Path) -> list[SemanticMapping]:
@@ -28,23 +32,58 @@ def read(path: Path) -> list[SemanticMapping]:
     return list(mappings)
 
 
+def stem(path: Path) -> str:
+    """Take a file's name without the suffixes an SSSOM table carries."""
+    return path.name.removesuffix(".tsv").removesuffix(".sssom")
+
+
+def to_pairs(paths: Iterable[Path]) -> set[tuple[str, str]]:
+    """Read the mappings SSSOM rows and OBO xrefs declare, each held both ways round."""
+    return {
+        held
+        for path in paths
+        for pair in (_xrefs(path) if path.suffix == ".obo" else _rows(path))
+        for held in (pair, pair[::-1])
+    }
+
+
+def _rows(path: Path) -> Iterator[tuple[str, str]]:
+    """Yield the normalized subject and object of every row in an SSSOM table."""
+    for row in table(path):
+        try:
+            yield to_curie(row["subject_id"]), to_curie(row["object_id"])
+        except ValueError:
+            continue
+
+
+def _xrefs(path: Path) -> Iterator[tuple[str, str]]:
+    """Yield the cross references an OBO file declares on its own terms."""
+    subject = ""
+    with path.open(encoding="utf-8") as handle:
+        for line in handle:
+            if line.startswith("id: "):
+                subject = line[4:].strip()
+            elif line.startswith("xref: ") and subject:
+                try:
+                    yield to_curie(subject), to_curie(line[6:].split()[0])
+                except ValueError:
+                    continue
+
+
 def write(
     mappings: Iterable[SemanticMapping],
     out: Path,
-    tool: str,
-    version: str,
-    tool_id: str = "",
+    tool: MappingTool = MAPNET,
     source_version: str | None = None,
     target_version: str | None = None,
     mapping_set_id: str | None = None,
 ) -> int:
     """Write mappings as SSSOM at `out` and return the number written."""
-    identity = _tool(tool, version, tool_id)
     today = date.today()
     rows = [
         row.model_copy(
             update={
-                "mapping_tool": row.mapping_tool or identity,
+                "mapping_tool": row.mapping_tool or tool,
                 "mapping_date": row.mapping_date or today,
                 "subject_source_version": row.subject_source_version or source_version,
                 "object_source_version": row.object_source_version or target_version,
@@ -52,9 +91,9 @@ def write(
         )
         for row in mappings
     ]
-    stem = out.name.removesuffix(".tsv").removesuffix(".sssom")
-    set_id = AnyUrl(mapping_set_id or f"{MAPPING_SET_BASE}/{stem}")
-    metadata = MappingSet(id=set_id, title=stem)
+    title = stem(out)
+    set_id = AnyUrl(mapping_set_id or f"{MAPPING_SET_BASE}/{title}")
+    metadata = MappingSet(id=set_id, title=title)
     out.parent.mkdir(parents=True, exist_ok=True)
     tmp = out.with_name(f"{out.name}.tmp")
     try:
@@ -66,12 +105,6 @@ def write(
     return len(rows)
 
 
-def _tool(name: str, version: str, tool_id: str) -> MappingTool:
-    """Build the tool identity stamped onto every row."""
-    reference = curies.Reference.from_curie(tool_id) if tool_id else None
-    return MappingTool(name=name, version=version, reference=reference)
-
-
 def _converter(rows: list[SemanticMapping]) -> curies.Converter:
     """Build a curie map covering the prefixes the rows actually use."""
     prefixes = set()
@@ -80,9 +113,14 @@ def _converter(rows: list[SemanticMapping]) -> curies.Converter:
         prefixes.update({row.predicate.prefix, row.justification.prefix})
         if row.mapping_tool and row.mapping_tool.reference:
             prefixes.add(row.mapping_tool.reference.prefix)
-    resolved = {prefix: bioregistry.get_uri_prefix(prefix) for prefix in prefixes}
-    unknown = sorted(p for p, uri in resolved.items() if uri is None)
+    prefix_map: dict[str, str] = {}
+    unknown = []
+    for prefix in prefixes:
+        uri = bioregistry.get_uri_prefix(prefix)
+        if uri is None:
+            unknown.append(prefix)
+        else:
+            prefix_map[str(prefix)] = uri
     if unknown:
-        raise ValueError(f"bioregistry cannot resolve prefixes {unknown}")
-    prefix_map = {str(p): uri for p, uri in resolved.items() if uri is not None}
+        raise ValueError(f"bioregistry cannot resolve prefixes {sorted(unknown)}")
     return curies.Converter.from_prefix_map(prefix_map)

@@ -8,10 +8,12 @@ from collections.abc import Iterable, Sequence
 from pathlib import Path
 from typing import ClassVar
 
-from sssom_pydantic import SemanticMapping
+from curies import Reference
+from sssom_pydantic import MappingTool, SemanticMapping
 
 from mapnet.data import get_version
 from mapnet.sssom import write
+from mapnet.utils import LOG_ROOT
 
 
 class Mapper(ABC):
@@ -32,13 +34,17 @@ class Mapper(ABC):
         write(
             cls().match(args),
             args.out,
-            tool=cls.name,
-            version=cls.version,
-            tool_id=cls.tool_id,
+            tool=cls.identity(),
             source_version=get_version(args.source),
             target_version=get_version(args.target),
         )
         return 0
+
+    @classmethod
+    def identity(cls) -> MappingTool:
+        """Build the tool identity stamped onto every row the adapter writes."""
+        reference = Reference.from_curie(cls.tool_id) if cls.tool_id else None
+        return MappingTool(name=cls.name, version=cls.version, reference=reference)
 
 
 def parse_args(prog: str, argv: Sequence[str] | None = None) -> argparse.Namespace:
@@ -47,7 +53,7 @@ def parse_args(prog: str, argv: Sequence[str] | None = None) -> argparse.Namespa
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--target", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--logs", type=Path, default=Path("logs"))
+    parser.add_argument("--logs", type=Path, default=LOG_ROOT)
     parser.add_argument("--src-prefix", help="override the source ontology prefix")
     parser.add_argument("--tgt-prefix", help="override the target ontology prefix")
     parser.add_argument("--config", type=Path)

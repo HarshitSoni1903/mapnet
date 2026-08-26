@@ -135,7 +135,8 @@ flowchart LR
     classDef default fill:transparent,stroke:#888888,color:#888888
 ```
 
-One run takes one tool. Several tools per run is planned.
+One run takes one tool. Several tools per run is planned. `map --classify` carries a run
+through the split in one command; publishing is gated the same way once `store` exists.
 
 ## Classification
 
@@ -188,10 +189,11 @@ flowchart LR
 - A wrong row carries the mapping it conflicts with.
 - The resolved evidence version is stamped on the output set.
 
-Evidence sources are named per run, with no auto selection: `biomappings`, `obo-xref`, and a
-landscape such as `semra:disease`. Each resolves the same three ways as an ontology: a URL is
-used as given, a pinned version is fetched by record or ref, otherwise the latest is resolved
-and recorded.
+`SOURCES` registers every evidence set as a kind and a location. `EVIDENCE` lists the ones
+consulted, overridable per run on `--evidence`. A location resolves to a file: `obo` to the
+ontologies the run is mapping, a Zenodo concept to its newest record, a URL as given. A
+`rejected` kind rules a pair out outright, a `predicted` kind carries no curation and so can
+only rescue a candidate no curated source has ruled on.
 
 ## Modules
 
@@ -203,7 +205,7 @@ and recorded.
 | `data.py` | Resolve, download and cache ontology files in the format an adapter asks for. |
 | `sssom.py` | Read and write SSSOM, infer the curie map, stamp tool identity, write atomically. |
 | `mapper.py` | The `Mapper` base class and the argument parser every adapter shares. |
-| `matchers.py` | Read the manifest, spawn a tool as a subprocess, capture its log. |
+| `matchers.py` | Read the manifest, spawn a tool as a subprocess, capture its log. Per run options pass straight through as flags. |
 | `classify.py` | Combine several tools' predictions, reduce, then split into right, wrong and novel. |
 | `store.py` | Publish mapping sets to Zenodo. Planned. |
-| `cli.py` | Command line surface. One registration function per subcommand. |
+| `cli.py` | Command line surface. Registers every subcommand, then reports what the core returns. |

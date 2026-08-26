@@ -7,50 +7,82 @@ import sys
 from collections.abc import Sequence
 from pathlib import Path
 
-from mapnet import __version__, get_evidence, get_ontology, get_version, list_versions
-from mapnet.classify import BUCKETS, aggregate, classify, load_evidence
+from mapnet import get_ontology, get_version, list_versions
+from mapnet.classify import BUCKETS, aggregate, classify
 from mapnet.data import DATA_ROOT
+from mapnet.manifest import EVIDENCE, SOURCES
 from mapnet.matchers import load_tools, run
-from mapnet.sssom import read, write
+from mapnet.sssom import read, stem, write
 from mapnet.utils import LOG_ROOT
 
 
 def main(argv: Sequence[str] | None = None) -> int:
-    """Run the mapnet command line."""
+    """Register every command and run the one asked for."""
     parser = argparse.ArgumentParser(prog="mapnet")
     commands = parser.add_subparsers(dest="command", required=True)
-    _add_fetch(commands)
-    _add_versions(commands)
-    _add_tools(commands)
-    _add_map(commands)
-    _add_aggregate(commands)
-    _add_classify(commands)
-    args = parser.parse_args(argv)
+    shared = argparse.ArgumentParser(add_help=False)
+    shared.add_argument("--data", type=Path, default=DATA_ROOT, help="download root")
+    judged = argparse.ArgumentParser(add_help=False)
+    judged.add_argument(
+        "--evidence",
+        default=",".join(EVIDENCE),
+        help="comma separated evidence names or file paths",
+    )
+
+    fetch = commands.add_parser("fetch", parents=[shared], help="download an ontology")
+    fetch.add_argument("source", help="a prefix such as mondo, or a download URL")
+    fetch.add_argument("--format", default="obo", choices=sorted(("obo", "owl")))
+    fetch.add_argument("--version", help="an OBO Foundry release, such as 2024-01-31")
+    fetch.add_argument("--redownload", action="store_true")
+    fetch.set_defaults(run=_fetch)
+
+    versions = commands.add_parser("versions", parents=[shared], help="list releases")
+    versions.add_argument("prefix")
+    versions.add_argument("--refresh", action="store_true", help="re-query the source")
+    versions.set_defaults(run=_versions)
+
+    commands.add_parser("tools", help="list matchers").set_defaults(run=_tools)
+    commands.add_parser("evidence", help="list evidence sets").set_defaults(
+        run=_evidence
+    )
+
+    mapping = commands.add_parser(
+        "map",
+        parents=[shared, judged],
+        help="run a matcher",
+        epilog="Any other flag is passed to the tool, which validates it.",
+    )
+    mapping.add_argument("--tool", required=True)
+    mapping.add_argument(
+        "--classify", action="store_true", help="split the predictions once written"
+    )
+    mapping.add_argument("--src", required=True, help="source prefix or URL")
+    mapping.add_argument("--tgt", required=True, help="target prefix or URL")
+    mapping.add_argument("--out", type=Path, required=True)
+    mapping.add_argument("--logs", type=Path, default=LOG_ROOT)
+    mapping.set_defaults(run=_map)
+
+    combine = commands.add_parser("aggregate", help="combine prediction files into one")
+    combine.add_argument("predictions", type=Path, nargs="+")
+    combine.add_argument("--out", type=Path, required=True)
+    combine.set_defaults(run=_aggregate)
+
+    split = commands.add_parser(
+        "classify", parents=[shared, judged], help="split predictions"
+    )
+    split.add_argument("predictions", type=Path)
+    split.add_argument("--out", type=Path, required=True, help="directory for the sets")
+    split.set_defaults(run=_classify)
+
+    args, extra = parser.parse_known_args(argv)
+    if extra and args.command != "map":
+        parser.error(f"unrecognized arguments: {' '.join(extra)}")
+    args.extra = extra
     try:
         return args.run(args)
     except (ValueError, RuntimeError) as error:
         print(f"error: {error}", file=sys.stderr)
         return 1
-
-
-def _add_fetch(commands: argparse._SubParsersAction) -> None:
-    """Register the fetch command."""
-    fetch = commands.add_parser("fetch", help="download an ontology")
-    fetch.add_argument("source", help="a prefix such as mondo, or a download URL")
-    fetch.add_argument("--format", default="obo", choices=sorted(("obo", "owl")))
-    fetch.add_argument("--version", help="an OBO Foundry release, such as 2024-01-31")
-    fetch.add_argument("--redownload", action="store_true")
-    fetch.add_argument("--data", type=Path, default=DATA_ROOT)
-    fetch.set_defaults(run=_fetch)
-
-
-def _add_versions(commands: argparse._SubParsersAction) -> None:
-    """Register the versions command."""
-    versions = commands.add_parser("versions", help="list an ontology's releases")
-    versions.add_argument("prefix")
-    versions.add_argument("--refresh", action="store_true", help="re-query the source")
-    versions.add_argument("--data", type=Path, default=DATA_ROOT)
-    versions.set_defaults(run=_versions)
 
 
 def _versions(args: argparse.Namespace) -> int:
@@ -60,44 +92,13 @@ def _versions(args: argparse.Namespace) -> int:
     return 0
 
 
-def _add_tools(commands: argparse._SubParsersAction) -> None:
-    """Register the tools command."""
-    tools = commands.add_parser("tools", help="list registered matchers")
-    tools.set_defaults(run=_tools)
-
-
-def _add_map(commands: argparse._SubParsersAction) -> None:
-    """Register the map command."""
-    mapping = commands.add_parser("map", help="run a matcher over two ontologies")
-    mapping.add_argument("--tool", required=True)
-    mapping.add_argument("--src", required=True, help="source prefix or URL")
-    mapping.add_argument("--tgt", required=True, help="target prefix or URL")
-    mapping.add_argument("--out", type=Path, required=True)
-    mapping.add_argument("--data", type=Path, default=DATA_ROOT)
-    mapping.add_argument("--logs", type=Path, default=LOG_ROOT)
-    mapping.add_argument("--src-prefix", help="override the source ontology prefix")
-    mapping.add_argument("--tgt-prefix", help="override the target ontology prefix")
-    mapping.set_defaults(run=_map)
-
-
-def _add_aggregate(commands: argparse._SubParsersAction) -> None:
-    """Register the aggregate command."""
-    combine = commands.add_parser("aggregate", help="combine prediction files into one")
-    combine.add_argument("predictions", type=Path, nargs="+")
-    combine.add_argument("--out", type=Path, required=True)
-    combine.set_defaults(run=_aggregate)
-
-
-def _add_classify(commands: argparse._SubParsersAction) -> None:
-    """Register the classify command."""
-    split = commands.add_parser("classify", help="split predictions against evidence")
-    split.add_argument("predictions", type=Path)
-    split.add_argument(
-        "--evidence", required=True, help="comma separated evidence names"
-    )
-    split.add_argument("--out", type=Path, required=True, help="directory for the sets")
-    split.add_argument("--data", type=Path, default=DATA_ROOT)
-    split.set_defaults(run=_classify)
+def _evidence(_: argparse.Namespace) -> int:
+    """Print every registered evidence set, marking the ones classify consults."""
+    for name, (kind, source) in sorted(SOURCES.items()):
+        mark = "*" if name in EVIDENCE else " "
+        print(f"{mark} {name:24} {kind:10} {source}")
+    print("\n* consulted by default, override with --evidence")
+    return 0
 
 
 def _aggregate(args: argparse.Namespace) -> int:
@@ -109,19 +110,32 @@ def _aggregate(args: argparse.Namespace) -> int:
 
 def _classify(args: argparse.Namespace) -> int:
     """Split one prediction file into right, wrong, novel and conflicts."""
-    names = [name.strip() for name in args.evidence.split(",") if name.strip()]
-    evidence = load_evidence([get_evidence(name, root=args.data) for name in names])
-    print(
-        f"evidence: {len(evidence.pairs) // 2} pairs, {len(evidence.prefixes)} entities"
-    )
-    buckets = classify(read(args.predictions), evidence)
-    stem = args.predictions.name.removesuffix(".tsv").removesuffix(".sssom")
-    for bucket in BUCKETS:
-        rows = buckets[bucket]
-        out = args.out / f"{stem}_{bucket}.sssom.tsv"
-        write(rows, out, tool="mapnet", version=__version__)
-        print(f"  {bucket:10} {len(rows):6}  {out}")
+    _split(args.predictions, args.evidence, args.out, args.data)
     return 0
+
+
+def _split(predictions: Path, evidence: str, out: Path, data: Path) -> None:
+    """Classify one prediction file, write the four sets, and report what happened."""
+    rows = read(predictions)
+    names = [name.strip() for name in evidence.split(",") if name.strip()]
+    split = classify(rows, names, root=data)
+    print(f"candidates  {len(rows)} over {', '.join(split.prefixes)}")
+    for kind, paths in split.evidence.sources.items():
+        for path in paths:
+            print(f"{kind:11} {path}")
+    held = len(split.buckets["conflicts"])
+    kept = len(split.buckets["novel"])
+    print(
+        f"rescued     {split.rescued} right on an uncurated prediction alone\n"
+        f"reduced     {kept + held} novel candidates -> "
+        f"{kept} one to one, {held} held as conflicts"
+    )
+    for bucket in BUCKETS:
+        written = split.buckets[bucket]
+        path = out / f"{stem(predictions)}_{bucket}.sssom.tsv"
+        write(written, path)
+        share = 100 * len(written) / len(rows) if rows else 0.0
+        print(f"  {bucket:10} {len(written):6} ({share:4.1f}%)  {path}")
 
 
 def _tools(_: argparse.Namespace) -> int:
@@ -139,18 +153,12 @@ def _map(args: argparse.Namespace) -> int:
         raise ValueError(f"unknown tool {args.tool!r}, have {sorted(tools)}")
     source = get_ontology(args.src, fmt=tool.wants_format, root=args.data)
     target = get_ontology(args.tgt, fmt=tool.wants_format, root=args.data)
-    out = run(
-        tool,
-        source,
-        target,
-        args.out,
-        logs=args.logs,
-        src_prefix=args.src_prefix,
-        tgt_prefix=args.tgt_prefix,
-    )
+    out = run(tool, source, target, args.out, logs=args.logs, extra=args.extra)
     with out.open(encoding="utf-8") as handle:
         rows = sum(1 for line in handle if not line.startswith("#")) - 1
     print(f"{out}  ({rows} mappings)")
+    if args.classify:
+        _split(out, args.evidence, out.parent, args.data)
     return 0
 
 

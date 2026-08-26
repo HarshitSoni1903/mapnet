@@ -4,7 +4,7 @@ from __future__ import annotations
 
 import json
 import re
-from itertools import islice
+import sys
 from pathlib import Path
 from urllib.error import URLError
 from urllib.parse import urlparse
@@ -13,11 +13,10 @@ from urllib.request import urlopen
 import bioregistry
 import pystow
 
-from mapnet.manifest import EVIDENCE_URL, EVIDENCE_ZENODO, URLS
+from mapnet.manifest import SOURCES, URLS
+from mapnet.utils import header
 
 DATA_ROOT = Path("data")
-
-HEADER_LINES = 200
 
 VERSION_INFO = re.compile(r"<owl:versionInfo[^>]*>([^<]+)</owl:versionInfo>")
 
@@ -39,12 +38,29 @@ def get_ontology(
     """Return a local path to an ontology, downloading it when absent."""
     if Path(source).is_file():
         return Path(source)
-    prefix, url = _resolve(source, fmt, version)
+    prefix, url = _ontology_url(source, fmt, version)
     stem = f"{prefix}_v_{version}" if version else prefix
-    name = Path(urlparse(url).path).name
-    if name.endswith(".gz"):
-        name = pystow.utils.base_from_gzip_name(name)
-    path = (root or DATA_ROOT) / prefix / f"{stem}{Path(name).suffix}"
+    suffix = Path(_plain_name(url)).suffix
+    return _fetch(url, (root or DATA_ROOT) / prefix / f"{stem}{suffix}", redownload)
+
+
+def get_evidence(
+    name: str,
+    record: str | None = None,
+    redownload: bool = False,
+    root: Path | None = None,
+) -> Path:
+    """Return a local path to a downloadable evidence set."""
+    registered = SOURCES.get(name)
+    if registered is None or registered[1] == "obo":
+        raise ValueError(f"{name!r} is not a downloadable evidence set")
+    cached = (root or DATA_ROOT) / "evidence" / name
+    url, version = _evidence_url(registered[1], record, cached)
+    return _fetch(url, cached / version / _plain_name(url), redownload)
+
+
+def _fetch(url: str, path: Path, redownload: bool) -> Path:
+    """Download a URL to a path, unless the file is already there."""
     if path.exists() and not redownload:
         return path
     path.parent.mkdir(parents=True, exist_ok=True)
@@ -55,48 +71,39 @@ def get_ontology(
     return path
 
 
-def get_evidence(
-    name: str,
-    record: str | None = None,
-    redownload: bool = False,
-    root: Path | None = None,
-) -> Path:
-    """Return a local path to an evidence set, downloading it when absent."""
-    url, version = _evidence_url(name, record)
-    stem = Path(urlparse(url).path).name
-    if stem.endswith(".gz"):
-        stem = pystow.utils.base_from_gzip_name(stem)
-    path = (root or DATA_ROOT) / "evidence" / name.replace(":", "_") / version / stem
-    if path.exists() and not redownload:
-        return path
-    path.parent.mkdir(parents=True, exist_ok=True)
-    try:
-        _download(url, path)
-    except pystow.utils.DownloadError as error:
-        raise ValueError(f"cannot download {name} from {url}") from error
-    return path
+def _plain_name(url: str) -> str:
+    """Name the file a URL lands in, once unzipped."""
+    name = Path(urlparse(url).path).name
+    return pystow.utils.base_from_gzip_name(name) if name.endswith(".gz") else name
 
 
-def _evidence_url(name: str, record: str | None) -> tuple[str, str]:
-    """Resolve an evidence name to its download URL and the version to file it under."""
-    if name in EVIDENCE_URL:
-        return EVIDENCE_URL[name], "latest"
-    if name not in EVIDENCE_ZENODO:
-        known = sorted({*EVIDENCE_URL, *EVIDENCE_ZENODO})
-        raise ValueError(f"unknown evidence {name!r}, have {known}")
-    concept, filename = EVIDENCE_ZENODO[name]
-    resolved = record or _latest_record(concept)
+def _evidence_url(source: str, record: str | None, cached: Path) -> tuple[str, str]:
+    """Turn a manifest entry into a download URL and the version to file it under."""
+    if not source.startswith("zenodo:"):
+        return source, "latest"
+    concept, _, filename = source.removeprefix("zenodo:").partition("/")
+    resolved = record or _latest_record(int(concept), cached)
     return URLS["zenodo_file"].format(record=resolved, filename=filename), resolved
 
 
-def _latest_record(concept: int) -> str:
-    """Resolve a Zenodo concept record to the newest version's id."""
+def _latest_record(concept: int, cached: Path) -> str:
+    """Resolve a Zenodo concept to its newest version, else the newest cached."""
     url = URLS["zenodo_latest"].format(concept=concept)
     try:
         with urlopen(url, timeout=30) as response:
             return str(json.load(response)["id"])
     except (URLError, TimeoutError, KeyError) as error:
-        raise ValueError(f"cannot resolve Zenodo record {concept}: {error}") from error
+        have = [d.name for d in cached.glob("*") if d.is_dir() and d.name.isdigit()]
+        if not have:
+            raise ValueError(
+                f"cannot resolve Zenodo record {concept}: {error}"
+            ) from error
+        newest = max(have, key=int)
+        print(
+            f"[evidence] Zenodo unreachable ({error}), using cached record {newest}",
+            file=sys.stderr,
+        )
+        return newest
 
 
 def get_version(path: Path) -> str | None:
@@ -137,8 +144,7 @@ def _fetch_versions(prefix: str) -> list[str]:
 
 def _header_version(path: Path) -> str | None:
     """Read a version from an OBO or an OWL header."""
-    with path.open(encoding="utf-8", errors="replace") as handle:
-        head = "".join(islice(handle, HEADER_LINES))
+    head = header(path)
     for line in head.splitlines():
         if line.startswith("data-version:"):
             return _version_part(line.split(":", 1)[1].strip())
@@ -170,12 +176,12 @@ def _version_part(value: str) -> str:
     return parts[-1] if parts else value
 
 
-def _resolve(source: str, fmt: str, version: str | None) -> tuple[str, str]:
+def _ontology_url(source: str, fmt: str, version: str | None) -> tuple[str, str]:
     """Return the cache key and download URL for a prefix or a URL."""
     if source.startswith(("http://", "https://")):
         if version:
             raise ValueError("a URL serves one release, so it cannot be versioned")
-        return Path(urlparse(source).path).name.split(".")[0], source
+        return _plain_name(source).split(".")[0], source
     if fmt not in DOWNLOADERS:
         raise ValueError(f"unknown format {fmt!r}, expected {sorted(DOWNLOADERS)}")
     if version:

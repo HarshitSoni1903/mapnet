@@ -13,21 +13,29 @@ URLS = {
 
 MAPPING_SET_BASE = "https://w3id.org/mapnet/mappings"
 
-BIOMAPPINGS = "https://raw.githubusercontent.com/biopragmatics/biomappings/main/"
+BIOMAPPINGS = (
+    "https://raw.githubusercontent.com/biopragmatics/biomappings/main/"
+    "src/biomappings/resources/{name}.sssom.tsv"
+)
 
-# Zenodo concept record and filename. The record id is resolved at run time.
-EVIDENCE_ZENODO: dict[str, tuple[int, str]] = {
-    "semra:disease": (11091885, "processed.sssom.tsv.gz"),
+# Every evidence set mapnet knows, as what a match means and where the file comes from.
+# obo is the run's own ontologies, zenodo: a concept resolved to its newest record.
+SOURCES = {
+    "biomappings": ("pairs", BIOMAPPINGS.format(name="positive")),
+    "biomappings-negative": ("rejected", BIOMAPPINGS.format(name="negative")),
+    "biomappings-predicted": ("predicted", BIOMAPPINGS.format(name="predictions")),
+    "semra": ("pairs", "zenodo:11091885/processed.sssom.tsv.gz"),
+    "obo-xref": ("pairs", "obo"),
 }
 
-# Evidence served straight from a URL, used as given.
-EVIDENCE_URL: dict[str, str] = {
-    "biomappings": BIOMAPPINGS + "src/biomappings/resources/positive.sssom.tsv",
-    "biomappings:negative": BIOMAPPINGS
-    + "src/biomappings/resources/negative.sssom.tsv",
-    "biomappings:predictions": BIOMAPPINGS
-    + "src/biomappings/resources/predictions.sssom.tsv",
-}
+# Evidence sets used for classification. Edit to change behavior of the classifier.
+EVIDENCE = [
+    "biomappings",
+    "semra",
+    "obo-xref",
+    "biomappings-negative",
+    "biomappings-predicted",
+]
 
 TOOLS = {
     "gilda": {

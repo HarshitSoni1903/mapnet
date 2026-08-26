@@ -6,6 +6,9 @@ readme = "README.md"
 requires-python = ">=3.11"
 dependencies = [
     "bioregistry>=0.14.0",
+    "curies>=0.10.0",
+    "pydantic>=2.0",
+    "pystow>=0.5.0",
     "sssom-pydantic>=0.6.1",
 ]
 

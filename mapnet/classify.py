@@ -2,31 +2,47 @@
 
 from __future__ import annotations
 
-import csv
-import importlib.metadata as md
+import sys
 from collections import defaultdict
-from collections.abc import Sequence
+from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
 
 from sssom_pydantic import SemanticMapping
 
-from mapnet.sssom import read, write
+from mapnet.data import get_evidence, get_ontology
+from mapnet.manifest import EVIDENCE, SOURCES
+from mapnet.sssom import read, to_pairs, write
 
 BUCKETS = ("right", "wrong", "novel", "conflicts")
+
+KINDS = ("pairs", "rejected", "predicted")
 
 
 @dataclass(frozen=True)
 class Evidence:
-    """Curated pairs, and the prefixes each entity is already mapped into."""
+    """The pair sets a candidate is judged against, and the files behind them."""
 
     pairs: set[tuple[str, str]] = field(default_factory=set)
+    rejected: set[tuple[str, str]] = field(default_factory=set)
+    predicted: set[tuple[str, str]] = field(default_factory=set)
     prefixes: dict[str, set[str]] = field(default_factory=dict)
+    sources: dict[str, list[Path]] = field(default_factory=dict)
+
+
+@dataclass(frozen=True)
+class Split:
+    """The four sets, the evidence behind them, and what a prediction alone rescued."""
+
+    buckets: dict[str, list[SemanticMapping]]
+    evidence: Evidence
+    prefixes: Sequence[str]
+    rescued: int
 
 
 def aggregate(paths: Sequence[Path], out: Path) -> int:
     """Write one mapping set from several prediction files, first pair winning."""
-    return write(union(paths), out, tool="mapnet", version=md.version("mapnet"))
+    return write(union(paths), out)
 
 
 def union(paths: Sequence[Path]) -> list[SemanticMapping]:
@@ -43,32 +59,58 @@ def union(paths: Sequence[Path]) -> list[SemanticMapping]:
     return rows
 
 
-def load_evidence(paths: Sequence[Path]) -> Evidence:
-    """Stream curated mapping files into a pair set and the entities they cover."""
-    pairs: set[tuple[str, str]] = set()
-    prefixes: dict[str, set[str]] = defaultdict(set)
-    for path in paths:
-        with path.open(encoding="utf-8") as handle:
-            body = (line for line in handle if not line.startswith("#"))
-            for row in csv.DictReader(body, delimiter="\t"):
-                subject, obj = row["subject_id"], row["object_id"]
-                pairs.add((subject, obj))
-                pairs.add((obj, subject))
-                prefixes[subject].add(obj.split(":")[0])
-                prefixes[obj].add(subject.split(":")[0])
-    return Evidence(pairs, dict(prefixes))
+def load_evidence(
+    names: Iterable[str], prefixes: Iterable[str], root: Path | None = None
+) -> Evidence:
+    """Resolve evidence names to files and stream each kind into its own pair set."""
+    files: dict[str, list[Path]] = {kind: [] for kind in KINDS}
+    for name in [names] if isinstance(names, str) else names:
+        kind, source = SOURCES.get(name, ("pairs", name))
+        if kind not in files:
+            raise ValueError(f"{name!r} has unknown kind {kind!r}, expected {KINDS}")
+        if source == "obo":
+            for prefix in prefixes:
+                try:
+                    files[kind].append(get_ontology(prefix, root=root))
+                except ValueError as error:
+                    print(f"[evidence] no xrefs for {prefix}: {error}", file=sys.stderr)
+        elif Path(name).is_file():
+            files[kind].append(Path(name))
+        else:
+            files[kind].append(get_evidence(name, root=root))
+    pairs = to_pairs(files["pairs"])
+    mapped: dict[str, set[str]] = defaultdict(set)
+    for subject, obj in pairs:
+        mapped[subject].add(obj.split(":")[0])
+    return Evidence(
+        pairs,
+        to_pairs(files["rejected"]),
+        to_pairs(files["predicted"]),
+        dict(mapped),
+        files,
+    )
 
 
 def classify(
-    rows: Sequence[SemanticMapping], evidence: Evidence
-) -> dict[str, list[SemanticMapping]]:
-    """Split candidates against evidence, then reduce the novel ones to one to one."""
+    rows: Sequence[SemanticMapping],
+    evidence: Iterable[str] | Evidence = EVIDENCE,
+    root: Path | None = None,
+) -> Split:
+    """Split candidates against evidence, loading it first when given names."""
+    prefixes = sorted(
+        {p for row in rows for p in (row.subject.prefix, row.object.prefix)}
+    )
+    if not isinstance(evidence, Evidence):
+        evidence = load_evidence(evidence, prefixes, root)
     buckets: dict[str, list[SemanticMapping]] = {name: [] for name in BUCKETS}
     for row in rows:
         buckets[_bucket(row, evidence)].append(row)
-    kept, conflicts = reduce(buckets["novel"])
-    buckets["novel"], buckets["conflicts"] = kept, conflicts
-    return buckets
+    buckets["novel"], buckets["conflicts"] = reduce(buckets["novel"])
+    rescued = sum(
+        (row.subject.curie, row.object.curie) not in evidence.pairs
+        for row in buckets["right"]
+    )
+    return Split(buckets, evidence, prefixes, rescued)
 
 
 def reduce(
@@ -93,13 +135,15 @@ def reduce(
 def _bucket(row: SemanticMapping, evidence: Evidence) -> str:
     """Name the bucket one candidate belongs in, judged within its own prefix pair."""
     subject, obj = row.subject.curie, row.object.curie
+    if (subject, obj) in evidence.rejected:
+        return "wrong"
     if (subject, obj) in evidence.pairs:
         return "right"
     mapped_subject = row.object.prefix in evidence.prefixes.get(subject, ())
     mapped_object = row.subject.prefix in evidence.prefixes.get(obj, ())
     if mapped_subject or mapped_object:
         return "wrong"
-    return "novel"
+    return "right" if (subject, obj) in evidence.predicted else "novel"
 
 
 def _wins(row: SemanticMapping, group: list[SemanticMapping]) -> bool:

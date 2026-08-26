@@ -17,6 +17,8 @@ MapNet appends these to the command from the manifest:
 
 - `--source` and `--target` are local files already downloaded in the format the manifest names.
 - `--logs` defaults to `logs` when the adapter is run by hand.
+- Any flag `mapnet map` does not recognise is appended verbatim, so `--src-prefix` and a tool's
+  own options reach the adapter without MapNet declaring them. The adapter validates them.
 - Thresholds and model settings are not arguments. They go in the file `--config` points at,
   which MapNet passes through without reading.
 

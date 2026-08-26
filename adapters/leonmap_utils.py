@@ -10,13 +10,12 @@
 # ///
 """Run the LeonMap embedding matcher over two ontologies."""
 
-import csv
 import importlib.metadata as md
 import subprocess
 import sys
 from pathlib import Path
 
-from mapnet import Mapper, SemanticMapping, to_prefix, to_reference
+from mapnet import Mapper, SemanticMapping, table, to_prefix, to_reference
 
 WORKDIR = Path("data/leonmap")
 THRESHOLD = 0.9
@@ -66,10 +65,9 @@ def _command(args, work, out):
 
 def _rows(out):
     """Yield every scored prediction from the TSV leonmap copied to --out."""
-    with out.open(encoding="utf-8") as handle:
-        for row in csv.DictReader(handle, delimiter="\t"):
-            if row.get("score"):
-                yield _mapping(row)
+    for row in table(out):
+        if row.get("score"):
+            yield _mapping(row)
 
 
 def _mapping(row):
