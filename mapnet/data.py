@@ -13,7 +13,7 @@ from urllib.request import urlopen
 import bioregistry
 import pystow
 
-from mapnet.manifest import EVIDENCE, URLS
+from mapnet.manifest import EVIDENCE_URL, EVIDENCE_ZENODO, URLS
 
 DATA_ROOT = Path("data")
 
@@ -37,6 +37,8 @@ def get_ontology(
     root: Path | None = None,
 ) -> Path:
     """Return a local path to an ontology, downloading it when absent."""
+    if Path(source).is_file():
+        return Path(source)
     prefix, url = _resolve(source, fmt, version)
     stem = f"{prefix}_v_{version}" if version else prefix
     name = Path(urlparse(url).path).name
@@ -55,28 +57,36 @@ def get_ontology(
 
 def get_evidence(
     name: str,
-    version: str | None = None,
+    record: str | None = None,
     redownload: bool = False,
     root: Path | None = None,
 ) -> Path:
-    """Return a local path to an evidence set, download when absent."""
-    if name not in EVIDENCE:
-        raise ValueError(f"unknown evidence {name!r}, have {sorted(EVIDENCE)}")
-    concept, filename = EVIDENCE[name]
-    record = version or _latest_record(concept)
-    stem = filename
+    """Return a local path to an evidence set, downloading it when absent."""
+    url, version = _evidence_url(name, record)
+    stem = Path(urlparse(url).path).name
     if stem.endswith(".gz"):
         stem = pystow.utils.base_from_gzip_name(stem)
-    path = (root or DATA_ROOT) / "evidence" / name.replace(":", "_") / record / stem
+    path = (root or DATA_ROOT) / "evidence" / name.replace(":", "_") / version / stem
     if path.exists() and not redownload:
         return path
     path.parent.mkdir(parents=True, exist_ok=True)
-    url = URLS["zenodo_file"].format(record=record, filename=filename)
     try:
         _download(url, path)
     except pystow.utils.DownloadError as error:
         raise ValueError(f"cannot download {name} from {url}") from error
     return path
+
+
+def _evidence_url(name: str, record: str | None) -> tuple[str, str]:
+    """Resolve an evidence name to its download URL and the version to file it under."""
+    if name in EVIDENCE_URL:
+        return EVIDENCE_URL[name], "latest"
+    if name not in EVIDENCE_ZENODO:
+        known = sorted({*EVIDENCE_URL, *EVIDENCE_ZENODO})
+        raise ValueError(f"unknown evidence {name!r}, have {known}")
+    concept, filename = EVIDENCE_ZENODO[name]
+    resolved = record or _latest_record(concept)
+    return URLS["zenodo_file"].format(record=resolved, filename=filename), resolved
 
 
 def _latest_record(concept: int) -> str:

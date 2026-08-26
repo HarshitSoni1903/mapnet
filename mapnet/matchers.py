@@ -28,7 +28,13 @@ def load_tools() -> dict[str, Tool]:
 
 
 def run(
-    tool: Tool, source: Path, target: Path, out: Path, logs: Path = LOG_ROOT
+    tool: Tool,
+    source: Path,
+    target: Path,
+    out: Path,
+    logs: Path = LOG_ROOT,
+    src_prefix: str | None = None,
+    tgt_prefix: str | None = None,
 ) -> Path:
     """Run a tool over two ontologies and return the predictions it wrote."""
     log = run_log(tool.name, source, target, logs)
@@ -36,6 +42,10 @@ def run(
     command += ["--out", str(out), "--logs", str(logs)]
     if tool.config:
         command += ["--config", str(tool.config)]
+    if src_prefix:
+        command += ["--src-prefix", src_prefix]
+    if tgt_prefix:
+        command += ["--tgt-prefix", tgt_prefix]
     with log.open("w", encoding="utf-8") as handle:
         result = subprocess.run(
             command, stdout=handle, stderr=subprocess.STDOUT, text=True

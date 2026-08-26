@@ -15,22 +15,23 @@ from collections import defaultdict
 import gilda.generate_terms
 import obonet
 
-from mapnet import Mapper, Reference, SemanticMapping, to_curie, to_prefix, to_reference
+import mapnet
 
-JUSTIFICATION = Reference(prefix="semapv", identifier="LexicalMatching")
-PREDICATE = Reference(prefix="skos", identifier="exactMatch")
+JUSTIFICATION = mapnet.Reference(prefix="semapv", identifier="LexicalMatching")
+PREDICATE = mapnet.Reference(prefix="skos", identifier="exactMatch")
 SYNONYM = re.compile(r'^"(.+)" (EXACT|RELATED|NARROW|BROAD|\[\])')
 CONFIDENCE = {2: 1.0, 1: 0.95, 0: 0.9}
 
 
-class GildaMapper(Mapper):
+class GildaMapper(mapnet.Mapper):
     name = "gilda"
     version = md.version("gilda")
 
     def match(self, args):
         """Match the two ontologies on every unambiguous shared label."""
-        names, synonyms = _index(args.source, to_prefix(args.source))
-        targets = _targets(to_prefix(args.target))
+        source = args.src_prefix or mapnet.to_prefix(args.source)
+        names, synonyms = _index(args.source, source)
+        targets = _targets(args.tgt_prefix or mapnet.to_prefix(args.target))
         seen = set()
         for named, table in ((True, names), (False, synonyms)):
             for text in sorted(table.keys() & targets.keys()):
@@ -48,7 +49,9 @@ class GildaMapper(Mapper):
 def _index(path, prefix):
     """Index the ontology's names and exact synonyms by normalized text."""
     names, synonyms = defaultdict(set), defaultdict(set)
-    for node, data in obonet.read_obo(path).nodes(data=True):
+    graph = obonet.read_obo(path)
+    mapnet.check_prefixes(path, prefix, graph.nodes)
+    for node, data in graph.nodes(data=True):
         label = data.get("name")
         if not label or not node.lower().startswith(f"{prefix}:"):
             continue
@@ -69,17 +72,17 @@ def _targets(prefix):
     drop = "ignore_mappings" in inspect.signature(generate).parameters
     index = defaultdict(set)
     for term in generate(ignore_mappings=True) if drop else generate():
-        curie = to_curie(f"{term.db}:{term.id}")
+        curie = mapnet.to_curie(f"{term.db}:{term.id}")
         index[term.norm_text].add((curie, term.entry_name, term.status))
     return index
 
 
 def _mapping(subject, obj, confidence):
     """Turn one matched pair into an SSSOM row."""
-    return SemanticMapping(
-        subject=to_reference(subject[0], name=subject[1]),
+    return mapnet.SemanticMapping(
+        subject=mapnet.to_reference(subject[0], name=subject[1]),
         predicate=PREDICATE,
-        object=to_reference(obj[0], name=obj[1]),
+        object=mapnet.to_reference(obj[0], name=obj[1]),
         justification=JUSTIFICATION,
         confidence=confidence,
     )

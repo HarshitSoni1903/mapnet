@@ -36,19 +36,26 @@ class LeonMapMapper(Mapper):
         """Run leonmap-map and yield every prediction it wrote."""
         work = WORKDIR.resolve()
         work.mkdir(parents=True, exist_ok=True)
-        out = work / f"{to_prefix(args.source)}_to_{to_prefix(args.target)}.tsv"
+        out = work / f"{_prefix(args, 'src')}_to_{_prefix(args, 'tgt')}.tsv"
         subprocess.run(_command(args, work, out), check=True)
         yield from _rows(out)
+
+
+def _prefix(args, side):
+    """Take the prefix the run declared, else the one the file declares."""
+    given = getattr(args, f"{side}_prefix", None)
+    return given or to_prefix(args.source if side == "src" else args.target)
 
 
 def _command(args, work, out):
     """Build the leonmap-map invocation."""
     source, target = args.source.resolve(), args.target.resolve()
+    src, tgt = _prefix(args, "src"), _prefix(args, "tgt")
     command = [sys.executable, "-m", "leonmap.mapper"]
     command += ["--source", str(source), "--target", str(target)]
-    command += ["--src-name", to_prefix(source), "--tgt-name", to_prefix(target)]
-    command += ["--src-prefix", f"{to_prefix(source)}:"]
-    command += ["--tgt-prefix", f"{to_prefix(target)}:"]
+    command += ["--src-name", src, "--tgt-name", tgt]
+    command += ["--src-prefix", f"{src}:"]
+    command += ["--tgt-prefix", f"{tgt}:"]
     command += ["--work-dir", str(work), "--out", str(out)]
     command += ["--threshold", str(THRESHOLD), "--top_k", str(TOP_K)]
     command += ["--build-missing"]

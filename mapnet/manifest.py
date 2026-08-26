@@ -13,9 +13,20 @@ URLS = {
 
 MAPPING_SET_BASE = "https://w3id.org/mapnet/mappings"
 
+BIOMAPPINGS = "https://raw.githubusercontent.com/biopragmatics/biomappings/main/"
+
 # Zenodo concept record and filename. The record id is resolved at run time.
-EVIDENCE: dict[str, tuple[int, str]] = {
+EVIDENCE_ZENODO: dict[str, tuple[int, str]] = {
     "semra:disease": (11091885, "processed.sssom.tsv.gz"),
+}
+
+# Evidence served straight from a URL, used as given.
+EVIDENCE_URL: dict[str, str] = {
+    "biomappings": BIOMAPPINGS + "src/biomappings/resources/positive.sssom.tsv",
+    "biomappings:negative": BIOMAPPINGS
+    + "src/biomappings/resources/negative.sssom.tsv",
+    "biomappings:predictions": BIOMAPPINGS
+    + "src/biomappings/resources/predictions.sssom.tsv",
 }
 
 TOOLS = {

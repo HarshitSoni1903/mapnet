@@ -9,7 +9,7 @@ from mapnet.classify import aggregate
 from mapnet.data import get_evidence, get_ontology, get_version, list_versions
 from mapnet.mapper import Mapper
 from mapnet.sssom import read, write
-from mapnet.utils import to_curie, to_prefix, to_reference
+from mapnet.utils import check_prefixes, to_curie, to_prefix, to_reference
 
 __version__ = "2.0.0.dev0"
 
@@ -19,6 +19,7 @@ __all__ = [
     "SemanticMapping",
     "__version__",
     "aggregate",
+    "check_prefixes",
     "get_evidence",
     "get_ontology",
     "get_version",
