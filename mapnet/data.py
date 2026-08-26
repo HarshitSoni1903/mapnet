@@ -1,4 +1,4 @@
-"""Fetch ontology files for a tool to consume."""
+"""Fetch the ontology and evidence files a run needs."""
 
 from __future__ import annotations
 
@@ -13,19 +13,15 @@ from urllib.request import urlopen
 import bioregistry
 import pystow
 
+from mapnet.manifest import EVIDENCE, URLS
+
 DATA_ROOT = Path("data")
 
 HEADER_LINES = 200
 
-GITHUB_TAGS = "https://api.github.com/repos/{repo}/tags?per_page=100"
-
 VERSION_INFO = re.compile(r"<owl:versionInfo[^>]*>([^<]+)</owl:versionInfo>")
 
 VERSION_IRI = re.compile(r'<owl:versionIRI[^>]*rdf:resource="([^"]+)"')
-
-RELEASE_URL = (
-    "http://purl.obolibrary.org/obo/{prefix}/releases/{version}/{prefix}.{fmt}"
-)
 
 DOWNLOADERS = {
     "obo": bioregistry.get_obo_download,
@@ -57,6 +53,42 @@ def get_ontology(
     return path
 
 
+def get_evidence(
+    name: str,
+    version: str | None = None,
+    redownload: bool = False,
+    root: Path | None = None,
+) -> Path:
+    """Return a local path to an evidence set, download when absent."""
+    if name not in EVIDENCE:
+        raise ValueError(f"unknown evidence {name!r}, have {sorted(EVIDENCE)}")
+    concept, filename = EVIDENCE[name]
+    record = version or _latest_record(concept)
+    stem = filename
+    if stem.endswith(".gz"):
+        stem = pystow.utils.base_from_gzip_name(stem)
+    path = (root or DATA_ROOT) / "evidence" / name.replace(":", "_") / record / stem
+    if path.exists() and not redownload:
+        return path
+    path.parent.mkdir(parents=True, exist_ok=True)
+    url = URLS["zenodo_file"].format(record=record, filename=filename)
+    try:
+        _download(url, path)
+    except pystow.utils.DownloadError as error:
+        raise ValueError(f"cannot download {name} from {url}") from error
+    return path
+
+
+def _latest_record(concept: int) -> str:
+    """Resolve a Zenodo concept record to the newest version's id."""
+    url = URLS["zenodo_latest"].format(concept=concept)
+    try:
+        with urlopen(url, timeout=30) as response:
+            return str(json.load(response)["id"])
+    except (URLError, TimeoutError, KeyError) as error:
+        raise ValueError(f"cannot resolve Zenodo record {concept}: {error}") from error
+
+
 def get_version(path: Path) -> str | None:
     """Read an ontology's version from its filename or its header."""
     stem = path.name.split(".")[0]
@@ -84,7 +116,7 @@ def _fetch_versions(prefix: str) -> list[str]:
     repo = bioregistry.get_repository(prefix)
     if not repo or "github.com/" not in repo:
         raise ValueError(f"{prefix!r} has no GitHub repository to list releases from")
-    url = GITHUB_TAGS.format(repo=repo.split("github.com/", 1)[1].strip("/"))
+    url = URLS["github_tags"].format(repo=repo.split("github.com/", 1)[1].strip("/"))
     try:
         with urlopen(url, timeout=30) as response:
             tags = json.load(response)
@@ -131,13 +163,17 @@ def _version_part(value: str) -> str:
 def _resolve(source: str, fmt: str, version: str | None) -> tuple[str, str]:
     """Return the cache key and download URL for a prefix or a URL."""
     if source.startswith(("http://", "https://")):
+        if version:
+            raise ValueError("a URL serves one release, so it cannot be versioned")
         return Path(urlparse(source).path).name.split(".")[0], source
     if fmt not in DOWNLOADERS:
         raise ValueError(f"unknown format {fmt!r}, expected {sorted(DOWNLOADERS)}")
     if version:
         if bioregistry.get_obofoundry_prefix(source) is None:
             raise ValueError(f"{source!r} is not an OBO Foundry ontology, pass a URL")
-        return source, RELEASE_URL.format(prefix=source, version=version, fmt=fmt)
+        return source, URLS["obo_release"].format(
+            prefix=source, version=version, fmt=fmt
+        )
     url = DOWNLOADERS[fmt](source)
     if url is None:
         raise ValueError(f"bioregistry has no {fmt} download for {source!r}")

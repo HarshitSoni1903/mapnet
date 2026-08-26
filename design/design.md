@@ -139,29 +139,11 @@ One run takes one tool. Several tools per run is planned.
 
 ## Classification
 
-Planned. Reduction runs before the split. It resolves collisions in a fixed order and stops at
-the first step that separates the candidates.
+Planned. Every candidate is split against evidence first.
 
 ```mermaid
 flowchart LR
-    A[candidates] --> B{collision}
-    B -->|no| K[keep]
-    B -->|yes| E{evidence backs one}
-    E -->|no| C{confidence differs}
-    C -->|no| V{survives reverse run}
-    V -->|no| G[conflicts]
-    E -->|yes| K
-    C -->|yes| K
-    V -->|yes| K
-
-    classDef default fill:transparent,stroke:#888888,color:#888888
-```
-
-Each survivor is then split against evidence.
-
-```mermaid
-flowchart LR
-    K[kept] --> P{pair known}
+    A[candidates] --> P{pair known}
     P -->|yes| R[right]
     P -->|no| E{subject or target known}
     E -->|yes| W[wrong]
@@ -177,8 +159,25 @@ flowchart LR
 | no | no | yes | wrong |
 | no | no | no | novel |
 
+Reduction then runs inside `novel`, where evidence has nothing to say.
+
+```mermaid
+flowchart LR
+    N[novel] --> B{collision}
+    B -->|no| K[keep]
+    B -->|yes| C{confidence differs}
+    C -->|yes| K
+    C -->|no| V{survives reverse run}
+    V -->|yes| K
+    V -->|no| G[conflicts]
+
+    classDef default fill:transparent,stroke:#888888,color:#888888
+```
+
 - A collision is a subject or object claimed by more than one candidate in the same run.
-- Evidence is tried before confidence. Evidence is curated, confidence is tool relative.
+- Only `novel` is reduced. `right` is already curated and `wrong` records a contradiction, so
+  neither collapses.
+- Confidence separates a collision first, then the reverse run.
 - The reverse run calls the same adapter with source and target swapped. A pair kept in both
   directions survives.
 - A collision that reaches the end unseparated goes to `conflicts`, not to a bucket.
@@ -199,11 +198,12 @@ and recorded.
 | Module | Responsibility |
 | --- | --- |
 | `__init__.py` | Package facade. Declares the public API and attaches a null log handler. |
+| `manifest.py` | The central registry: URLs, evidence sets and registered tools. |
 | `utils.py` | Cross cutting helpers: CURIE normalisation, ontology prefixes, run log paths. |
 | `data.py` | Resolve, download and cache ontology files in the format an adapter asks for. |
 | `sssom.py` | Read and write SSSOM, infer the curie map, stamp tool identity, write atomically. |
 | `mapper.py` | The `Mapper` base class and the argument parser every adapter shares. |
 | `matchers.py` | Read the manifest, spawn a tool as a subprocess, capture its log. |
-| `classify.py` | Reduce to one to one, then split into right, wrong and novel. Planned. |
+| `classify.py` | Combine several tools' predictions, reduce, then split into right, wrong and novel. |
 | `store.py` | Publish mapping sets to Zenodo. Planned. |
 | `cli.py` | Command line surface. One registration function per subcommand. |

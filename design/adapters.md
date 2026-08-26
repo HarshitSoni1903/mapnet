@@ -38,29 +38,26 @@ Both raise with the last non empty line of the run log.
 
 ## Manifest
 
-`adapters/manifest.toml` is the registry.
+`mapnet/manifest.py` is the registry. Its `TOOLS` entry registers a matcher.
 
-```toml
-[gilda]
-command = ["uv", "run", "--script", "gilda_utils.py"]
-wants_format = "obo"
-
-[leonmap]
-command = ["uv", "run", "--script", "leonmap_utils.py"]
-wants_format = "owl"
+```python
+TOOLS = {
+    "gilda": {
+        "command": ["uv", "run", "--script", "gilda_utils.py"],
+        "wants_format": "obo",
+    },
+}
 ```
 
 | Field | Value |
 | --- | --- |
-| `command` | argv list. A part naming a file beside the manifest is made absolute. |
+| `command` | argv list. A part naming a file in `adapters/` is made absolute. |
 | `wants_format` | `obo` or `owl`. The format MapNet downloads and passes. |
-| `config` | Optional path to the tool's config file, resolved against the manifest. |
+| `config` | Optional path to the tool's config file, resolved against `adapters/`. |
 
 - `command` and `wants_format` are required. A missing one raises on load.
 - `config` is optional. No tool declares one.
-- `load_tools` accepts several manifests and reads them in order. A later entry replaces an
-  earlier one of the same name.
-- A containerised tool is `command = ["docker", "run", ...]`.
+- A containerised tool is `["docker", "run", ...]`.
 - Dependencies go in the adapter's PEP 723 header, never in the manifest.
 
 ## Writing one

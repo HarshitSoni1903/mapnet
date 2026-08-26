@@ -73,7 +73,7 @@ def _add_map(commands: argparse._SubParsersAction) -> None:
     mapping.set_defaults(run=_map)
 
 
-def _tools(args: argparse.Namespace) -> int:
+def _tools(_: argparse.Namespace) -> int:
     """Print every registered matcher."""
     for name, tool in sorted(load_tools().items()):
         print(f"{name:12} {tool.wants_format:4} {' '.join(tool.command)}")
@@ -89,7 +89,8 @@ def _map(args: argparse.Namespace) -> int:
     source = get_ontology(args.src, fmt=tool.wants_format, root=args.data)
     target = get_ontology(args.tgt, fmt=tool.wants_format, root=args.data)
     out = run(tool, source, target, args.out, logs=args.logs)
-    rows = sum(1 for line in out.open() if not line.startswith("#")) - 1
+    with out.open(encoding="utf-8") as handle:
+        rows = sum(1 for line in handle if not line.startswith("#")) - 1
     print(f"{out}  ({rows} mappings)")
     return 0
 

@@ -5,7 +5,8 @@ import logging
 from curies import Reference
 from sssom_pydantic import SemanticMapping
 
-from mapnet.data import get_ontology, get_version, list_versions
+from mapnet.classify import aggregate
+from mapnet.data import get_evidence, get_ontology, get_version, list_versions
 from mapnet.mapper import Mapper
 from mapnet.sssom import read, write
 from mapnet.utils import to_curie, to_prefix, to_reference
@@ -17,6 +18,8 @@ __all__ = [
     "Reference",
     "SemanticMapping",
     "__version__",
+    "aggregate",
+    "get_evidence",
     "get_ontology",
     "get_version",
     "list_versions",

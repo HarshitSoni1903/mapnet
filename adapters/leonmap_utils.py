@@ -16,7 +16,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from mapnet import Mapper, SemanticMapping, get_version, to_prefix, to_reference
+from mapnet import Mapper, SemanticMapping, to_prefix, to_reference
 
 WORKDIR = Path("data/leonmap")
 THRESHOLD = 0.9
@@ -36,15 +36,9 @@ class LeonMapMapper(Mapper):
         """Run leonmap-map and yield every prediction it wrote."""
         work = WORKDIR.resolve()
         work.mkdir(parents=True, exist_ok=True)
-        out = work / f"{_name(args.source)}_to_{_name(args.target)}.tsv"
+        out = work / f"{to_prefix(args.source)}_to_{to_prefix(args.target)}.tsv"
         subprocess.run(_command(args, work, out), check=True)
         yield from _rows(out)
-
-
-def _name(path):
-    """Name a collection after the ontology and the version it carries."""
-    version = get_version(path)
-    return f"{to_prefix(path)}_{version}" if version else path.stem
 
 
 def _command(args, work, out):
@@ -52,7 +46,7 @@ def _command(args, work, out):
     source, target = args.source.resolve(), args.target.resolve()
     command = [sys.executable, "-m", "leonmap.mapper"]
     command += ["--source", str(source), "--target", str(target)]
-    command += ["--src-name", _name(source), "--tgt-name", _name(target)]
+    command += ["--src-name", to_prefix(source), "--tgt-name", to_prefix(target)]
     command += ["--src-prefix", f"{to_prefix(source)}:"]
     command += ["--tgt-prefix", f"{to_prefix(target)}:"]
     command += ["--work-dir", str(work), "--out", str(out)]
@@ -64,10 +58,11 @@ def _command(args, work, out):
 
 
 def _rows(out):
-    """Yield every prediction from the TSV leonmap copied to --out."""
+    """Yield every scored prediction from the TSV leonmap copied to --out."""
     with out.open(encoding="utf-8") as handle:
         for row in csv.DictReader(handle, delimiter="\t"):
-            yield _mapping(row)
+            if row.get("score"):
+                yield _mapping(row)
 
 
 def _mapping(row):

@@ -3,14 +3,13 @@
 from __future__ import annotations
 
 import subprocess
-import tomllib
-from collections.abc import Sequence
 from dataclasses import dataclass
 from pathlib import Path
 
+from mapnet.manifest import TOOLS
 from mapnet.utils import LOG_ROOT, run_log
 
-MANIFEST = Path(__file__).parent.parent / "adapters" / "manifest.toml"
+ADAPTERS = Path(__file__).parent.parent / "adapters"
 
 
 @dataclass(frozen=True)
@@ -23,16 +22,9 @@ class Tool:
     config: Path | None
 
 
-def load_tools(manifests: Sequence[Path] | None = None) -> dict[str, Tool]:
-    """Read the manifests in order, later entries winning by tool name."""
-    tools: dict[str, Tool] = {}
-    for manifest in manifests or [MANIFEST]:
-        if not manifest.is_file():
-            continue
-        entries = tomllib.loads(manifest.read_text(encoding="utf-8"))
-        for name, entry in entries.items():
-            tools[name] = _tool(name, entry, manifest.parent)
-    return tools
+def load_tools() -> dict[str, Tool]:
+    """Read every tool the manifest registers."""
+    return {name: _tool(name, entry) for name, entry in TOOLS.items()}
 
 
 def run(
@@ -61,20 +53,20 @@ def _tail(log: Path) -> str:
     return next((line for line in reversed(lines) if line), "no output")
 
 
-def _tool(name: str, entry: dict, directory: Path) -> Tool:
-    """Build one registry entry, resolving its paths against its manifest."""
+def _tool(name: str, entry: dict) -> Tool:
+    """Build one registry entry, resolving its paths against the adapters folder."""
     if "command" not in entry or "wants_format" not in entry:
         raise ValueError(f"{name!r} needs both command and wants_format")
     config = entry.get("config")
     return Tool(
         name=name,
-        command=[_resolve(part, directory) for part in entry["command"]],
+        command=[_resolve(part) for part in entry["command"]],
         wants_format=entry["wants_format"],
-        config=directory / config if config else None,
+        config=ADAPTERS / config if config else None,
     )
 
 
-def _resolve(part: str, directory: Path) -> str:
-    """Make a command part absolute when it names a file beside the manifest."""
-    candidate = directory / part
+def _resolve(part: str) -> str:
+    """Make a command part absolute when it names a file in the adapters folder."""
+    candidate = ADAPTERS / part
     return str(candidate) if candidate.is_file() else part
