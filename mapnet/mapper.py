@@ -13,7 +13,7 @@ from sssom_pydantic import MappingTool, SemanticMapping
 
 from mapnet.data import get_version
 from mapnet.sssom import write
-from mapnet.utils import LOG_ROOT
+from mapnet.utils import LOG_ROOT, to_prefix
 
 
 class Mapper(ABC):
@@ -39,6 +39,14 @@ class Mapper(ABC):
             target_version=get_version(args.target),
         )
         return 0
+
+    @staticmethod
+    def prefixes(args: argparse.Namespace) -> tuple[str, str]:
+        """Take the source and target prefixes, preferring the flags over the files."""
+        return (
+            args.src_prefix or to_prefix(args.source),
+            args.tgt_prefix or to_prefix(args.target),
+        )
 
     @classmethod
     def identity(cls) -> MappingTool:

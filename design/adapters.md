@@ -93,10 +93,13 @@ if __name__ == "__main__":
 ```
 
 `Mapper.main` parses the arguments, reads the version of both ontology files, and calls
-`sssom.write` with the class attributes `name`, `version` and `tool_id`.
+`sssom.write` with the class attributes `name`, `version` and `tool_id`. `Mapper.prefixes`
+resolves the source and target prefixes for every adapter, so no adapter reads the flags itself.
 
 - Subclass `Mapper` and implement `match`, which yields `SemanticMapping` objects.
 - Set `name` and `version` as class attributes. `tool_id` is optional and takes a CURIE.
+- Call `self.prefixes(args)` for the source and target prefixes. It prefers `--src-prefix` and
+  `--tgt-prefix` over what the files declare, so honouring those flags costs an adapter nothing.
 - Call `sssom.write` directly when the control flow does not fit `Mapper.main`.
 - Name the file `<tool>_utils.py`. A module named after the tool shadows the package on import.
 - Emit every candidate found. Reduction to one to one happens in `classify`.

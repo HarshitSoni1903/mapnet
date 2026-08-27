@@ -37,6 +37,17 @@ EVIDENCE = [
     "biomappings-predicted",
 ]
 
+# Evidence names or ontology prefixes a bare `mapnet fetch` refetches.
+REFRESH = [
+    "biomappings",
+    "biomappings-negative",
+    "biomappings-predicted",
+    "semra",
+]
+
+# Zenodo concept the run's own mapping sets are published under.
+DEPOSITION = "zenodo:0000000"
+
 TOOLS = {
     "gilda": {
         "command": ["uv", "run", "--script", "gilda_utils.py"],

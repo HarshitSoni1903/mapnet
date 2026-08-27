@@ -15,7 +15,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-from mapnet import Mapper, SemanticMapping, table, to_prefix, to_reference
+from mapnet import Mapper, SemanticMapping, table, to_reference
 
 WORKDIR = Path("data/leonmap")
 THRESHOLD = 0.9
@@ -35,21 +35,15 @@ class LeonMapMapper(Mapper):
         """Run leonmap-map and yield every prediction it wrote."""
         work = WORKDIR.resolve()
         work.mkdir(parents=True, exist_ok=True)
-        out = work / f"{_prefix(args, 'src')}_to_{_prefix(args, 'tgt')}.tsv"
-        subprocess.run(_command(args, work, out), check=True)
+        src, tgt = self.prefixes(args)
+        out = work / f"{src}_to_{tgt}.tsv"
+        subprocess.run(_command(args, work, out, src, tgt), check=True)
         yield from _rows(out)
 
 
-def _prefix(args, side):
-    """Take the prefix the run declared, else the one the file declares."""
-    given = getattr(args, f"{side}_prefix", None)
-    return given or to_prefix(args.source if side == "src" else args.target)
-
-
-def _command(args, work, out):
+def _command(args, work, out, src, tgt):
     """Build the leonmap-map invocation."""
     source, target = args.source.resolve(), args.target.resolve()
-    src, tgt = _prefix(args, "src"), _prefix(args, "tgt")
     command = [sys.executable, "-m", "leonmap.mapper"]
     command += ["--source", str(source), "--target", str(target)]
     command += ["--src-name", src, "--tgt-name", tgt]

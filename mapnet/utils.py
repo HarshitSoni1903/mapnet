@@ -11,6 +11,7 @@ from datetime import datetime
 from functools import cache
 from itertools import islice
 from pathlib import Path
+from typing import Any
 from urllib.parse import urlparse
 
 import bioregistry
@@ -74,6 +75,11 @@ def to_prefix(path: Path) -> str:
                 text = Path(urlparse(text).path).name
             return text.split(".")[0].split("/")[0].lower()
     raise ValueError(f"{path.name} declares no ontology prefix in its header")
+
+
+def to_prefixes(rows: Iterable[Any]) -> list[str]:
+    """List every prefix a set of mappings touches, on either side, sorted."""
+    return sorted({p for row in rows for p in (row.subject.prefix, row.object.prefix)})
 
 
 def count_prefixes(values: Iterable[str]) -> Counter[str]:

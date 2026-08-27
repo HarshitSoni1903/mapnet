@@ -15,7 +15,7 @@ from pathlib import Path
 
 CONCEPTS = Path("data/icd10/icd10_concepts.tsv")
 ONTOLOGY = Path(tempfile.gettempdir()) / "mapnet_icd10" / "icd10.obo"
-OUT = Path("outputs/gilda_icd10_mesh.sssom.tsv")
+OUT = Path("outputs")
 
 
 def blend(concepts: Path, out: Path) -> tuple[int, int]:

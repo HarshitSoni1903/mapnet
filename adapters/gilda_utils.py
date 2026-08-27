@@ -29,9 +29,9 @@ class GildaMapper(mapnet.Mapper):
 
     def match(self, args):
         """Match the two ontologies on every unambiguous shared label."""
-        source = args.src_prefix or mapnet.to_prefix(args.source)
+        source, target = self.prefixes(args)
         names, synonyms = _index(args.source, source)
-        targets = _targets(args.tgt_prefix or mapnet.to_prefix(args.target))
+        targets = _targets(target, args.target)
         seen = set()
         for named, table in ((True, names), (False, synonyms)):
             for text in sorted(table.keys() & targets.keys()):
@@ -64,16 +64,27 @@ def _index(path, prefix):
     return names, synonyms
 
 
-def _targets(prefix):
-    """Index the target ontology's own Gilda terms by normalized text."""
+def _targets(prefix, path):
+    """Index the target's terms, from gilda when it can, else from the file."""
     generate = getattr(gilda.generate_terms, f"generate_{prefix}_terms", None)
     if generate is None:
-        raise ValueError(f"gilda has no term generator for {prefix!r}")
+        return _file_targets(path, prefix)
     drop = "ignore_mappings" in inspect.signature(generate).parameters
     index = defaultdict(set)
     for term in generate(ignore_mappings=True) if drop else generate():
         curie = mapnet.to_curie(f"{term.db}:{term.id}")
         index[term.norm_text].add((curie, term.entry_name, term.status))
+    return index
+
+
+def _file_targets(path, prefix):
+    """Index the target ontology's own file, for prefixes gilda cannot generate."""
+    names, synonyms = _index(path, prefix)
+    index = defaultdict(set)
+    for table, status in ((names, "name"), (synonyms, "synonym")):
+        for text, entries in table.items():
+            for node, label in entries:
+                index[text].add((mapnet.to_curie(node), label, status))
     return index
 
 
