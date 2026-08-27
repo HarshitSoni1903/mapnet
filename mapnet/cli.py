@@ -1,33 +1,47 @@
-"""Command line commands."""
+"""The command line surface."""
 
 from __future__ import annotations
 
 import argparse
 import sys
 from collections.abc import Sequence
+from datetime import datetime
 from pathlib import Path
 
 from mapnet.classify import BUCKETS, aggregate, classify
 from mapnet.data import DATA_ROOT, downloads, get_source, get_version, list_versions
-from mapnet.manifest import EVIDENCE, REFRESH, SOURCES
+from mapnet.manifest import EVIDENCE, OUTPUT_ROOT, REFRESH, RUN_STAMP, SOURCES
 from mapnet.matchers import load_tools, run
-from mapnet.sssom import read, stem, write
+from mapnet.sssom import read, write
 from mapnet.utils import LOG_ROOT, table, to_prefix
 
 _Commands = argparse._SubParsersAction
 
 
 def _parser() -> argparse.ArgumentParser:
-    """Build the parser by letting every command declare itself."""
+    """Build the parser with every command registered."""
     parser = argparse.ArgumentParser(prog="mapnet")
     commands = parser.add_subparsers(dest="command", required=True)
     shared, judged = _shared()
     _add_fetch(commands, shared)
-    _add_versions(commands, shared)
-    _add_tools(commands)
-    _add_evidence(commands)
+
+    versions = commands.add_parser("versions", parents=[shared], help="list releases")
+    versions.add_argument("prefix")
+    versions.add_argument("--refresh", action="store_true", help="re-query the source")
+    versions.set_defaults(run=_versions)
+
+    commands.add_parser("tools", help="list matchers").set_defaults(run=_tools)
+    commands.add_parser("evidence", help="list evidence sets").set_defaults(
+        run=_evidence
+    )
+
     _add_map(commands, shared, judged)
-    _add_aggregate(commands)
+
+    combine = commands.add_parser("aggregate", help="combine prediction files into one")
+    combine.add_argument("predictions", type=Path, nargs="+")
+    combine.add_argument("--out", type=Path, required=True)
+    combine.set_defaults(run=_aggregate)
+
     _add_classify(commands, shared, judged)
     return parser
 
@@ -63,26 +77,6 @@ def _add_fetch(commands: _Commands, shared: argparse.ArgumentParser) -> None:
     fetch.set_defaults(run=_fetch)
 
 
-def _add_versions(commands: _Commands, shared: argparse.ArgumentParser) -> None:
-    """Declare the command that lists an ontology's releases."""
-    versions = commands.add_parser("versions", parents=[shared], help="list releases")
-    versions.add_argument("prefix")
-    versions.add_argument("--refresh", action="store_true", help="re-query the source")
-    versions.set_defaults(run=_versions)
-
-
-def _add_tools(commands: _Commands) -> None:
-    """Declare the command that lists registered matchers."""
-    commands.add_parser("tools", help="list matchers").set_defaults(run=_tools)
-
-
-def _add_evidence(commands: _Commands) -> None:
-    """Declare the command that lists registered evidence sets."""
-    commands.add_parser("evidence", help="list evidence sets").set_defaults(
-        run=_evidence
-    )
-
-
 def _add_map(
     commands: _Commands,
     shared: argparse.ArgumentParser,
@@ -105,18 +99,13 @@ def _add_map(
     mapping.add_argument("--src", required=True, help="source prefix or URL")
     mapping.add_argument("--tgt", required=True, help="target prefix or URL")
     mapping.add_argument(
-        "--out", type=Path, required=True, help="folder to write this run's files in"
+        "--out", type=Path, default=Path(OUTPUT_ROOT), help="root for every run's files"
+    )
+    mapping.add_argument(
+        "--gold", type=Path, help="gold standard for the tool to score"
     )
     mapping.add_argument("--logs", type=Path, default=LOG_ROOT)
     mapping.set_defaults(run=_map)
-
-
-def _add_aggregate(commands: _Commands) -> None:
-    """Declare the command that unions several prediction files."""
-    combine = commands.add_parser("aggregate", help="combine prediction files into one")
-    combine.add_argument("predictions", type=Path, nargs="+")
-    combine.add_argument("--out", type=Path, required=True)
-    combine.set_defaults(run=_aggregate)
 
 
 def _add_classify(
@@ -129,7 +118,9 @@ def _add_classify(
         "classify", parents=[shared, judged], help="split predictions"
     )
     split.add_argument("predictions", type=Path)
-    split.add_argument("--out", type=Path, required=True, help="directory for the sets")
+    split.add_argument(
+        "--out", type=Path, help="directory for the sets, else beside the predictions"
+    )
     split.add_argument(
         "--reverse", type=Path, help="predictions from the run with the sides swapped"
     )
@@ -176,7 +167,8 @@ def _aggregate(args: argparse.Namespace) -> int:
 
 def _classify(args: argparse.Namespace) -> int:
     """Split one prediction file into right, wrong, novel and conflicts."""
-    _split(args.predictions, args.evidence, args.out, args.data, args.reverse)
+    out = args.out or args.predictions.parent
+    _split(args.predictions, args.evidence, out, args.data, args.reverse)
     return 0
 
 
@@ -203,7 +195,7 @@ def _split(
     )
     for bucket in BUCKETS:
         written = split.buckets[bucket]
-        path = out / f"{stem(predictions)}_{bucket}.sssom.tsv"
+        path = out / f"{bucket}.sssom.tsv"
         write(written, path)
         share = 100 * len(written) / len(rows) if rows else 0.0
         print(f"  {bucket:10} {len(written):6} ({share:4.1f}%)  {path}")
@@ -225,22 +217,19 @@ def _map(args: argparse.Namespace) -> int:
     source = get_source(args.src, fmt=tool.wants_format, root=args.data)
     target = get_source(args.tgt, fmt=tool.wants_format, root=args.data)
     src, tgt = to_prefix(source), to_prefix(target)
-    out = args.out / f"{tool.name}_{src}_{tgt}.sssom.tsv"
-    run(tool, source, target, out, logs=args.logs, extra=args.extra)
-    print(f"{out}  ({_count(out)} mappings)")
+    stamp = datetime.now().strftime(RUN_STAMP)
+    out = args.out / tool.name / f"{src}_{tgt}" / stamp / "run.sssom.tsv"
+    extra = [*args.extra, "--gold", str(args.gold)] if args.gold else args.extra
+    run(tool, source, target, out, stamp, logs=args.logs, extra=extra)
+    print(f"{out}  ({sum(1 for _ in table(out))} mappings)")
     back = None
     if args.reverse:
-        back = args.out / f"{tool.name}_{tgt}_{src}.sssom.tsv"
-        run(tool, target, source, back, logs=args.logs, extra=args.extra)
-        print(f"{back}  ({_count(back)} mappings)")
+        back = out.with_name("run_reverse.sssom.tsv")
+        run(tool, target, source, back, stamp, logs=args.logs, extra=args.extra)
+        print(f"{back}  ({sum(1 for _ in table(back))} mappings)")
     if args.classify:
-        _split(out, args.evidence, args.out, args.data, back)
+        _split(out, args.evidence, out.parent, args.data, back)
     return 0
-
-
-def _count(path: Path) -> int:
-    """Count the mapping rows an SSSOM file holds."""
-    return sum(1 for _ in table(path))
 
 
 def _fetch(args: argparse.Namespace) -> int:

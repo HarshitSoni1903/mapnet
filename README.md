@@ -26,8 +26,8 @@ mapnet fetch biomappings
 mapnet fetch
 mapnet versions mondo
 mapnet tools
-mapnet map --tool gilda --src mondo --tgt mesh --out results/
-mapnet map --tool gilda --src https://example.org/my.obo --tgt mesh --out results/
+mapnet map --tool gilda --src mondo --tgt mesh
+mapnet map --tool gilda --src https://example.org/my.obo --tgt mesh
 ```
 
 | Command | Options |
@@ -36,28 +36,34 @@ mapnet map --tool gilda --src https://example.org/my.obo --tgt mesh --out result
 | `versions <prefix>` | `--refresh` `--data` |
 | `tools` | none |
 | `evidence` | none |
-| `map` | `--tool` `--src` `--tgt` `--out` `--reverse` `--classify` `--evidence` `--data` `--logs` |
+| `map` | `--tool` `--src` `--tgt` `--out` `--reverse` `--classify` `--gold` `--evidence` `--data` `--logs` |
 | `aggregate <predictions...>` | `--out` |
 | `classify <predictions>` | `--out` `--reverse` `--evidence` `--data` |
 
-`--out` is a folder. `map` names every file from the tool and the prefixes the ontologies
-declare, so one command leaves a complete run in one place:
+`--out` is a root, `outputs/` by default, so the flag can be skipped entirely. Each run gets its
+own directory under it, and the files inside carry plain names:
 
 ```bash
-mapnet map --tool gilda --src icd10.obo --tgt mesh --out results/ --reverse --classify
+mapnet map --tool gilda --src icd10 --tgt mesh --reverse --classify
 ```
 
 ```text
-results/gilda_icd10_mesh.sssom.tsv            the run
-results/gilda_mesh_icd10.sssom.tsv            the reverse run
-results/gilda_icd10_mesh_right.sssom.tsv      the four sets
-results/gilda_icd10_mesh_wrong.sssom.tsv
-results/gilda_icd10_mesh_novel.sssom.tsv
-results/gilda_icd10_mesh_conflicts.sssom.tsv
+outputs/gilda/icd10_mesh/20260827_143012/run.sssom.tsv          the run
+outputs/gilda/icd10_mesh/20260827_143012/run_reverse.sssom.tsv  the reverse run
+outputs/gilda/icd10_mesh/20260827_143012/right.sssom.tsv        the four sets
+outputs/gilda/icd10_mesh/20260827_143012/wrong.sssom.tsv
+outputs/gilda/icd10_mesh/20260827_143012/novel.sssom.tsv
+outputs/gilda/icd10_mesh/20260827_143012/conflicts.sssom.tsv
+outputs/gilda/icd10_mesh/20260827_143012/run.eval.json          when --gold is given
 ```
 
-The tool leads the name so two matchers on the same pair do not overwrite each other.
-`conflicts` holds collisions nothing could separate, kept rather than resolved arbitrarily.
+`--out` only moves the root. The tool, the pair and the timestamp are always directories under
+it, so `--out results/` gives `results/gilda/icd10_mesh/<stamp>/`. Two matchers on the same pair
+land in different directories, and two runs of the same matcher in different ones. `conflicts` holds collisions nothing could separate, kept rather than
+resolved arbitrarily.
+
+`classify` on its own writes the four sets beside the predictions unless `--out` says otherwise,
+so classifying a run's file lands the sets back in that run's directory.
 
 Reduction cascades. When a candidate wins its subject but then loses its object to a stronger
 rival, the candidate it had beaten is reconsidered rather than lost with it, and this repeats
@@ -117,6 +123,7 @@ Everything the pipeline needs is on the facade. Nothing imports a submodule.
 from mapnet import classify, load_evidence, aggregate, read, write
 from mapnet import get_source, get_version, list_versions, downloads
 from mapnet import to_curie, to_prefix, to_reference, table, check_prefixes
+from mapnet import score, mrr, hits_at_k, Scores
 from mapnet import BUCKETS, EVIDENCE, REFRESH, Evidence, Mapper, Reference, Split
 from mapnet import SemanticMapping
 ```
@@ -144,6 +151,47 @@ to the newest record already cached, and only asks Zenodo when you pass `redownl
 classification never depends on the network. `downloads()` reads the index of every file
 fetched. `aggregate` unions prediction files, keeping the first row for each subject and
 object pair.
+
+## Evaluation
+
+`--gold` names an SSSOM file of correct mappings and is passed straight to the tool. The tool
+scores itself and writes `<run>.eval.json` beside its predictions. Without `--gold` no scoring
+happens at all.
+
+```bash
+mapnet map --tool gilda --src icd10 --tgt mesh --gold oaei_icd10_mesh.sssom.tsv
+```
+
+```json
+{"tool": "gilda", "version": "1.6.1",
+ "metrics": {"hits": 1, "predicted": 2, "expected": 2,
+             "precision": 0.5, "recall": 0.5, "f1": 0.5}}
+```
+
+Scoring belongs to the adapter because only the adapter can see its own ranking. A matcher
+prunes its candidates before writing SSSOM, so a rank based metric cannot be recovered from the
+output file. `Mapper.evaluate` scores the pairs written, and an adapter that keeps ranked
+candidates overrides it to add more:
+
+```python
+def evaluate(self, rows, gold, args):
+    """Score the pairs written, and the ranking only this adapter can see."""
+    metrics = super().evaluate(rows, gold, args)
+    metrics["mrr"] = mrr(self.ranked, gold)
+    metrics["hits_at_1"] = hits_at_k(self.ranked, gold, 1)
+    return metrics
+```
+
+Every adapter uses the same functions from `mapnet.eval`, so numbers from different tools are
+comparable. The eval file says what that tool could measure, so nothing needs declaring twice.
+
+| Function | Takes | Gives |
+| --- | --- | --- |
+| `score(predicted, gold)` | two sets of pairs | hits, counts, precision, recall, f1 |
+| `mrr(ranked, gold)` | subject to ranked objects | mean reciprocal rank |
+| `hits_at_k(ranked, gold, k)` | subject to ranked objects | share correct within the top k |
+
+Pairs are compared without direction, since an exact match holds both ways round.
 
 ## Evidence
 

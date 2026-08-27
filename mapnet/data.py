@@ -80,7 +80,7 @@ def _locate(
 
 
 def _record(root: Path, path: Path, url: str) -> None:
-    """Note a download's url, digest, size and date in the index a UI reads."""
+    """Note a download's url, digest, size and date in the download index."""
     index = downloads(root)
     index[str(path)] = {
         "url": url,

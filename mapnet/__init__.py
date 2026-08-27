@@ -8,6 +8,7 @@ from sssom_pydantic import SemanticMapping
 
 from mapnet.classify import BUCKETS, Evidence, Split, aggregate, classify, load_evidence
 from mapnet.data import downloads, get_source, get_version, list_versions
+from mapnet.eval import Scores, hits_at_k, mrr, score
 from mapnet.manifest import EVIDENCE, REFRESH
 from mapnet.mapper import Mapper
 from mapnet.sssom import read, write
@@ -22,6 +23,7 @@ __all__ = [
     "Mapper",
     "REFRESH",
     "Reference",
+    "Scores",
     "SemanticMapping",
     "Split",
     "__version__",
@@ -31,9 +33,12 @@ __all__ = [
     "downloads",
     "get_source",
     "get_version",
+    "hits_at_k",
     "list_versions",
     "load_evidence",
+    "mrr",
     "read",
+    "score",
     "table",
     "to_curie",
     "to_prefix",

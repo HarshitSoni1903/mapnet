@@ -14,6 +14,7 @@ MapNet appends these to the command from the manifest:
 | `--out` | path to write the SSSOM file |
 | `--logs` | directory for the tool's own logs |
 | `--config` | the manifest's `config` path, appended only when the manifest declares one |
+| `--gold` | SSSOM gold standard, appended only when `map --gold` is given |
 
 - `--source` and `--target` are local files already downloaded in the format the manifest names.
 - `--logs` defaults to `logs` when the adapter is run by hand.
@@ -21,6 +22,7 @@ MapNet appends these to the command from the manifest:
   own options reach the adapter without MapNet declaring them. The adapter validates them.
 - Thresholds and model settings are not arguments. They go in the file `--config` points at,
   which MapNet passes through without reading.
+- `--gold` is absent unless asked for. When absent, no scoring happens.
 
 ## Output
 
@@ -107,6 +109,24 @@ resolves the source and target prefixes for every adapter, so no adapter reads t
 
 The `[tool.uv.sources]` block is a local override while `mapnet` is unpublished. It is removed
 on release.
+
+## Scoring
+
+An adapter scores its own run, because only it can see the candidates it pruned before writing.
+`Mapper.main` calls `report` when `--gold` is given, which writes `<out>.eval.json` beside the
+predictions.
+
+| Function | Takes | Gives |
+| --- | --- | --- |
+| `score(predicted, gold)` | two sets of pairs | hits, counts, precision, recall, f1 |
+| `mrr(ranked, gold)` | subject to ranked objects | mean reciprocal rank |
+| `hits_at_k(ranked, gold, k)` | subject to ranked objects | share correct within the top k |
+
+- Use `mapnet.eval`. An adapter that writes its own precision makes its numbers incomparable.
+- `Mapper.evaluate` scores the pairs written. Override it to add what only this tool can see.
+- Rank based metrics need a ranked candidate list per subject. An adapter that emits one match
+  per subject has nothing to rank, so it should not report them.
+- The eval file is self describing. Nothing declares its metrics in the manifest.
 
 ## Field ownership
 

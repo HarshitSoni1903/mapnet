@@ -28,7 +28,7 @@ SOURCES = {
     "obo-xref": ("pairs", "obo"),
 }
 
-# Evidence sets used for classification. Edit to change behavior of the classifier.
+# Evidence sets classify consults.
 EVIDENCE = [
     "biomappings",
     "semra",
@@ -47,6 +47,10 @@ REFRESH = [
 
 # Zenodo concept the run's own mapping sets are published under.
 DEPOSITION = "zenodo:0000000"
+
+# Where a run's files land, one directory per <root>/<tool>/<src>_<tgt>/<stamp>.
+OUTPUT_ROOT = "outputs"
+RUN_STAMP = "%Y%m%d_%H%M%S"
 
 TOOLS = {
     "gilda": {

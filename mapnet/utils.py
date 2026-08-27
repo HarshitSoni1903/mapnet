@@ -7,7 +7,6 @@ import re
 import sys
 from collections import Counter
 from collections.abc import Iterable, Iterator
-from datetime import datetime
 from functools import cache
 from itertools import islice
 from pathlib import Path
@@ -29,16 +28,15 @@ ONTOLOGY_LINE = re.compile(r"^ontology:\s*(\S+)", re.MULTILINE)
 ONTOLOGY_IRI = re.compile(r'<owl:Ontology rdf:about="([^"]+)"')
 
 
-def run_log(tool: str, source: Path, target: Path, root: Path = LOG_ROOT) -> Path:
-    """Build the log path for one tool run, creating its directory."""
-    stamp = datetime.now().strftime("%Y%m%d_%H%M%S")
+def run_log(tool: str, source: Path, target: Path, stamp: str, root: Path) -> Path:
+    """Build the log path for one tool run, named by the stamp that names the run."""
     root.mkdir(parents=True, exist_ok=True)
     return root / f"run_{tool}_{source.stem}_{target.stem}_{stamp}.log"
 
 
 @cache
 def converter() -> curies.Converter:
-    """Build the bioregistry converter, once per process."""
+    """Build the bioregistry converter."""
     return bioregistry.get_converter()
 
 
@@ -109,7 +107,7 @@ def check_prefixes(path: Path, prefix: str, nodes: Iterable[str]) -> None:
 
 @cache
 def _normalize(head: str) -> str | None:
-    """Normalize one CURIE prefix, cached since a file reuses only a handful."""
+    """Normalize one CURIE prefix."""
     return bioregistry.normalize_prefix(head)
 
 

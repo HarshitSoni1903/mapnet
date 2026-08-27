@@ -138,6 +138,26 @@ flowchart LR
 One run takes one tool. Several tools per run is planned. `map --classify` carries a run
 through the split in one command; publishing is gated the same way once `store` exists.
 
+## Run layout
+
+One run is one directory: `<root>/<tool>/<src>_<tgt>/<stamp>/`. `OUTPUT_ROOT` and `RUN_STAMP`
+in the manifest set the root and the timestamp, and `--out` overrides the root only. Inside,
+names are plain, since the directory already says which tool, which pair and which run.
+
+```text
+run.sssom.tsv           the predictions
+run_reverse.sssom.tsv   the reverse run, when asked for
+right/wrong/novel/conflicts.sssom.tsv
+run.eval.json           the tool's own scores, when given a gold set
+```
+
+The CLI takes the timestamp once per run and hands it to every leg, so the forward run, the
+reverse run and their logs all carry the same stamp. A run's log in `logs/` is found by the
+stamp that names its directory.
+
+The stamp resolves to the second, so two runs of one tool over one pair inside the same second
+would share a directory.
+
 ## Classification
 
 Planned. Every candidate is split against evidence first.
@@ -230,5 +250,6 @@ refresh report whether upstream actually changed and what a UI reads to offer th
 | `mapper.py` | The `Mapper` base class and the argument parser every adapter shares. |
 | `matchers.py` | Read the manifest, spawn a tool as a subprocess, capture its log. Per run options pass straight through as flags. |
 | `classify.py` | Combine several tools' predictions, reduce, then split into right, wrong and novel. |
+| `eval.py` | Metric functions adapters share, so scores from different tools compare. |
 | `store.py` | Publish mapping sets to the Zenodo deposition in the manifest. Planned. |
 | `cli.py` | Command line surface. Registers every subcommand, then reports what the core returns. |
