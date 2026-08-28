@@ -49,7 +49,12 @@ def _parser() -> argparse.ArgumentParser:
 def _shared() -> tuple[argparse.ArgumentParser, argparse.ArgumentParser]:
     """Build the option groups more than one command takes."""
     data = argparse.ArgumentParser(add_help=False)
-    data.add_argument("--data", type=Path, default=DATA_ROOT, help="download root")
+    data.add_argument(
+        "--workdir",
+        type=Path,
+        default=Path("."),
+        help=f"where {DATA_ROOT}, {LOG_ROOT} and {OUTPUT_ROOT} are created",
+    )
     evidence = argparse.ArgumentParser(add_help=False)
     evidence.add_argument(
         "--evidence",
@@ -99,12 +104,8 @@ def _add_map(
     mapping.add_argument("--src", required=True, help="source prefix or URL")
     mapping.add_argument("--tgt", required=True, help="target prefix or URL")
     mapping.add_argument(
-        "--out", type=Path, default=Path(OUTPUT_ROOT), help="root for every run's files"
-    )
-    mapping.add_argument(
         "--gold", type=Path, help="gold standard for the tool to score"
     )
-    mapping.add_argument("--logs", type=Path, default=LOG_ROOT)
     mapping.set_defaults(run=_map)
 
 
@@ -143,7 +144,9 @@ def main(argv: Sequence[str] | None = None) -> int:
 
 def _versions(args: argparse.Namespace) -> int:
     """Print every release published for an ontology."""
-    for version in list_versions(args.prefix, refresh=args.refresh, root=args.data):
+    for version in list_versions(
+        args.prefix, refresh=args.refresh, root=args.workdir / DATA_ROOT
+    ):
         print(version)
     return 0
 
@@ -168,7 +171,7 @@ def _aggregate(args: argparse.Namespace) -> int:
 def _classify(args: argparse.Namespace) -> int:
     """Split one prediction file into right, wrong, novel and conflicts."""
     out = args.out or args.predictions.parent
-    _split(args.predictions, args.evidence, out, args.data, args.reverse)
+    _split(args.predictions, args.evidence, out, args.workdir / DATA_ROOT, args.reverse)
     return 0
 
 
@@ -214,21 +217,25 @@ def _map(args: argparse.Namespace) -> int:
     tool = tools.get(args.tool)
     if tool is None:
         raise ValueError(f"unknown tool {args.tool!r}, have {sorted(tools)}")
-    source = get_source(args.src, fmt=tool.wants_format, root=args.data)
-    target = get_source(args.tgt, fmt=tool.wants_format, root=args.data)
+    if args.gold and not args.gold.is_file():
+        raise ValueError(f"no gold file at {args.gold}")
+    source = get_source(args.src, fmt=tool.wants_format, root=args.workdir / DATA_ROOT)
+    target = get_source(args.tgt, fmt=tool.wants_format, root=args.workdir / DATA_ROOT)
     src, tgt = to_prefix(source), to_prefix(target)
     stamp = datetime.now().strftime(RUN_STAMP)
-    out = args.out / tool.name / f"{src}_{tgt}" / stamp / "run.sssom.tsv"
+    out = (
+        args.workdir / OUTPUT_ROOT / tool.name / f"{src}_{tgt}" / stamp
+    ) / "run.sssom.tsv"
     extra = [*args.extra, "--gold", str(args.gold)] if args.gold else args.extra
-    run(tool, source, target, out, stamp, logs=args.logs, extra=extra)
+    run(tool, source, target, out, stamp, args.workdir, extra)
     print(f"{out}  ({sum(1 for _ in table(out))} mappings)")
     back = None
     if args.reverse:
         back = out.with_name("run_reverse.sssom.tsv")
-        run(tool, target, source, back, stamp, logs=args.logs, extra=args.extra)
+        run(tool, target, source, back, stamp, args.workdir, args.extra)
         print(f"{back}  ({sum(1 for _ in table(back))} mappings)")
     if args.classify:
-        _split(out, args.evidence, out.parent, args.data, back)
+        _split(out, args.evidence, out.parent, args.workdir / DATA_ROOT, back)
     return 0
 
 
@@ -237,16 +244,16 @@ def _fetch(args: argparse.Namespace) -> int:
     if args.source is None and args.version:
         raise ValueError("--version names one release, so it needs a source")
     names = [args.source] if args.source else REFRESH
-    before = downloads(args.data)
+    before = downloads(args.workdir / DATA_ROOT)
     for name in names:
         path = get_source(
             name,
             fmt=args.format,
             version=args.version,
             redownload=args.redownload or args.source is None,
-            root=args.data,
+            root=args.workdir / DATA_ROOT,
         )
-        _report(name, path, before, args.data)
+        _report(name, path, before, args.workdir / DATA_ROOT)
     return 0
 
 

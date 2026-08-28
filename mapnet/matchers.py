@@ -34,13 +34,14 @@ def run(
     target: Path,
     out: Path,
     stamp: str,
-    logs: Path = LOG_ROOT,
+    workdir: Path = Path("."),
     extra: Sequence[str] = (),
 ) -> Path:
     """Run a tool over two ontologies and return the predictions it wrote."""
+    logs = workdir / LOG_ROOT
     log = run_log(tool.name, source, target, stamp, logs)
     command = [*tool.command, "--source", str(source), "--target", str(target)]
-    command += ["--out", str(out), "--logs", str(logs)]
+    command += ["--out", str(out), "--logs", str(logs), "--workdir", str(workdir)]
     if tool.config:
         command += ["--config", str(tool.config)]
     command += extra

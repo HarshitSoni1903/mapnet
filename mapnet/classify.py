@@ -13,7 +13,6 @@ from sssom_pydantic import SemanticMapping
 from mapnet.data import get_source
 from mapnet.manifest import EVIDENCE, SOURCES
 from mapnet.sssom import read, to_pairs, write
-from mapnet.utils import to_prefixes
 
 BUCKETS = ("right", "wrong", "novel", "conflicts")
 
@@ -124,7 +123,9 @@ def classify(
     reverse: Sequence[SemanticMapping] = (),
 ) -> Split:
     """Split candidates against evidence, loading it first when given names."""
-    prefixes = to_prefixes(rows)
+    prefixes = sorted(
+        {p for row in rows for p in (row.subject.prefix, row.object.prefix)}
+    )
     if not isinstance(evidence, Evidence):
         evidence = load_evidence(evidence, prefixes, root)
     buckets: dict[str, list[SemanticMapping]] = {name: [] for name in BUCKETS}

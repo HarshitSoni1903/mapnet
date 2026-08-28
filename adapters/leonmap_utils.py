@@ -13,11 +13,9 @@
 import importlib.metadata as md
 import subprocess
 import sys
-from pathlib import Path
 
 from mapnet import Mapper, SemanticMapping, table, to_reference
 
-WORKDIR = Path("data/leonmap")
 THRESHOLD = 0.9
 TOP_K = 1
 
@@ -33,7 +31,7 @@ class LeonMapMapper(Mapper):
 
     def match(self, args):
         """Run leonmap-map and yield every prediction it wrote."""
-        work = WORKDIR.resolve()
+        work = (args.workdir / "leonmap").resolve()
         work.mkdir(parents=True, exist_ok=True)
         src, tgt = self.prefixes(args)
         out = work / f"{src}_to_{tgt}.tsv"

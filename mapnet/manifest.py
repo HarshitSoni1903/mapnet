@@ -50,6 +50,7 @@ DEPOSITION = "zenodo:0000000"
 
 # Where a run's files land, one directory per <root>/<tool>/<src>_<tgt>/<stamp>.
 OUTPUT_ROOT = "outputs"
+
 RUN_STAMP = "%Y%m%d_%H%M%S"
 
 TOOLS = {

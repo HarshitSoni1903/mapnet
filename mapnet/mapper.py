@@ -87,6 +87,7 @@ def parse_args(prog: str, argv: Sequence[str] | None = None) -> argparse.Namespa
     parser.add_argument("--target", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
     parser.add_argument("--logs", type=Path, default=LOG_ROOT)
+    parser.add_argument("--workdir", type=Path, default=Path("."))
     parser.add_argument("--src-prefix", help="override the source ontology prefix")
     parser.add_argument("--tgt-prefix", help="override the target ontology prefix")
     parser.add_argument("--config", type=Path)

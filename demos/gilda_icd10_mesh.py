@@ -7,15 +7,14 @@
 # ///
 """Blend enriched ICD-10 concepts into OBO, then map them to MeSH with gilda."""
 
+import argparse
 import csv
 import subprocess
 import sys
-import tempfile
 from pathlib import Path
 
 CONCEPTS = Path("data/icd10/icd10_concepts.tsv")
-ONTOLOGY = Path(tempfile.gettempdir()) / "mapnet_icd10" / "icd10.obo"
-OUT = Path("outputs")
+BLENDED = Path("data/icd10/icd10_blended.obo")
 
 
 def blend(concepts: Path, out: Path) -> tuple[int, int]:
@@ -40,8 +39,16 @@ def blend(concepts: Path, out: Path) -> tuple[int, int]:
 
 
 if __name__ == "__main__":
-    counts = blend(CONCEPTS, ONTOLOGY)
-    print(f"[blend] {ONTOLOGY}: {counts[0]} terms, {counts[1]} synonyms")
+    parser = argparse.ArgumentParser(prog="gilda_icd10_mesh")
+    parser.add_argument("--workdir", type=Path, default=Path("."))
+    parser.add_argument("--classify", action="store_true")
+    args = parser.parse_args()
+    ontology = args.workdir / BLENDED
+    counts = blend(args.workdir / CONCEPTS, ontology)
+    print(f"[blend] {ontology}: {counts[0]} terms, {counts[1]} synonyms")
     command = [sys.executable, "-m", "mapnet.cli", "map", "--tool", "gilda"]
-    command += ["--src", str(ONTOLOGY), "--tgt", "mesh", "--out", str(OUT)]
+    command += ["--src", str(ontology), "--tgt", "mesh"]
+    command += ["--workdir", str(args.workdir)]
+    if args.classify:
+        command.append("--classify")
     sys.exit(subprocess.run(command).returncode)

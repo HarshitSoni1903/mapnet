@@ -13,13 +13,19 @@ MapNet appends these to the command from the manifest:
 | `--target` | ontology file to map to |
 | `--out` | path to write the SSSOM file |
 | `--logs` | directory for the tool's own logs |
+| `--workdir` | root the run writes under, and where a tool puts anything it keeps |
 | `--config` | the manifest's `config` path, appended only when the manifest declares one |
 | `--gold` | SSSOM gold standard, appended only when `map --gold` is given |
 
 - `--source` and `--target` are local files already downloaded in the format the manifest names.
 - `--logs` defaults to `logs` when the adapter is run by hand.
-- Any flag `mapnet map` does not recognise is appended verbatim, so `--src-prefix` and a tool's
-  own options reach the adapter without MapNet declaring them. The adapter validates them.
+- `--workdir` defaults to the current directory. A tool that keeps models or an index puts
+  them somewhere under it and names that place itself. MapNet does not dictate the layout, it
+  only guarantees the workdir is the boundary.
+- Any flag `mapnet map` does not recognise is appended verbatim, so a tool's own options reach
+  the adapter without the CLI declaring them. The adapter validates them.
+- `--src-prefix` and `--tgt-prefix` are declared by `Mapper.parse_args`, so every adapter
+  accepts them. Read them with `self.prefixes(args)`, never directly.
 - Thresholds and model settings are not arguments. They go in the file `--config` points at,
   which MapNet passes through without reading.
 - `--gold` is absent unless asked for. When absent, no scoring happens.

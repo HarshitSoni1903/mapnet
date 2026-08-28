@@ -140,8 +140,9 @@ through the split in one command; publishing is gated the same way once `store` 
 
 ## Run layout
 
-One run is one directory: `<root>/<tool>/<src>_<tgt>/<stamp>/`. `OUTPUT_ROOT` and `RUN_STAMP`
-in the manifest set the root and the timestamp, and `--out` overrides the root only. Inside,
+One run is one directory: `<workdir>/outputs/<tool>/<src>_<tgt>/<stamp>/`. `OUTPUT_ROOT` and `RUN_STAMP`
+in the manifest name the directory and the timestamp. `--workdir` moves `data/`, `logs/` and
+`outputs/` together, so one workdir is one sandbox. Inside,
 names are plain, since the directory already says which tool, which pair and which run.
 
 ```text

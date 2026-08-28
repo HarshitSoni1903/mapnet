@@ -11,7 +11,7 @@ from pathlib import Path
 import bioregistry
 import curies
 import sssom_pydantic
-from pydantic import AnyUrl
+from pydantic import AnyUrl, ValidationError
 from sssom_pydantic import MappingSet, MappingTool, SemanticMapping
 
 from mapnet.manifest import MAPPING_SET_BASE
@@ -22,7 +22,12 @@ MAPNET = MappingTool(name="mapnet", version=md.version("mapnet"))
 
 def read(path: Path) -> list[SemanticMapping]:
     """Read every mapping from an SSSOM file."""
-    mappings, _, _, errors = sssom_pydantic.read(path, return_errors=True)
+    if not path.is_file():
+        raise ValueError(f"no mapping file at {path}")
+    try:
+        mappings, _, _, errors = sssom_pydantic.read(path, return_errors=True)
+    except ValidationError as error:
+        raise ValueError(f"{path.name} is not a readable SSSOM file") from error
     if errors:
         first = errors[0]
         raise ValueError(
@@ -35,6 +40,14 @@ def read(path: Path) -> list[SemanticMapping]:
 def stem(path: Path) -> str:
     """Take a file's name without the suffixes an SSSOM table carries."""
     return path.name.removesuffix(".tsv").removesuffix(".sssom")
+
+
+def by_prefixes(
+    rows: Iterable[SemanticMapping], *prefixes: str
+) -> list[SemanticMapping]:
+    """Keep the mappings whose two sides use the named prefixes, either way round."""
+    wanted = set(prefixes)
+    return [row for row in rows if {row.subject.prefix, row.object.prefix} == wanted]
 
 
 def to_pairs(paths: Iterable[Path]) -> set[tuple[str, str]]:

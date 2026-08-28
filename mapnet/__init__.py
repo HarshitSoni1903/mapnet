@@ -11,7 +11,7 @@ from mapnet.data import downloads, get_source, get_version, list_versions
 from mapnet.eval import Scores, hits_at_k, mrr, score
 from mapnet.manifest import EVIDENCE, REFRESH
 from mapnet.mapper import Mapper
-from mapnet.sssom import read, write
+from mapnet.sssom import by_prefixes, read, write
 from mapnet.utils import check_prefixes, table, to_curie, to_prefix, to_reference
 
 __version__ = md.version("mapnet")
@@ -28,6 +28,7 @@ __all__ = [
     "Split",
     "__version__",
     "aggregate",
+    "by_prefixes",
     "check_prefixes",
     "classify",
     "downloads",

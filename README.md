@@ -32,16 +32,17 @@ mapnet map --tool gilda --src https://example.org/my.obo --tgt mesh
 
 | Command | Options |
 | --- | --- |
-| `fetch [source]` | `--format {obo,owl}` `--version` `--redownload` `--data` |
-| `versions <prefix>` | `--refresh` `--data` |
+| `fetch [source]` | `--format {obo,owl}` `--version` `--redownload` `--workdir` |
+| `versions <prefix>` | `--refresh` `--workdir` |
 | `tools` | none |
 | `evidence` | none |
-| `map` | `--tool` `--src` `--tgt` `--out` `--reverse` `--classify` `--gold` `--evidence` `--data` `--logs` |
+| `map` | `--tool` `--src` `--tgt` `--reverse` `--classify` `--gold` `--evidence` `--workdir` |
 | `aggregate <predictions...>` | `--out` |
-| `classify <predictions>` | `--out` `--reverse` `--evidence` `--data` |
+| `classify <predictions>` | `--out` `--reverse` `--evidence` `--workdir` |
 
-`--out` is a root, `outputs/` by default, so the flag can be skipped entirely. Each run gets its
-own directory under it, and the files inside carry plain names:
+`--workdir` is the one location everything is created under, the current directory by default,
+so the flag can be skipped entirely. `data/`, `logs/` and `outputs/` are made inside it. Each
+run gets its own directory, and the files inside carry plain names:
 
 ```bash
 mapnet map --tool gilda --src icd10 --tgt mesh --reverse --classify
@@ -57,9 +58,9 @@ outputs/gilda/icd10_mesh/20260827_143012/conflicts.sssom.tsv
 outputs/gilda/icd10_mesh/20260827_143012/run.eval.json          when --gold is given
 ```
 
-`--out` only moves the root. The tool, the pair and the timestamp are always directories under
-it, so `--out results/` gives `results/gilda/icd10_mesh/<stamp>/`. Two matchers on the same pair
-land in different directories, and two runs of the same matcher in different ones. `conflicts` holds collisions nothing could separate, kept rather than
+`--workdir run1/` puts the whole run under `run1/`, downloads included, so a second workdir is
+a fully separate sandbox. Two matchers on the same pair land in different directories, and two
+runs of the same matcher in different ones. `conflicts` holds collisions nothing could separate, kept rather than
 resolved arbitrarily.
 
 `classify` on its own writes the four sets beside the predictions unless `--out` says otherwise,
@@ -77,11 +78,12 @@ Any flag `map` does not recognise is passed to the tool, which validates it, so 
 mondo` or a tool's own `--threshold 0.8` need no change to MapNet.
 
 `map` fetches both ontologies in the format the tool declares, runs the tool as a subprocess,
-and writes SSSOM. Each run is logged to `logs/`.
+and writes SSSOM. Each run is logged to `<workdir>/logs/`, named by the stamp that names the
+run directory.
 
 A source, `--src` or `--tgt` is a [Bioregistry](https://bioregistry.io) prefix or a download
-URL. Files land in `data/<prefix>/`, named after the prefix and the extension they were served
-with.
+URL. Files land in `<workdir>/data/<prefix>/`, named after the prefix and the extension they
+were served with.
 
 `--version` names an OBO Foundry release. It applies to prefixes only, since a URL serves one
 release and cannot be versioned.
@@ -122,7 +124,8 @@ Everything the pipeline needs is on the facade. Nothing imports a submodule.
 ```python
 from mapnet import classify, load_evidence, aggregate, read, write
 from mapnet import get_source, get_version, list_versions, downloads
-from mapnet import to_curie, to_prefix, to_reference, table, check_prefixes
+from mapnet import to_curie, to_prefix, to_reference, table
+from mapnet import by_prefixes, check_prefixes
 from mapnet import score, mrr, hits_at_k, Scores
 from mapnet import BUCKETS, EVIDENCE, REFRESH, Evidence, Mapper, Reference, Split
 from mapnet import SemanticMapping
@@ -159,8 +162,19 @@ scores itself and writes `<run>.eval.json` beside its predictions. Without `--go
 happens at all.
 
 ```bash
-mapnet map --tool gilda --src icd10 --tgt mesh --gold oaei_icd10_mesh.sssom.tsv
+mapnet map --tool gilda --src mondo --tgt mesh --gold gold/mondo_mesh.sssom.tsv
 ```
+
+There is no gold file in the repository. `by_prefixes` cuts one out of any curated set, keeping
+only the rows whose two sides use the pair being mapped, either way round:
+
+```python
+rows = read(Path("data/evidence/biomappings/latest/positive.sssom.tsv"))
+write(by_prefixes(rows, "mondo", "mesh"), Path("gold/mondo_mesh.sssom.tsv"))
+```
+
+Check the coverage before trusting the result. Biomappings holds 323 curated mondo to mesh
+pairs and none at all for icd10, so it can score some pairs and not others.
 
 ```json
 {"tool": "gilda", "version": "1.6.1",
@@ -243,13 +257,31 @@ sink is an edit there. A local path is never one of them: those come from pystow
 ```text
 mapnet/          the core package
 adapters/        one script per matcher
+demos/           end to end scripts over real data
 design/          architecture and design documents
-data/            downloaded ontologies and caches
-outputs/         mapping sets
-logs/            per-run tool output
 ```
 
-`data/`, `outputs/` and `logs/` are gitignored.
+Everything a run produces goes under the workdir, the current directory by default:
+
+```text
+<workdir>/data/       downloaded ontologies and evidence
+<workdir>/outputs/    one directory per run
+<workdir>/logs/       per-run tool output
+```
+
+All three are gitignored at the repository root, and `--workdir` moves them together, so a
+second workdir is a fully separate sandbox. A tool that caches models puts them under the
+workdir too, wherever it chooses.
+
+## Demos
+
+`demos/` holds end to end scripts. `gilda_icd10_mesh.py` blends the enriched ICD-10 concept
+table into OBO, then maps it to MeSH:
+
+```bash
+uv run --script demos/gilda_icd10_mesh.py --classify
+uv run --script demos/gilda_icd10_mesh.py --workdir /tmp/run1
+```
 
 ## Design
 
