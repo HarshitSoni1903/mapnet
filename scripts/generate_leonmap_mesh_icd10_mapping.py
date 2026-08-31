@@ -75,8 +75,7 @@ from mapnet.utils.utils import make_undirected, sssom_to_biomappings
 
 HF_MODEL_REPO = "harshitsoni1903/sapbert-finetuned-semra"
 MESH_OWL_GZ_URL = "https://w3id.org/biopragmatics/resources/mesh/mesh.owl.gz"
-SEMRA_URL = "https://zenodo.org/records/15826693/files/processed.sssom.tsv.gz?download=1"
-SEMRA_NAME = "semra_disease_landscape_mappings.tsv.gz"
+SEMRA_URL = "https://zenodo.org/records/21935586/files/processed.sssom.tsv.gz?download=1"
 MAPPING_TOOL = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
                 "generate_leonmap_mesh_icd10_mapping.py")
 
@@ -141,10 +140,16 @@ def ensure_mesh_owl(data_dir):
     return dst
 
 
-def load_semra_sssom():
+def semra_cache_name(url):
+    """Cache filename keyed to the Zenodo record so a new URL never reuses an old download."""
+    m = re.search(r"records/(\d+)", url)
+    return f"semra_disease_landscape_mappings_{m.group(1) if m else 'custom'}.tsv.gz"
+
+
+def load_semra_sssom(url):
     """Cache the SemRA disease landscape and return it in raw SSSOM form."""
-    path = pystow.ensure_gunzip("semra", url=SEMRA_URL, name=SEMRA_NAME)
-    return pl.read_csv(path, separator="\t")
+    path = pystow.ensure_gunzip("semra", url=url, name=semra_cache_name(url))
+    return pl.read_csv(path, separator="\t", comment_prefix="#")
 
 
 def _umls_definitions():
@@ -339,20 +344,24 @@ def _write_sssom(df, out_path, remark, provenance):
     print(f"[sssom] {len(records)} -> {out_path.name}")
 
 
-def append_predictions(df, remark, provenance, predictions_path):
+def append_predictions(df, remark, provenance, predictions_path, exact_only=False, coerce_exact=False):
     """Append the novel mappings to a Biomappings predictions file."""
     tool = sssom_pydantic.MappingTool(name=provenance["mapping_tool"],
                                       version=provenance["mapping_tool_version"])
     mappings = []
+    skipped = 0
     for r in df.iter_rows(named=True):
         obj = r.get("predicted identifier", r["target identifier"])
         kind, _, _ = remark.get((r["source identifier"], obj), "semantic").partition(";")
         lexical = kind in ("exact", "synonym")
+        predicate = "exactMatch" if kind == "exact" or coerce_exact else "closeMatch"
+        if exact_only and predicate != "exactMatch":
+            skipped += 1
+            continue
         mappings.append(sssom_pydantic.SemanticMapping(
             subject=curies.NamableReference.from_curie(
                 r["source identifier"], name=r["source name"] or None),
-            predicate=curies.NamableReference(
-                prefix="skos", identifier="exactMatch" if kind == "exact" else "closeMatch"),
+            predicate=curies.NamableReference(prefix="skos", identifier=predicate),
             object=curies.NamableReference.from_curie(
                 obj, name=r.get("predicted name", r["target name"]) or None),
             justification=curies.Reference(
@@ -372,7 +381,8 @@ def append_predictions(df, remark, provenance, predictions_path):
     sssom_pydantic.write([*existing, *mappings], predictions_path, metadata=metadata,
                          converter=converter, drop_duplicates=True, sort=True)
     added = len(sssom_pydantic.read(predictions_path)[0]) - len(existing)
-    print(f"[predictions] +{added} of {len(mappings)} -> {predictions_path}")
+    note = f" (skipped {skipped} non-exact)" if skipped else ""
+    print(f"[predictions] +{added} of {len(mappings)}{note} -> {predictions_path}")
 
 
 def _biomappings_evidence():
@@ -390,7 +400,8 @@ def _biomappings_evidence():
     return sssom_to_biomappings(pl.from_pandas(ev[["subject_id", "subject_label", "object_id", "object_label"]]))
 
 
-def classify(predictions, remark, out_dir, semra_raw, mesh_owl, predictions_path):
+def classify(predictions, remark, out_dir, semra_raw, mesh_owl, predictions_path,
+             exact_only=False, coerce_exact=False):
     # flatten n:1 collisions to the best 1:1 pick, split right/wrong/novel against evidence, write SSSOM
     out_dir.mkdir(parents=True, exist_ok=True)
 
@@ -428,7 +439,7 @@ def classify(predictions, remark, out_dir, semra_raw, mesh_owl, predictions_path
     print(f"[classify] right={right.height} wrong={wrong.height} novel={novel.height} "
           f"(dup_collisions={dup_losers.height})")
     if predictions_path is not None:
-        append_predictions(novel, remark, provenance, predictions_path)
+        append_predictions(novel, remark, provenance, predictions_path, exact_only, coerce_exact)
 
 
 def main():
@@ -440,14 +451,21 @@ def main():
     ap.add_argument("--no-umls", action="store_true", help="rebuild without UMLS enrichment (ClaML labels only)")
     ap.add_argument("--no-refine", action="store_true",
                     help="skip lexical-hit labeling (exact/synonym predicates fall back to semantic)")
-    ap.add_argument("--work-dir", type=Path, default=Path("."),
-                    help="root for db/, data/, models/, mapper_results/")
+    ap.add_argument("--work-dir", type=Path, default=pystow.join("leonmap"),
+                    help="root for db/, data/, models/, mapper_results/ (default: %(default)s)")
     ap.add_argument("--out-dir", default=f"leonmap_{STUDY}_classified")
+    ap.add_argument("--semra-url", default=SEMRA_URL,
+                    help="SemRA disease database to classify against (default: %(default)s)")
     ap.add_argument("--predictions-path",
                     help=f"Biomappings predictions.sssom.tsv to append to "
                          f"(default: {PREDICTIONS_RELPATH} under the working directory)")
     ap.add_argument("--no-append", action="store_true",
                     help="only write the classified files, don't append to predictions")
+    predicates = ap.add_mutually_exclusive_group()
+    predicates.add_argument("--exact-only", action="store_true",
+                            help="only append skos:exactMatch mappings, skipping skos:closeMatch")
+    predicates.add_argument("--coerce-exact", action="store_true",
+                            help="append every mapping as skos:exactMatch regardless of inferred predicate")
     args = ap.parse_args()
 
     predictions_path = None
@@ -472,7 +490,7 @@ def main():
     g, children = load_icd10()
     raw = build_collections(g, cfg, args, build_main)
 
-    semra_raw = load_semra_sssom()
+    semra_raw = load_semra_sssom(args.semra_url)
 
     db_dir = resolve_path(cfg.db_dir)
     if args.no_blend:
@@ -489,7 +507,8 @@ def main():
         tsv = refine_mapping(tsv, g, cfg)
     predictions, remark = _predictions_df(tsv)
     classify(predictions, remark, root / args.out_dir, semra_raw,
-             resolve_path(cfg.data_dir) / "mesh.owl", predictions_path)
+             resolve_path(cfg.data_dir) / "mesh.owl", predictions_path,
+             args.exact_only, args.coerce_exact)
     print(f"Done -> {root / args.out_dir}/")
 
 

@@ -60,8 +60,7 @@ from mapnet.utils.filtering import (
 from mapnet.utils.utils import make_undirected, sssom_to_biomappings
 
 # Pinned data sources. Only SemRA's disease landscape carries icd10.
-SEMRA_URL = "https://zenodo.org/records/15826693/files/processed.sssom.tsv.gz?download=1"
-SEMRA_NAME = "semra_disease_landscape_mappings.tsv.gz"
+SEMRA_URL = "https://zenodo.org/records/21935586/files/processed.sssom.tsv.gz?download=1"
 MAPPING_TOOL = ("https://github.com/gyorilab/mapnet/blob/main/scripts/"
                 "generate_gilda_mesh_icd10_mapping.py")
 
@@ -75,10 +74,16 @@ SSSOM_COLUMNS = ["subject_id", "subject_label", "predicate_id", "object_id", "ob
                  "confidence"]
 
 
-def load_semra_landscape_df():
+def semra_cache_name(url):
+    """Cache filename keyed to the Zenodo record so a new URL never reuses an old download."""
+    m = re.search(r"records/(\d+)", url)
+    return f"semra_disease_landscape_mappings_{m.group(1) if m else 'custom'}.tsv.gz"
+
+
+def load_semra_landscape_df(url):
     """Fetch (once, cached) the SemRA disease landscape in biomappings column layout."""
-    path = pystow.ensure_gunzip("semra", url=SEMRA_URL, name=SEMRA_NAME)
-    return sssom_to_biomappings(pl.read_csv(path, separator="\t"))
+    path = pystow.ensure_gunzip("semra", url=url, name=semra_cache_name(url))
+    return sssom_to_biomappings(pl.read_csv(path, separator="\t", comment_prefix="#"))
 
 
 def _canonical(curie):
@@ -190,10 +195,10 @@ def append_predictions(df, provenance, predictions_path):
     print(f"[predictions] +{added} of {len(mappings)} -> {predictions_path}")
 
 
-def classify(df, out_dir, predictions_path):
+def classify(df, out_dir, predictions_path, semra_url):
     """Split predictions into right/wrong/novel against SemRA + Biomappings evidence."""
     out_dir.mkdir(parents=True, exist_ok=True)
-    semra = load_semra_landscape_df()
+    semra = load_semra_landscape_df(semra_url)
     df = repair_names_with_semra(df, semra)
     evidence = make_undirected(pl.concat([semra, _biomappings_evidence()]).unique())
     print(f"[evidence] {evidence.height} undirected pairs")
@@ -212,6 +217,8 @@ def main():
     parser.add_argument("--predictions-path",
                         help=f"Biomappings predictions.sssom.tsv to append to "
                              f"(default: {PREDICTIONS_RELPATH} under the working directory)")
+    parser.add_argument("--semra-url", default=SEMRA_URL,
+                        help="SemRA disease database to classify against (default: %(default)s)")
     parser.add_argument("--no-append", action="store_true",
                         help="only write the classified files, don't append to predictions")
     args = parser.parse_args()
@@ -253,7 +260,7 @@ def main():
     print(f"[gilda] predictions: {predictions.height} "
           f"(preferred={n_pref}, inclusion={predictions.height - n_pref})")
 
-    classify(predictions, args.out_dir, predictions_path)
+    classify(predictions, args.out_dir, predictions_path, args.semra_url)
 
 
 if __name__ == "__main__":
