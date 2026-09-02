@@ -42,6 +42,8 @@ def evaluate(rows: Sequence[SemanticMapping], gold: Iterable[Pair]) -> Scores:
     found = {(row.subject.curie, row.object.curie) for row in rows}
     used = {side.partition(":")[0] for pair in found for side in pair}
     covered = {p for p in gold if {s.partition(":")[0] for s in p} <= used}
+    if not covered:
+        raise ValueError(f"the gold standard covers none of {sorted(used)}")
     return score(predicted=found, gold=covered, ranked=candidates(rows))
 
 
