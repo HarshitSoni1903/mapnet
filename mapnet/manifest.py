@@ -2,8 +2,9 @@
 
 from __future__ import annotations
 
+from pathlib import Path
+
 URLS = {
-    "github_tags": "https://api.github.com/repos/{repo}/tags?per_page=100",
     "obo_release": (
         "http://purl.obolibrary.org/obo/{prefix}/releases/{version}/{prefix}.{fmt}"
     ),
@@ -53,6 +54,10 @@ DEPOSITION = "zenodo:0000000"
 
 # Where a run's files land, one directory per <root>/<tool>/<src>_<tgt>/<stamp>.
 OUTPUT_ROOT = "outputs"
+
+DATA_ROOT = Path("data")
+
+RAW = "raw_mappings.sssom.tsv"
 
 RUN_STAMP = "%Y%m%d_%H%M%S"
 

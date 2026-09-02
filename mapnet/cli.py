@@ -3,142 +3,77 @@
 from __future__ import annotations
 
 import argparse
-import json
 import sys
 from collections.abc import Sequence
-from datetime import datetime
 from pathlib import Path
 
-from mapnet.classify import BUCKETS, aggregate, classify
-from mapnet.data import DATA_ROOT, downloads, get_source, get_version, list_versions
-from mapnet.eval import evaluate
-from mapnet.manifest import EVIDENCE, GOLD, OUTPUT_ROOT, REFRESH, RUN_STAMP, SOURCES
-from mapnet.matchers import load_tools, run
-from mapnet.sssom import read, stem, write
-from mapnet.utils import LOG_ROOT, table, to_prefix
-
-_Commands = argparse._SubParsersAction
+from mapnet.classify import Split
+from mapnet.data import Dataset, MapNet, downloads, get_version
+from mapnet.eval import Scores, evaluate
+from mapnet.manifest import DATA_ROOT, EVIDENCE, GOLD, REFRESH, SOURCES
+from mapnet.matchers import Config, Result, match
+from mapnet.sssom import read, stem, to_pairs
+from mapnet.utils import LOG_ROOT
 
 
 def _parser() -> argparse.ArgumentParser:
     """Build the parser with every command registered."""
     parser = argparse.ArgumentParser(prog="mapnet")
     commands = parser.add_subparsers(dest="command", required=True)
-    shared, judged = _shared()
-    _add_fetch(commands, shared)
-
-    versions = commands.add_parser("versions", parents=[shared], help="list releases")
-    versions.add_argument("prefix")
-    versions.add_argument("--refresh", action="store_true", help="re-query the source")
-    versions.set_defaults(run=_versions)
-
-    commands.add_parser("tools", help="list matchers").set_defaults(run=_tools)
-    commands.add_parser("evidence", help="list evidence sets").set_defaults(
-        run=_evidence
-    )
-
-    _add_map(commands, shared, judged)
-
-    combine = commands.add_parser("aggregate", help="combine prediction files into one")
-    combine.add_argument("predictions", type=Path, nargs="+")
-    combine.add_argument("--out", type=Path, required=True)
-    combine.set_defaults(run=_aggregate)
-
-    _add_classify(commands, shared, judged)
-
-    scoring = commands.add_parser(
-        "eval", parents=[shared], help="score results against a gold standard"
-    )
-    scoring.add_argument("results", type=Path)
-    scoring.add_argument(
-        "--gold",
-        required=True,
-        help=f"a file path, a URL, or one of {sorted(GOLD) or sorted(SOURCES)}",
-    )
-    scoring.set_defaults(run=_eval)
-    return parser
-
-
-def _shared() -> tuple[argparse.ArgumentParser, argparse.ArgumentParser]:
-    """Build the option groups more than one command takes."""
-    data = argparse.ArgumentParser(add_help=False)
-    data.add_argument(
+    shared = argparse.ArgumentParser(add_help=False)
+    shared.add_argument(
         "--workdir",
         type=Path,
         default=Path("."),
-        help=f"where {DATA_ROOT}, {LOG_ROOT} and {OUTPUT_ROOT} are created",
+        help=f"where {DATA_ROOT}, {LOG_ROOT} and outputs are created",
     )
-    evidence = argparse.ArgumentParser(add_help=False)
-    evidence.add_argument(
+    shared.add_argument(
         "--evidence",
         default=",".join(EVIDENCE),
         help="comma separated evidence names or file paths, each optionally "
         "tagged rejected: or predicted:",
     )
-    return data, evidence
+    known = sorted(GOLD) or sorted(SOURCES)
+    shared.add_argument("--gold", help=f"a file path, a URL, or one of {known}")
 
-
-def _add_fetch(commands: _Commands, shared: argparse.ArgumentParser) -> None:
-    """Declare the command that downloads an ontology or an evidence set."""
-    fetch = commands.add_parser(
-        "fetch", parents=[shared], help="download an ontology or an evidence set"
-    )
-    fetch.add_argument(
-        "source",
-        nargs="?",
-        help="a prefix, an evidence name, or a URL; omit to refresh every "
-        f"volatile source ({', '.join(REFRESH)})",
-    )
-    fetch.add_argument("--format", default="obo", choices=sorted(("obo", "owl")))
-    fetch.add_argument("--version", help="an OBO Foundry release, such as 2024-01-31")
-    fetch.add_argument("--redownload", action="store_true")
-    fetch.set_defaults(run=_fetch)
-
-
-def _add_map(
-    commands: _Commands,
-    shared: argparse.ArgumentParser,
-    judged: argparse.ArgumentParser,
-) -> None:
-    """Declare the command that runs a matcher over two ontologies."""
     mapping = commands.add_parser(
         "map",
-        parents=[shared, judged],
+        parents=[shared],
         help="run a matcher",
         epilog="Any other flag is passed to the tool, which validates it.",
     )
     mapping.add_argument("--tool", required=True)
-    mapping.add_argument(
-        "--classify", action="store_true", help="split the predictions once written"
-    )
-    mapping.add_argument(
-        "--reverse", action="store_true", help="also run with the sides swapped"
-    )
-    mapping.add_argument("--src", required=True, help="source prefix or URL")
-    mapping.add_argument("--tgt", required=True, help="target prefix or URL")
-    mapping.add_argument(
-        "--gold", type=Path, help="gold standard for the tool to score"
-    )
+    mapping.add_argument("--src", required=True, help="source prefix, path or URL")
+    mapping.add_argument("--tgt", required=True, help="target prefix, path or URL")
+    mapping.add_argument("--classify", action="store_true")
+    mapping.add_argument("--reverse", action="store_true", help="also run swapped")
     mapping.set_defaults(run=_map)
 
-
-def _add_classify(
-    commands: _Commands,
-    shared: argparse.ArgumentParser,
-    judged: argparse.ArgumentParser,
-) -> None:
-    """Declare the command that splits predictions against evidence."""
-    split = commands.add_parser(
-        "classify", parents=[shared, judged], help="split predictions"
-    )
+    split = commands.add_parser("classify", parents=[shared], help="split predictions")
     split.add_argument("predictions", type=Path)
-    split.add_argument(
-        "--out", type=Path, help="directory for the sets, else beside the predictions"
-    )
-    split.add_argument(
-        "--reverse", type=Path, help="predictions from the run with the sides swapped"
-    )
+    split.add_argument("--out", type=Path, help="else beside the predictions")
+    split.add_argument("--reverse", type=Path, help="predictions from the swapped run")
     split.set_defaults(run=_classify)
+
+    scoring = commands.add_parser(
+        "eval", parents=[shared], help="score results against a gold standard"
+    )
+    scoring.add_argument("results", type=Path)
+    scoring.set_defaults(run=_eval)
+
+    fetch = commands.add_parser(
+        "fetch", parents=[shared], help="download or refresh a source"
+    )
+    fetch.add_argument(
+        "source",
+        nargs="?",
+        help=f"a prefix, an evidence name, or a URL; omit to refresh {REFRESH}",
+    )
+    fetch.add_argument("--format", default="obo", choices=("obo", "owl"))
+    fetch.add_argument("--version", help="an OBO Foundry release, such as 2024-01-31")
+    fetch.add_argument("--redownload", action="store_true")
+    fetch.set_defaults(run=_fetch)
+    return parser
 
 
 def main(argv: Sequence[str] | None = None) -> int:
@@ -155,112 +90,54 @@ def main(argv: Sequence[str] | None = None) -> int:
         return 1
 
 
-def _versions(args: argparse.Namespace) -> int:
-    """Print every release published for an ontology."""
-    for version in list_versions(
-        args.prefix, refresh=args.refresh, root=args.workdir / DATA_ROOT
-    ):
-        print(version)
-    return 0
+def _dataset(args: argparse.Namespace, src: str, tgt: str) -> Dataset:
+    """Build the dataset one command runs against."""
+    names = [name.strip() for name in args.evidence.split(",") if name.strip()]
+    return Dataset(
+        src=src,
+        tgt=tgt,
+        gold=args.gold,
+        evidence=names,
+        mapnet=MapNet(workdir=args.workdir),
+    )
 
 
-def _evidence(_: argparse.Namespace) -> int:
-    """Print every registered evidence set, marking what is consulted and refreshed."""
-    for name, (kind, source) in sorted(SOURCES.items()):
-        marks = ("*" if name in EVIDENCE else " ") + ("^" if name in REFRESH else " ")
-        print(f"{marks} {name:24} {kind:10} {source}")
-    print("\n* consulted by default, override with --evidence")
-    print("^ refetched by a bare `mapnet fetch`")
-    return 0
-
-
-def _eval(args: argparse.Namespace) -> int:
-    """Score one results file against a gold standard, writing the scores beside it."""
-    scores = evaluate(args.results, args.gold, root=args.workdir / DATA_ROOT)
-    out = args.results.with_name(f"{stem(args.results)}.eval.json")
-    out.write_text(json.dumps(scores.as_dict(), indent=2, sort_keys=True), "utf-8")
-    print(f"{args.results}  against {args.gold}")
-    for name, value in scores.as_dict().items():
-        print(f"  {name:10} {value:g}")
-    print(out)
-    return 0
-
-
-def _aggregate(args: argparse.Namespace) -> int:
-    """Combine several prediction files into one mapping set."""
-    count = aggregate(args.predictions, args.out)
-    print(f"{args.out}  ({count} mappings from {len(args.predictions)} files)")
+def _map(args: argparse.Namespace) -> int:
+    """Fetch both ontologies, run the tool, and report what it wrote."""
+    dataset = _dataset(args=args, src=args.src, tgt=args.tgt)
+    config = Config(tool=args.tool, reverse=args.reverse, extra=args.extra)
+    result = match(dataset=dataset, config=config)
+    print(f"{result.raw}  ({len(to_pairs([result.raw])) // 2} mappings)")
+    if args.classify:
+        _split(split=result.classify(), result=result)
+    if dataset.gold:
+        _scores(scores=result.evaluate(), gold=dataset.gold)
     return 0
 
 
 def _classify(args: argparse.Namespace) -> int:
     """Split one prediction file into right, wrong, novel and conflicts."""
-    out = args.out or args.predictions.parent
-    _split(args.predictions, args.evidence, out, args.workdir / DATA_ROOT, args.reverse)
-    return 0
-
-
-def _split(
-    predictions: Path, evidence: str, out: Path, data: Path, reverse: Path | None = None
-) -> None:
-    """Classify one prediction file, write the four sets, and report what happened."""
-    rows = read(predictions)
-    back = read(reverse) if reverse else []
-    names = [name.strip() for name in evidence.split(",") if name.strip()]
-    split = classify(rows, names, root=data, reverse=back)
-    print(f"candidates  {len(rows)} over {', '.join(split.prefixes)}")
-    if reverse:
-        print(f"reverse     {len(back)} pairs from {reverse}")
-    for kind, entries in split.evidence.sources.items():
-        for path, count in entries:
-            print(f"{kind:11} {count:9} pairs  {path}")
-    held = len(split.buckets["conflicts"])
-    kept = len(split.buckets["novel"])
-    print(
-        f"rescued     {split.rescued} right on an uncurated prediction alone\n"
-        f"reduced     {kept + held} novel candidates -> "
-        f"{kept} one to one, {held} held as conflicts"
+    result = Result.load(
+        raw=args.predictions,
+        mapnet=MapNet(workdir=args.workdir),
+        evidence=[n.strip() for n in args.evidence.split(",") if n.strip()],
+        gold=args.gold,
+        reverse=args.reverse,
+        out=args.out,
     )
-    for bucket in BUCKETS:
-        written = split.buckets[bucket]
-        path = out / f"{bucket}.sssom.tsv"
-        write(written, path)
-        share = 100 * len(written) / len(rows) if rows else 0.0
-        print(f"  {bucket:10} {len(written):6} ({share:4.1f}%)  {path}")
-
-
-def _tools(_: argparse.Namespace) -> int:
-    """Print every registered matcher."""
-    for name, tool in sorted(load_tools().items()):
-        print(f"{name:12} {tool.wants_format:4} {' '.join(tool.command)}")
+    _split(split=result.classify(), result=result)
     return 0
 
 
-def _map(args: argparse.Namespace) -> int:
-    """Fetch both ontologies, run the tool, and report the predictions."""
-    tools = load_tools()
-    tool = tools.get(args.tool)
-    if tool is None:
-        raise ValueError(f"unknown tool {args.tool!r}, have {sorted(tools)}")
-    if args.gold and not args.gold.is_file():
-        raise ValueError(f"no gold file at {args.gold}")
-    source = get_source(args.src, fmt=tool.wants_format, root=args.workdir / DATA_ROOT)
-    target = get_source(args.tgt, fmt=tool.wants_format, root=args.workdir / DATA_ROOT)
-    src, tgt = to_prefix(source), to_prefix(target)
-    stamp = datetime.now().strftime(RUN_STAMP)
-    out = (
-        args.workdir / OUTPUT_ROOT / tool.name / f"{src}_{tgt}" / stamp
-    ) / "run.sssom.tsv"
-    extra = [*args.extra, "--gold", str(args.gold)] if args.gold else args.extra
-    run(tool, source, target, out, stamp, args.workdir, extra)
-    print(f"{out}  ({sum(1 for _ in table(out))} mappings)")
-    back = None
-    if args.reverse:
-        back = out.with_name("run_reverse.sssom.tsv")
-        run(tool, target, source, back, stamp, args.workdir, args.extra)
-        print(f"{back}  ({sum(1 for _ in table(back))} mappings)")
-    if args.classify:
-        _split(out, args.evidence, out.parent, args.workdir / DATA_ROOT, back)
+def _eval(args: argparse.Namespace) -> int:
+    """Score one results file against a gold standard, writing the scores beside it."""
+    if not args.gold:
+        raise ValueError("eval needs --gold")
+    space = MapNet(workdir=args.workdir)
+    gold = to_pairs([space.fetch(name=args.gold)])
+    scores = evaluate(rows=read(args.results), gold=gold)
+    scores.write(path=args.results.with_name(f"{stem(args.results)}.eval.json"))
+    _scores(scores=scores, gold=args.gold)
     return 0
 
 
@@ -268,32 +145,49 @@ def _fetch(args: argparse.Namespace) -> int:
     """Download one source, or refresh every volatile one, and report what changed."""
     if args.source is None and args.version:
         raise ValueError("--version names one release, so it needs a source")
-    names = [args.source] if args.source else REFRESH
-    before = downloads(args.workdir / DATA_ROOT)
-    for name in names:
-        path = get_source(
-            name,
+    space = MapNet(workdir=args.workdir)
+    root = space.data
+    before = downloads(root)
+    for name in [args.source] if args.source else REFRESH:
+        path = space.fetch(
+            name=name,
             fmt=args.format,
             version=args.version,
             redownload=args.redownload or args.source is None,
-            root=args.workdir / DATA_ROOT,
         )
-        _report(name, path, before, args.workdir / DATA_ROOT)
+        was, now = before.get(str(path), {}), downloads(root).get(str(path), {})
+        state = "cached" if not now else "new" if not was else "changed"
+        if was.get("sha256") == now.get("sha256") and was:
+            state = "unchanged"
+        seen = path.parent.name if name in SOURCES else get_version(path) or "unknown"
+        print(f"{name:24} {state:10} version {seen}  {path}")
     return 0
 
 
-def _report(name: str, path: Path, before: dict, root: Path) -> None:
-    """Print where a fetched file landed, its version, and whether it changed."""
-    was, now = before.get(str(path), {}), downloads(root).get(str(path), {})
-    if not now:
-        state = "cached"
-    elif not was:
-        state = "new"
-    else:
-        state = "unchanged" if was.get("sha256") == now.get("sha256") else "changed"
-    version = path.parent.name if name in SOURCES else get_version(path) or "unknown"
-    size = path.stat().st_size / 1e6
-    print(f"{name:24} {state:10} {size:7.1f} MB  version {version}  {path}")
+def _split(split: Split, result: Result) -> None:
+    """Print what one classify run found and where the four sets landed."""
+    total = sum(len(rows) for _, rows in split.sets())
+    print(f"candidates  {total} over {', '.join(split.prefixes)}")
+    for kind, entries in split.evidence.sources.items():
+        for path, count in entries:
+            print(f"{kind:11} {count:9} pairs  {path}")
+    held, kept = len(split.conflicts), len(split.novel)
+    print(
+        f"rescued     {split.rescued} right on an uncurated prediction alone\n"
+        f"reduced     {kept + held} novel candidates -> "
+        f"{kept} one to one, {held} held as conflicts"
+    )
+    for name, rows in split.sets():
+        share = 100 * len(rows) / total if total else 0.0
+        path = result.directory / f"{name}.sssom.tsv"
+        print(f"  {name:10} {len(rows):6} ({share:4.1f}%)  {path}")
+
+
+def _scores(scores: Scores, gold: str) -> None:
+    """Print the metrics one results file scored against a gold standard."""
+    print(f"[eval] against {gold}")
+    for name, value in scores.as_dict().items():
+        print(f"  {name:10} {value:g}")
 
 
 if __name__ == "__main__":

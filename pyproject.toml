@@ -19,6 +19,9 @@ mapnet = "mapnet.cli:main"
 requires = ["hatchling"]
 build-backend = "hatchling.build"
 
+[tool.hatch.build.targets.wheel]
+packages = ["mapnet", "adapters"]
+
 [dependency-groups]
 dev = ["ruff>=0.6", "mypy>=1.11", "pre-commit>=3.8"]
 

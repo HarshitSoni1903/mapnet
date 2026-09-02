@@ -2,19 +2,19 @@
 
 from __future__ import annotations
 
-import sys
 from collections import defaultdict
-from collections.abc import Iterable, Sequence
+from collections.abc import Iterable, Iterator, Sequence
 from dataclasses import dataclass, field
 from pathlib import Path
+from sys import stderr
 
 from sssom_pydantic import SemanticMapping
 
-from mapnet.data import get_source
-from mapnet.manifest import EVIDENCE, SOURCES
-from mapnet.sssom import read, to_pairs, write
+from mapnet.data import MapNet
+from mapnet.manifest import SOURCES
+from mapnet.sssom import to_pairs
 
-BUCKETS = ("right", "wrong", "novel", "conflicts")
+SETS = ("right", "wrong", "novel", "conflicts")
 
 KINDS = ("pairs", "rejected", "predicted")
 
@@ -29,66 +29,65 @@ class Evidence:
     mapped: dict[str, set[str]] = field(default_factory=dict)
     sources: dict[str, list[tuple[Path, int]]] = field(default_factory=dict)
 
+    @classmethod
+    def load(
+        cls,
+        names: Iterable[str],
+        prefixes: Iterable[str],
+        mapnet: MapNet | None = None,
+    ) -> Evidence:
+        """Resolve evidence names to files, one pair set per kind."""
+        space = mapnet or MapNet()
+        files: dict[str, list[Path]] = {kind: [] for kind in KINDS}
+        for entry in [names] if isinstance(names, str) else names:
+            tagged, name = _tagged(entry)
+            kind, source = SOURCES.get(name, ("pairs", name))
+            kind = tagged or kind
+            if kind not in files:
+                raise ValueError(
+                    f"{name!r} has unknown kind {kind!r}, expected {KINDS}"
+                )
+            if source == "obo":
+                for prefix in prefixes:
+                    try:
+                        files[kind].append(space.fetch(name=prefix))
+                    except ValueError as error:
+                        print(f"[evidence] no xrefs for {prefix}: {error}", file=stderr)
+            elif Path(name).is_file():
+                files[kind].append(Path(name))
+            elif name in SOURCES:
+                files[kind].append(space.fetch(name=name))
+            else:
+                raise ValueError(f"{name!r} is not a file or one of {sorted(SOURCES)}")
+        sets, sources = _pair_sets(files)
+        mapped: dict[str, set[str]] = defaultdict(set)
+        for subject, obj in sets["pairs"]:
+            mapped[subject].add(obj.split(":")[0])
+        return cls(
+            pairs=sets["pairs"],
+            rejected=sets["rejected"],
+            predicted=sets["predicted"],
+            mapped=dict(mapped),
+            sources=sources,
+        )
+
 
 @dataclass(frozen=True)
 class Split:
     """The four sets, the evidence behind them, and what a prediction alone rescued."""
 
-    buckets: dict[str, list[SemanticMapping]]
+    right: list[SemanticMapping]
+    wrong: list[SemanticMapping]
+    novel: list[SemanticMapping]
+    conflicts: list[SemanticMapping]
     evidence: Evidence
     prefixes: Sequence[str]
     rescued: int
 
-
-def aggregate(paths: Sequence[Path], out: Path) -> int:
-    """Write one mapping set from several prediction files, first pair winning."""
-    return write(union(paths), out)
-
-
-def union(paths: Sequence[Path]) -> list[SemanticMapping]:
-    """Read every prediction file in order, keeping the first row for each pair."""
-    seen: set[tuple[str, str]] = set()
-    rows: list[SemanticMapping] = []
-    for path in paths:
-        for row in read(path):
-            key = (row.subject.curie, row.object.curie)
-            if key in seen:
-                continue
-            seen.add(key)
-            rows.append(row)
-    return rows
-
-
-def load_evidence(
-    names: Iterable[str], prefixes: Iterable[str], root: Path | None = None
-) -> Evidence:
-    """Resolve evidence names to files and stream each kind into its own pair set."""
-    files: dict[str, list[Path]] = {kind: [] for kind in KINDS}
-    for entry in [names] if isinstance(names, str) else names:
-        tagged, name = _tagged(entry)
-        kind, source = SOURCES.get(name, ("pairs", name))
-        kind = tagged or kind
-        if kind not in files:
-            raise ValueError(f"{name!r} has unknown kind {kind!r}, expected {KINDS}")
-        if source == "obo":
-            for prefix in prefixes:
-                try:
-                    files[kind].append(get_source(prefix, root=root))
-                except ValueError as error:
-                    print(f"[evidence] no xrefs for {prefix}: {error}", file=sys.stderr)
-        elif Path(name).is_file():
-            files[kind].append(Path(name))
-        elif name in SOURCES:
-            files[kind].append(get_source(name, root=root))
-        else:
-            raise ValueError(f"{name!r} is not a known evidence set or a file")
-    sets, sources = _pair_sets(files)
-    mapped: dict[str, set[str]] = defaultdict(set)
-    for subject, obj in sets["pairs"]:
-        mapped[subject].add(obj.split(":")[0])
-    return Evidence(
-        sets["pairs"], sets["rejected"], sets["predicted"], dict(mapped), sources
-    )
+    def sets(self) -> Iterator[tuple[str, list[SemanticMapping]]]:
+        """Yield each set's name and its rows."""
+        for name in SETS:
+            yield name, getattr(self, name)
 
 
 def _tagged(entry: str) -> tuple[str, str]:
@@ -109,7 +108,7 @@ def _pair_sets(
         for path in paths:
             pairs = to_pairs([path])
             if not pairs:
-                print(f"[evidence] {path} yielded no pairs", file=sys.stderr)
+                print(f"[evidence] {path} yielded no pairs", file=stderr)
             sources[kind].append((path, len(pairs) // 2))
             found |= pairs
         sets[kind] = found
@@ -118,26 +117,24 @@ def _pair_sets(
 
 def classify(
     rows: Sequence[SemanticMapping],
-    evidence: Iterable[str] | Evidence = EVIDENCE,
-    root: Path | None = None,
+    evidence: Evidence,
+    prefixes: Sequence[str],
     reverse: Sequence[SemanticMapping] = (),
 ) -> Split:
-    """Split candidates against evidence, loading it first when given names."""
-    prefixes = sorted(
-        {p for row in rows for p in (row.subject.prefix, row.object.prefix)}
-    )
-    if not isinstance(evidence, Evidence):
-        evidence = load_evidence(evidence, prefixes, root)
-    buckets: dict[str, list[SemanticMapping]] = {name: [] for name in BUCKETS}
+    """Split already read candidates against already loaded evidence."""
+    used = list(prefixes)
+    sets: dict[str, list[SemanticMapping]] = {name: [] for name in SETS}
     for row in rows:
-        buckets[_bucket(row, evidence)].append(row)
+        sets[_bucket(row, evidence)].append(row)
     survived = {(row.object.curie, row.subject.curie) for row in reverse}
-    buckets["novel"], buckets["conflicts"] = reduce(buckets["novel"], survived)
+    novel, conflicts = reduce(sets["novel"], survived)
     rescued = sum(
         (row.subject.curie, row.object.curie) not in evidence.pairs
-        for row in buckets["right"]
+        for row in sets["right"]
     )
-    return Split(buckets, evidence, prefixes, rescued)
+    return Split(
+        sets["right"], sets["wrong"], novel, conflicts, evidence, used, rescued
+    )
 
 
 def reduce(

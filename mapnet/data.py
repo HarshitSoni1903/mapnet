@@ -6,6 +6,8 @@ import hashlib
 import json
 import re
 import sys
+from collections.abc import Sequence
+from dataclasses import dataclass, field
 from datetime import datetime
 from pathlib import Path
 from urllib.error import URLError
@@ -15,10 +17,8 @@ from urllib.request import urlopen
 import bioregistry
 import pystow
 
-from mapnet.manifest import GOLD, SOURCES, URLS
-from mapnet.utils import header
-
-DATA_ROOT = Path("data")
+from mapnet.manifest import DATA_ROOT, EVIDENCE, GOLD, OUTPUT_ROOT, SOURCES, URLS
+from mapnet.utils import LOG_ROOT, header
 
 DOWNLOADS = "downloads.json"
 
@@ -30,6 +30,51 @@ DOWNLOADERS = {
     "obo": bioregistry.get_obo_download,
     "owl": bioregistry.get_owl_download,
 }
+
+
+@dataclass
+class MapNet:
+    """Where every file a run touches lives."""
+
+    workdir: Path = Path(".")
+
+    @property
+    def data(self) -> Path:
+        return self.workdir / DATA_ROOT
+
+    @property
+    def logs(self) -> Path:
+        return self.workdir / LOG_ROOT
+
+    @property
+    def outputs(self) -> Path:
+        return self.workdir / OUTPUT_ROOT
+
+    def fetch(
+        self,
+        name: str,
+        fmt: str = "obo",
+        version: str | None = None,
+        redownload: bool = False,
+    ) -> Path:
+        """Return a local path to one source, downloading it when absent."""
+        return get_source(name, fmt, version, redownload, self.data)
+
+
+@dataclass
+class Dataset:
+    """The two ontologies one run maps and the sets it is judged against."""
+
+    src: str
+    tgt: str
+    gold: str | None = None
+    evidence: Sequence[str] = field(default_factory=lambda: list(EVIDENCE))
+    mapnet: MapNet = field(default_factory=MapNet)
+
+    def ontologies(self, fmt: str = "obo") -> tuple[Path, Path]:
+        return self.mapnet.fetch(name=self.src, fmt=fmt), self.mapnet.fetch(
+            name=self.tgt, fmt=fmt
+        )
 
 
 def get_source(
@@ -157,34 +202,6 @@ def get_version(path: Path) -> str | None:
     if "_v_" in stem:
         return stem.split("_v_", 1)[1]
     return _header_version(path)
-
-
-def list_versions(
-    prefix: str, refresh: bool = False, root: Path | None = None
-) -> list[str]:
-    """Return an ontology's published releases, newest first."""
-    cache = (root or DATA_ROOT) / prefix / "versions.json"
-    if cache.is_file() and not refresh:
-        versions: list[str] = json.loads(cache.read_text("utf-8"))
-        return versions
-    versions = _fetch_versions(prefix)
-    cache.parent.mkdir(parents=True, exist_ok=True)
-    cache.write_text(json.dumps(versions, indent=2), "utf-8")
-    return versions
-
-
-def _fetch_versions(prefix: str) -> list[str]:
-    """Read an ontology's release tags from its GitHub repository."""
-    repo = bioregistry.get_repository(prefix)
-    if not repo or "github.com/" not in repo:
-        raise ValueError(f"{prefix!r} has no GitHub repository to list releases from")
-    url = URLS["github_tags"].format(repo=repo.split("github.com/", 1)[1].strip("/"))
-    try:
-        with urlopen(url, timeout=30) as response:
-            tags = json.load(response)
-    except (URLError, TimeoutError) as error:
-        raise ValueError(f"cannot list releases for {prefix!r}: {error}") from error
-    return sorted({tag["name"].lstrip("v") for tag in tags}, reverse=True)
 
 
 def _header_version(path: Path) -> str | None:

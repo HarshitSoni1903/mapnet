@@ -51,12 +51,23 @@ def stem(path: Path) -> str:
     return path.name.removesuffix(".tsv").removesuffix(".sssom")
 
 
-def by_prefixes(
-    rows: Iterable[SemanticMapping], *prefixes: str
-) -> list[SemanticMapping]:
-    """Keep the mappings whose two sides use the named prefixes, either way round."""
-    wanted = set(prefixes)
-    return [row for row in rows if {row.subject.prefix, row.object.prefix} == wanted]
+def prefixes(rows: Iterable[SemanticMapping]) -> list[str]:
+    """Take every prefix the rows carry on either side, in order."""
+    return sorted({p for row in rows for p in (row.subject.prefix, row.object.prefix)})
+
+
+def union(paths: Iterable[Path]) -> list[SemanticMapping]:
+    """Read every mapping file in order, keeping the first row for each pair."""
+    seen: set[tuple[str, str]] = set()
+    rows: list[SemanticMapping] = []
+    for path in paths:
+        for row in read(path):
+            key = (row.subject.curie, row.object.curie)
+            if key in seen:
+                continue
+            seen.add(key)
+            rows.append(row)
+    return rows
 
 
 def to_pairs(paths: Iterable[Path]) -> set[tuple[str, str]]:
@@ -150,15 +161,15 @@ def write(
 
 def _converter(rows: list[SemanticMapping]) -> curies.Converter:
     """Build a curie map covering the prefixes the rows actually use."""
-    prefixes = set()
+    used = set()
     for row in rows:
-        prefixes.update({row.subject.prefix, row.object.prefix})
-        prefixes.update({row.predicate.prefix, row.justification.prefix})
+        used.update({row.subject.prefix, row.object.prefix})
+        used.update({row.predicate.prefix, row.justification.prefix})
         if row.mapping_tool and row.mapping_tool.reference:
-            prefixes.add(row.mapping_tool.reference.prefix)
+            used.add(row.mapping_tool.reference.prefix)
     prefix_map: dict[str, str] = {}
     unknown = []
-    for prefix in prefixes:
+    for prefix in used:
         uri = bioregistry.get_uri_prefix(prefix)
         if uri is None:
             unknown.append(prefix)
