@@ -7,8 +7,8 @@ from curies import Reference
 from sssom_pydantic import SemanticMapping
 
 from mapnet.classify import BUCKETS, Evidence, Split, aggregate, classify, load_evidence
-from mapnet.data import downloads, get_source, get_version, list_versions
-from mapnet.eval import Scores, hits_at_k, mrr, score
+from mapnet.data import DATA_ROOT, downloads, get_source, get_version, list_versions
+from mapnet.eval import Scores, evaluate, hits_at_k, mrr, score
 from mapnet.manifest import EVIDENCE, REFRESH
 from mapnet.mapper import Mapper
 from mapnet.sssom import by_prefixes, read, write
@@ -18,6 +18,7 @@ __version__ = md.version("mapnet")
 
 __all__ = [
     "BUCKETS",
+    "DATA_ROOT",
     "EVIDENCE",
     "Evidence",
     "Mapper",
@@ -32,6 +33,7 @@ __all__ = [
     "check_prefixes",
     "classify",
     "downloads",
+    "evaluate",
     "get_source",
     "get_version",
     "hits_at_k",

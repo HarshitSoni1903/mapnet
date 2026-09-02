@@ -4,6 +4,10 @@ from __future__ import annotations
 
 from collections.abc import Iterable, Iterator, Mapping, Sequence
 from dataclasses import asdict, dataclass
+from pathlib import Path
+
+from mapnet.data import get_source
+from mapnet.sssom import read, to_pairs
 
 Pair = tuple[str, str]
 
@@ -24,6 +28,15 @@ class Scores:
     def as_dict(self) -> dict[str, float]:
         """Return the scores as plain numbers."""
         return asdict(self)
+
+
+def evaluate(results: Path, gold: str, root: Path | None = None) -> Scores:
+    """Score a results file against a gold standard, over the prefixes it uses."""
+    rows = read(results)
+    prefixes = {p for row in rows for p in (row.subject.prefix, row.object.prefix)}
+    wanted = to_pairs([get_source(gold, root=root)])
+    covered = {p for p in wanted if {s.partition(":")[0] for s in p} <= prefixes}
+    return score([(r.subject.curie, r.object.curie) for r in rows], covered)
 
 
 def score(predicted: Iterable[Pair], gold: Iterable[Pair]) -> Scores:

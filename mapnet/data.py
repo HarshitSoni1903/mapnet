@@ -15,7 +15,7 @@ from urllib.request import urlopen
 import bioregistry
 import pystow
 
-from mapnet.manifest import SOURCES, URLS
+from mapnet.manifest import GOLD, SOURCES, URLS
 from mapnet.utils import header
 
 DATA_ROOT = Path("data")
@@ -65,6 +65,8 @@ def _locate(
     name: str, fmt: str, version: str | None, resolve: bool, root: Path
 ) -> tuple[str, Path]:
     """Resolve a name to the URL it comes from and the file it lands in."""
+    if name in GOLD:
+        return GOLD[name], root / "gold" / _plain_name(GOLD[name])
     if name not in SOURCES:
         prefix, url = _ontology_url(name, fmt, version)
         stem = f"{prefix}_v_{version}" if version else prefix

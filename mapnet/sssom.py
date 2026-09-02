@@ -4,8 +4,10 @@ from __future__ import annotations
 
 import importlib.metadata as md
 import os
-from collections.abc import Iterable, Iterator
+import sys
+from collections.abc import Iterable, Iterator, Mapping
 from datetime import date
+from itertools import chain
 from pathlib import Path
 
 import bioregistry
@@ -18,6 +20,13 @@ from mapnet.manifest import MAPPING_SET_BASE
 from mapnet.utils import table, to_curie
 
 MAPNET = MappingTool(name="mapnet", version=md.version("mapnet"))
+
+# The subject and object column names a mapping table is allowed to use.
+PAIR_COLUMNS = (
+    ("subject_id", "object_id"),
+    ("SrcEntity", "TgtEntity"),
+    ("source", "target"),
+)
 
 
 def read(path: Path) -> list[SemanticMapping]:
@@ -61,12 +70,33 @@ def to_pairs(paths: Iterable[Path]) -> set[tuple[str, str]]:
 
 
 def _rows(path: Path) -> Iterator[tuple[str, str]]:
-    """Yield the normalized subject and object of every row in an SSSOM table."""
-    for row in table(path):
+    """Yield the normalized subject and object of every row in a mapping table."""
+    rows = table(path)
+    first = next(rows, None)
+    if first is None:
+        return
+    subject, obj = _columns(first)
+    skipped = 0
+    for row in chain([first], rows):
         try:
-            yield to_curie(row["subject_id"]), to_curie(row["object_id"])
+            yield to_curie(row[subject]), to_curie(row[obj])
         except ValueError:
-            continue
+            skipped += 1
+    if skipped:
+        print(
+            f"[mappings] {path.name}: skipped {skipped} rows with unknown prefixes",
+            file=sys.stderr,
+        )
+
+
+def _columns(row: Mapping[str, str]) -> tuple[str, str]:
+    """Take the subject and object column names one mapping table uses."""
+    for columns in PAIR_COLUMNS:
+        if all(name in row for name in columns):
+            return columns
+    raise ValueError(
+        f"no mapping columns in {sorted(row)}, expected one of {list(PAIR_COLUMNS)}"
+    )
 
 
 def _xrefs(path: Path) -> Iterator[tuple[str, str]]:

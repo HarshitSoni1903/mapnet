@@ -3,6 +3,7 @@
 from __future__ import annotations
 
 import argparse
+import json
 import sys
 from collections.abc import Sequence
 from datetime import datetime
@@ -10,9 +11,10 @@ from pathlib import Path
 
 from mapnet.classify import BUCKETS, aggregate, classify
 from mapnet.data import DATA_ROOT, downloads, get_source, get_version, list_versions
-from mapnet.manifest import EVIDENCE, OUTPUT_ROOT, REFRESH, RUN_STAMP, SOURCES
+from mapnet.eval import evaluate
+from mapnet.manifest import EVIDENCE, GOLD, OUTPUT_ROOT, REFRESH, RUN_STAMP, SOURCES
 from mapnet.matchers import load_tools, run
-from mapnet.sssom import read, write
+from mapnet.sssom import read, stem, write
 from mapnet.utils import LOG_ROOT, table, to_prefix
 
 _Commands = argparse._SubParsersAction
@@ -43,6 +45,17 @@ def _parser() -> argparse.ArgumentParser:
     combine.set_defaults(run=_aggregate)
 
     _add_classify(commands, shared, judged)
+
+    scoring = commands.add_parser(
+        "eval", parents=[shared], help="score results against a gold standard"
+    )
+    scoring.add_argument("results", type=Path)
+    scoring.add_argument(
+        "--gold",
+        required=True,
+        help=f"a file path, a URL, or one of {sorted(GOLD) or sorted(SOURCES)}",
+    )
+    scoring.set_defaults(run=_eval)
     return parser
 
 
@@ -158,6 +171,18 @@ def _evidence(_: argparse.Namespace) -> int:
         print(f"{marks} {name:24} {kind:10} {source}")
     print("\n* consulted by default, override with --evidence")
     print("^ refetched by a bare `mapnet fetch`")
+    return 0
+
+
+def _eval(args: argparse.Namespace) -> int:
+    """Score one results file against a gold standard, writing the scores beside it."""
+    scores = evaluate(args.results, args.gold, root=args.workdir / DATA_ROOT)
+    out = args.results.with_name(f"{stem(args.results)}.eval.json")
+    out.write_text(json.dumps(scores.as_dict(), indent=2, sort_keys=True), "utf-8")
+    print(f"{args.results}  against {args.gold}")
+    for name, value in scores.as_dict().items():
+        print(f"  {name:10} {value:g}")
+    print(out)
     return 0
 
 

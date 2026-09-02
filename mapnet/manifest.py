@@ -45,6 +45,9 @@ REFRESH = [
     "semra",
 ]
 
+# Gold standards fetched by name, each one table of pairs landing in data/gold.
+GOLD: dict[str, str] = {}
+
 # Zenodo concept the run's own mapping sets are published under.
 DEPOSITION = "zenodo:0000000"
 
