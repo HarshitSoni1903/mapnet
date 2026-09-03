@@ -12,22 +12,18 @@ MapNet appends these to the command from the manifest:
 | `--source` | ontology file to map from |
 | `--target` | ontology file to map to |
 | `--out` | path to write the SSSOM file |
-| `--logs` | directory for the tool's own logs |
+| `--log` | the run's log file, which the adapter appends to |
 | `--workdir` | root the run writes under, and where a tool puts anything it keeps |
 | `--config` | the manifest's `config` path, appended only when the manifest declares one |
-| `--gold` | SSSOM gold standard, appended only when `map --gold` is given |
 
 - `--source` and `--target` are local files already downloaded in the format the manifest names.
-- `--logs` defaults to `logs` when the adapter is run by hand.
+- `--log` is one file per run, shared with MapNet. An adapter that shells out runs the command through `self.log.run`, which echoes to the terminal and appends to that file at once. Left off, the adapter names its own.
 - `--workdir` defaults to the current directory. A tool that keeps models or an index puts
   them somewhere under it and names that place itself. MapNet does not dictate the layout, it
   only guarantees the workdir is the boundary.
 - Any flag `mapnet map` does not recognise is appended verbatim, so a tool's own options reach
   the adapter without the CLI declaring them. The adapter validates them.
-- `--src-prefix` and `--tgt-prefix` are declared by `Mapper.parse_args`, so every adapter
-  accepts them. Read them with `self.prefixes(args)`, never directly.
-- Thresholds and model settings are not arguments. They go in the file `--config` points at,
-  which MapNet passes through without reading.
+- Thresholds and model settings are not MapNet's arguments. They are the adapter class's own constructor parameters, or they go in the file `--config` points at, which MapNet passes through without reading.
 - `--gold` is absent unless asked for. When absent, no scoring happens.
 
 ## Output
@@ -100,15 +96,17 @@ if __name__ == "__main__":
     raise SystemExit(GildaMapper.main())
 ```
 
-`Mapper.main` parses the arguments, reads the version of both ontology files, and calls
-`sssom.write` with the class attributes `name`, `version` and `tool_id`. `Mapper.prefixes`
-resolves the source and target prefixes for every adapter, so no adapter reads the flags itself.
+An adapter holds a `Dataset` and its own parameters. `Mapper.run` fetches both ontologies, calls `match`, and writes SSSOM stamped with `name`, `version` and `tool_id`, returning a `Result`. `Mapper.main` is the same path when MapNet launches the adapter as a subprocess, so the library and the CLI end in one place.
+
+```python
+result = LeonMapMapper(dataset=dataset, threshold=0.9, top_k=1).run()
+```
 
 - Subclass `Mapper` and implement `match`, which yields `SemanticMapping` objects.
 - Set `name` and `version` as class attributes. `tool_id` is optional and takes a CURIE.
-- Call `self.prefixes(args)` for the source and target prefixes. It prefers `--src-prefix` and
-  `--tgt-prefix` over what the files declare, so honouring those flags costs an adapter nothing.
-- Call `sssom.write` directly when the control flow does not fit `Mapper.main`.
+- Take the adapter's own settings as constructor arguments and call `super().__init__(dataset, config)`.
+- Call `self.prefixes()` for the source and target prefixes, and `self.work()` for a directory of the adapter's own under the workdir.
+- The format an adapter reads comes from the manifest, so `wants_format` is declared once.
 - Name the file `<tool>_utils.py`. A module named after the tool shadows the package on import.
 - Emit every candidate found. Reduction to one to one happens in `classify`.
 - Keep confidence comparable within one adapter's output.
@@ -118,21 +116,16 @@ on release.
 
 ## Scoring
 
-An adapter scores its own run, because only it can see the candidates it pruned before writing.
-`Mapper.main` calls `report` when `--gold` is given, which writes `<out>.eval.json` beside the
-predictions.
+An adapter does not score itself. MapNet reads the run's own output, so any result can be scored later without rerunning the matcher, and numbers from different tools stay comparable because one function produces them all.
 
 | Function | Takes | Gives |
 | --- | --- | --- |
-| `score(predicted, gold)` | two sets of pairs | hits, counts, precision, recall, f1 |
-| `mrr(ranked, gold)` | subject to ranked objects | mean reciprocal rank |
-| `hits_at_k(ranked, gold, k)` | subject to ranked objects | share correct within the top k |
+| `score(predicted, gold, ranked)` | two sets of pairs, optional ranking | hits, counts, precision, recall, f1, mrr, hits_at_1 |
+| `evaluate(rows, gold)` | rows and gold pairs | the same, over the prefixes the rows use |
+| `candidates(rows)` | rows | each subject's objects, best confidence first |
 
-- Use `mapnet.eval`. An adapter that writes its own precision makes its numbers incomparable.
-- `Mapper.evaluate` scores the pairs written. Override it to add what only this tool can see.
-- Rank based metrics need a ranked candidate list per subject. An adapter that emits one match
-  per subject has nothing to rank, so it should not report them.
-- The eval file is self describing. Nothing declares its metrics in the manifest.
+- Emit every candidate found, ranked by confidence. Ranking metrics are recovered from the file, so an adapter that prunes to one match per subject makes `mrr` and `hits_at_1` say nothing.
+- Keep confidence comparable within one adapter's output.
 
 ## Field ownership
 

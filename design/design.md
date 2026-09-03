@@ -146,15 +146,13 @@ in the manifest name the directory and the timestamp. `--workdir` moves `data/`,
 names are plain, since the directory already says which tool, which pair and which run.
 
 ```text
-run.sssom.tsv           the predictions
-run_reverse.sssom.tsv   the reverse run, when asked for
+raw_mappings.sssom.tsv          the predictions
+reverse_raw_mappings.sssom.tsv  the reverse run, when asked for
 right/wrong/novel/conflicts.sssom.tsv
-run.eval.json           the tool's own scores, when given a gold set
+raw_mappings.eval.json          the scores, when given a gold set
 ```
 
-The CLI takes the timestamp once per run and hands it to every leg, so the forward run, the
-reverse run and their logs all carry the same stamp. A run's log in `logs/` is found by the
-stamp that names its directory.
+`MapNet` takes the timestamp once when it is created and hands it to every leg, so the forward run, the reverse run and their logs all carry the same stamp, to a hundredth of a second. A run's log in `logs/` is found by the stamp that names its directory, and holds both MapNet's lines and the tool's own output.
 
 The stamp resolves to the second, so two runs of one tool over one pair inside the same second
 would share a directory.
@@ -245,12 +243,13 @@ refresh report whether upstream actually changed and what a UI reads to offer th
 | --- | --- |
 | `__init__.py` | Package facade. Declares the public API and attaches a null log handler. |
 | `manifest.py` | The central registry: URLs, evidence sets, what refreshes, and registered tools. |
-| `utils.py` | Cross cutting helpers: CURIE normalisation, ontology prefixes, run log paths. |
-| `data.py` | Resolve, download and cache ontologies and evidence under `data/`, recording every file fetched. |
+| `utils.py` | Cross cutting helpers: CURIE normalisation, ontology prefixes, table reading. |
+| `logger.py` | One log file per run, echoed to the terminal, shared by MapNet and the tools it runs. |
+| `data.py` | `MapNet` and `Dataset`, and the fetch that caches ontologies, evidence and gold sets under `data/`. |
 | `sssom.py` | Read and write SSSOM, infer the curie map, stamp tool identity, write atomically. |
 | `mapper.py` | The `Mapper` base class and the argument parser every adapter shares. |
-| `matchers.py` | Read the manifest, spawn a tool as a subprocess, capture its log. Per run options pass straight through as flags. |
-| `classify.py` | Combine several tools' predictions, reduce, then split into right, wrong and novel. |
-| `eval.py` | Metric functions adapters share, so scores from different tools compare. |
+| `matchers.py` | The tool registry, `Config` and `Result`, spawning a tool as a subprocess, and aggregating runs. |
+| `classify.py` | Load evidence, reduce, then split candidates into right, wrong, novel and conflicts. |
+| `eval.py` | Score a run against a gold set, over the entities that gold actually covers. |
 | `store.py` | Publish mapping sets to the Zenodo deposition in the manifest. Planned. |
 | `cli.py` | Command line surface. Registers every subcommand, then reports what the core returns. |
