@@ -2,10 +2,8 @@
 
 from __future__ import annotations
 
-import subprocess
 from collections.abc import Iterable, Sequence
 from dataclasses import dataclass, field
-from datetime import datetime
 from pathlib import Path
 
 from sssom_pydantic import SemanticMapping
@@ -13,9 +11,10 @@ from sssom_pydantic import SemanticMapping
 from mapnet.classify import Evidence, Split, classify
 from mapnet.data import Dataset, MapNet
 from mapnet.eval import Scores, evaluate
-from mapnet.manifest import EVIDENCE, RAW, RUN_STAMP, TOOLS
+from mapnet.logger import Log
+from mapnet.manifest import EVIDENCE, RAW, TOOLS
 from mapnet.sssom import prefixes, read, stem, to_pairs, union, write
-from mapnet.utils import run_log, to_prefix
+from mapnet.utils import to_prefix
 
 ADAPTERS = Path(__file__).parent.parent / "adapters"
 
@@ -86,9 +85,7 @@ class Result:
         rows = self.rows()
         used = prefixes(rows)
         evidence = Evidence.load(
-            names=self.dataset.evidence,
-            prefixes=used,
-            mapnet=self.dataset.mapnet,
+            names=self.dataset.evidence, prefixes=used, mapnet=self.dataset.mapnet
         )
         split = classify(
             rows=rows,
@@ -123,15 +120,13 @@ def match(dataset: Dataset, config: Config | None = None) -> Result:
     if tool is None:
         raise ValueError(f"unknown tool {config.tool!r}, have {sorted(tools)}")
     source, target = dataset.ontologies(fmt=tool.wants_format)
-    stamp = datetime.now().strftime(RUN_STAMP)
     pair = f"{to_prefix(source)}_{to_prefix(target)}"
-    folder = run_folder(dataset=dataset, tool=config.tool, pair=pair, stamp=stamp)
+    folder = run_folder(dataset=dataset, tool=config.tool, pair=pair)
     launch(
         tool=tool,
         source=source,
         target=target,
         out=folder / RAW,
-        stamp=stamp,
         mapnet=dataset.mapnet,
         extra=config.extra,
     )
@@ -143,7 +138,6 @@ def match(dataset: Dataset, config: Config | None = None) -> Result:
             source=target,
             target=source,
             out=back,
-            stamp=stamp,
             mapnet=dataset.mapnet,
             extra=config.extra,
         )
@@ -163,12 +157,9 @@ def aggregate(results: Sequence[Result], out: Path | None = None) -> Result:
     return Result(dataset=dataset, directory=folder, raw=raw)
 
 
-def run_folder(
-    dataset: Dataset, tool: str, pair: str, stamp: str | None = None
-) -> Path:
+def run_folder(dataset: Dataset, tool: str, pair: str) -> Path:
     """The directory one run's files land in."""
-    stamp = stamp or datetime.now().strftime(RUN_STAMP)
-    return dataset.mapnet.outputs / tool / pair / stamp
+    return dataset.mapnet.outputs / tool / pair / dataset.mapnet.stamp
 
 
 def launch(
@@ -176,36 +167,24 @@ def launch(
     source: Path,
     target: Path,
     out: Path,
-    stamp: str,
     mapnet: MapNet | None = None,
     extra: Sequence[str] = (),
 ) -> Path:
     """Run a tool over two ontologies and return the predictions it wrote."""
     space = mapnet or MapNet()
-    log = run_log(
-        tool=tool.name, source=source, target=target, stamp=stamp, root=space.logs
+    log = Log.for_run(
+        tool=tool.name, source=source, target=target, stamp=space.stamp, root=space.logs
     )
     command = [*tool.command, "--source", str(source), "--target", str(target)]
-    command += ["--out", str(out), "--logs", str(space.logs)]
+    command += ["--out", str(out), "--log", str(log.path)]
     command += ["--workdir", str(space.workdir)]
     if tool.config:
         command += ["--config", str(tool.config)]
     command += extra
-    with log.open("w", encoding="utf-8") as handle:
-        result = subprocess.run(
-            command, stdout=handle, stderr=subprocess.STDOUT, text=True
-        )
-    if result.returncode != 0:
-        raise RuntimeError(f"{tool.name} failed, see {log}: {_tail(log)}")
+    log.run(command)
     if not out.is_file():
-        raise RuntimeError(f"{tool.name} wrote no predictions at {out}, see {log}")
+        raise RuntimeError(f"{tool.name} wrote no predictions at {out}, see {log.path}")
     return out
-
-
-def _tail(log: Path) -> str:
-    """Read the last non-empty line of a log."""
-    lines = [line.strip() for line in log.read_text(encoding="utf-8").splitlines()]
-    return next((line for line in reversed(lines) if line), "no output")
 
 
 def _tool(name: str, entry: dict) -> Tool:

@@ -16,8 +16,6 @@ import bioregistry
 import curies
 from curies import NamableReference
 
-LOG_ROOT = Path("logs")
-
 SAMPLE = 200
 
 TABLES = {".tsv": "\t", ".csv": ","}
@@ -25,12 +23,6 @@ TABLES = {".tsv": "\t", ".csv": ","}
 ONTOLOGY_LINE = re.compile(r"^ontology:\s*(\S+)", re.MULTILINE)
 
 ONTOLOGY_IRI = re.compile(r'<owl:Ontology rdf:about="([^"]+)"')
-
-
-def run_log(tool: str, source: Path, target: Path, stamp: str, root: Path) -> Path:
-    """Build the log path for one tool run, named by the stamp that names the run."""
-    root.mkdir(parents=True, exist_ok=True)
-    return root / f"run_{tool}_{source.stem}_{target.stem}_{stamp}.log"
 
 
 @cache

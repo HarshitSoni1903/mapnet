@@ -29,8 +29,14 @@ dev = ["ruff>=0.6", "mypy>=1.11", "pre-commit>=3.8"]
 line-length = 88
 extend-exclude = ["*.md"]
 
+[tool.ruff.format]
+skip-magic-trailing-comma = true
+
 [tool.ruff.lint]
 select = ["E", "F", "I", "UP", "B", "SIM"]
+
+[tool.ruff.lint.isort]
+split-on-trailing-comma = false
 
 [tool.mypy]
 python_version = "3.11"

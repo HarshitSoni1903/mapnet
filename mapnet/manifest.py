@@ -39,15 +39,15 @@ EVIDENCE = [
 ]
 
 # Evidence names or ontology prefixes a bare `mapnet fetch` refetches.
-REFRESH = [
-    "biomappings",
-    "biomappings-negative",
-    "biomappings-predicted",
-    "semra",
-]
+REFRESH = ["biomappings", "biomappings-negative", "biomappings-predicted", "semra"]
 
 # Gold standards fetched by name, each one table of pairs landing in data/gold.
-GOLD: dict[str, str] = {}
+GOLD: dict[str, str] = {
+    "mp-hp-mgi": (
+        "https://raw.githubusercontent.com/mapping-commons/mh_mapping_initiative/"
+        "master/mappings/mp_hp_mgi_all.sssom.tsv"
+    )
+}
 
 # Zenodo concept the run's own mapping sets are published under.
 DEPOSITION = "zenodo:0000000"
@@ -59,7 +59,7 @@ DATA_ROOT = Path("data")
 
 RAW = "raw_mappings.sssom.tsv"
 
-RUN_STAMP = "%Y%m%d_%H%M%S"
+RUN_STAMP = "%Y%m%d_%H%M%S%f"
 
 TOOLS = {
     "gilda": {

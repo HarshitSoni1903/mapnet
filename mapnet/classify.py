@@ -31,10 +31,7 @@ class Evidence:
 
     @classmethod
     def load(
-        cls,
-        names: Iterable[str],
-        prefixes: Iterable[str],
-        mapnet: MapNet | None = None,
+        cls, names: Iterable[str], prefixes: Iterable[str], mapnet: MapNet | None = None
     ) -> Evidence:
         """Resolve evidence names to files, one pair set per kind."""
         space = mapnet or MapNet()

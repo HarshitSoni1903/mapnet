@@ -12,10 +12,11 @@ from curies import Reference
 from sssom_pydantic import MappingTool, SemanticMapping
 
 from mapnet.data import Dataset, MapNet, get_version
+from mapnet.logger import Log
 from mapnet.manifest import RAW, TOOLS
 from mapnet.matchers import Result, run_folder
 from mapnet.sssom import write
-from mapnet.utils import LOG_ROOT, to_prefix
+from mapnet.utils import to_prefix
 
 
 class Mapper(ABC):
@@ -24,6 +25,8 @@ class Mapper(ABC):
     name: ClassVar[str]
     version: ClassVar[str]
     tool_id: ClassVar[str] = ""
+
+    log: Log | None = None
 
     def __init__(self, dataset: Dataset, config: Path | None = None) -> None:
         self.dataset = dataset
@@ -34,7 +37,7 @@ class Mapper(ABC):
         """Yield predicted mappings for this run."""
 
     def run(self, out: Path | None = None) -> Result:
-        """Match the pair and write the predictions as SSSOM."""
+        """Match the pair, log what the run wrote, and return where it landed."""
         source, target = self.ontologies()
         folder = (
             out.parent
@@ -46,13 +49,22 @@ class Mapper(ABC):
             )
         )
         raw = out or folder / RAW
-        write(
+        self.log = self.log or Log.for_run(
+            tool=self.name,
+            source=source,
+            target=target,
+            stamp=self.dataset.mapnet.stamp,
+            root=self.dataset.mapnet.logs,
+        )
+        self.log.say(f"[{self.name}] {source.name} -> {target.name}")
+        written = write(
             mappings=self.match(),
             out=raw,
             tool=self.identity(),
             source_version=get_version(path=source),
             target_version=get_version(path=target),
         )
+        self.log.say(f"[{self.name}] {written} mappings -> {raw}")
         return Result(dataset=self.dataset, directory=folder, raw=raw)
 
     def ontologies(self) -> tuple[Path, Path]:
@@ -66,7 +78,7 @@ class Mapper(ABC):
 
     def work(self) -> Path:
         """Return this adapter's own directory in the workspace, created."""
-        folder = (self.dataset.mapnet.workdir / self.name).resolve()
+        folder = (self.dataset.mapnet.workdir / self.name).absolute()
         folder.mkdir(parents=True, exist_ok=True)
         return folder
 
@@ -90,7 +102,9 @@ class Mapper(ABC):
             tgt=str(args.target),
             mapnet=MapNet(workdir=args.workdir),
         )
-        cls(dataset=dataset, config=args.config).run(out=args.out)
+        mapper = cls(dataset=dataset, config=args.config)
+        mapper.log = Log(args.log) if args.log else None
+        mapper.run(out=args.out)
         return 0
 
 
@@ -100,7 +114,7 @@ def parse_args(prog: str, argv: Sequence[str] | None = None) -> argparse.Namespa
     parser.add_argument("--source", type=Path, required=True)
     parser.add_argument("--target", type=Path, required=True)
     parser.add_argument("--out", type=Path, required=True)
-    parser.add_argument("--logs", type=Path, default=LOG_ROOT)
+    parser.add_argument("--log", type=Path, help="append this run's output here")
     parser.add_argument("--workdir", type=Path, default=Path("."))
     parser.add_argument("--config", type=Path)
     return parser.parse_args(argv)

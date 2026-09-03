@@ -10,10 +10,10 @@ from pathlib import Path
 from mapnet.classify import Split
 from mapnet.data import Dataset, MapNet, downloads, get_version
 from mapnet.eval import Scores, evaluate
+from mapnet.logger import LOG_ROOT
 from mapnet.manifest import DATA_ROOT, EVIDENCE, GOLD, REFRESH, SOURCES
 from mapnet.matchers import Config, Result, match
 from mapnet.sssom import read, stem, to_pairs
-from mapnet.utils import LOG_ROOT
 
 
 def _parser() -> argparse.ArgumentParser:

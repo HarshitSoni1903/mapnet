@@ -14,11 +14,7 @@ from adapters.gilda_utils import GildaMapper
 
 space = mapnet.MapNet(workdir=Path("."))
 dataset = mapnet.Dataset(
-    src="mondo",
-    tgt="mesh",
-    gold="biomappings",
-    evidence=mapnet.EVIDENCE,
-    mapnet=space,
+    src="mondo", tgt="mesh", gold="biomappings", evidence=mapnet.EVIDENCE, mapnet=space
 )
 result = GildaMapper(dataset=dataset).run()
 split = result.classify()

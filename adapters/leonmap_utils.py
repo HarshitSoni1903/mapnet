@@ -11,7 +11,6 @@
 """Run the LeonMap embedding matcher over two ontologies."""
 
 import importlib.metadata as md
-import subprocess
 import sys
 
 from mapnet import Mapper, SemanticMapping, table, to_reference
@@ -27,19 +26,26 @@ class LeonMapMapper(Mapper):
     version = md.version("leonmap")
 
     def __init__(
-        self, dataset, config=None, threshold=0.9, top_k=1, build_missing=True
+        self,
+        dataset,
+        config=None,
+        threshold=0.9,
+        top_k=1,
+        build_missing=True,
+        reverse=False,
     ):
         super().__init__(dataset, config)
         self.threshold = threshold
         self.top_k = top_k
         self.build_missing = build_missing
+        self.reverse = reverse
 
     def match(self):
         """Run leonmap-map and yield every prediction it wrote."""
         work = self.work()
         src, tgt = self.prefixes()
         out = work / f"{src}_to_{tgt}.tsv"
-        subprocess.run(self.command(work, out, src, tgt), check=True)
+        self.log.run(self.command(work, out, src, tgt))
         yield from self.rows(out)
 
     def command(self, work, out, src, tgt):
@@ -54,6 +60,8 @@ class LeonMapMapper(Mapper):
         command += ["--threshold", str(self.threshold), "--top_k", str(self.top_k)]
         if self.build_missing:
             command.append("--build-missing")
+        if self.reverse:
+            command.append("--reverse")
         if self.config:
             command += ["--config", str(self.config)]
         return command

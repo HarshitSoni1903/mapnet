@@ -17,8 +17,17 @@ from urllib.request import urlopen
 import bioregistry
 import pystow
 
-from mapnet.manifest import DATA_ROOT, EVIDENCE, GOLD, OUTPUT_ROOT, SOURCES, URLS
-from mapnet.utils import LOG_ROOT, header
+from mapnet.logger import LOG_ROOT
+from mapnet.manifest import (
+    DATA_ROOT,
+    EVIDENCE,
+    GOLD,
+    OUTPUT_ROOT,
+    RUN_STAMP,
+    SOURCES,
+    URLS,
+)
+from mapnet.utils import header
 
 DOWNLOADS = "downloads.json"
 
@@ -26,17 +35,15 @@ VERSION_INFO = re.compile(r"<owl:versionInfo[^>]*>([^<]+)</owl:versionInfo>")
 
 VERSION_IRI = re.compile(r'<owl:versionIRI[^>]*rdf:resource="([^"]+)"')
 
-DOWNLOADERS = {
-    "obo": bioregistry.get_obo_download,
-    "owl": bioregistry.get_owl_download,
-}
+DOWNLOADERS = {"obo": bioregistry.get_obo_download, "owl": bioregistry.get_owl_download}
 
 
 @dataclass
 class MapNet:
-    """Where every file a run touches lives."""
+    """Where files land, and the stamp naming every run, to a hundredth of a second."""
 
     workdir: Path = Path(".")
+    stamp: str = field(default_factory=lambda: datetime.now().strftime(RUN_STAMP)[:-4])
 
     @property
     def data(self) -> Path:
